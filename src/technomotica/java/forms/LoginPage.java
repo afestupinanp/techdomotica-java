@@ -1,4 +1,4 @@
-package technomotica.java;
+package technomotica.java.forms;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -39,6 +39,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Iniciar sesión - Technomotica");
+        setIconImages(null);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
