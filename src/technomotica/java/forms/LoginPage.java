@@ -1,6 +1,7 @@
 package technomotica.java.forms;
 
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -58,7 +59,19 @@ public class LoginPage extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre de usuario: ");
 
+        txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUserKeyPressed(evt);
+            }
+        });
+
         jLabel4.setText("Contraseña:");
+
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPassKeyPressed(evt);
+            }
+        });
 
         jButton1.setText("Iniciar sesión");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -150,19 +163,7 @@ public class LoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String user = txtUser.getText();
-        char[] pswd = txtPass.getPassword();
-        if(!user.isEmpty() && (pswd.length != 0)) {
-            char[] realPass = "admin".toCharArray();
-            if(user.equals("admin")) {
-                if(Arrays.equals(pswd, realPass)) {
-                    JOptionPane.showMessageDialog(null, "Bienvenido, " + user + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
-                }
-                else JOptionPane.showMessageDialog(null, "La contraseña escrita no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else JOptionPane.showMessageDialog(null, "El usuario específicado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+        logIn();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -186,6 +187,39 @@ public class LoginPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
+
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            logIn();
+        }
+    }//GEN-LAST:event_txtUserKeyPressed
+
+    private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed
+
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            logIn();
+        }
+    }//GEN-LAST:event_txtPassKeyPressed
+
+    public void logIn() {
+        String user = txtUser.getText();
+        char[] pswd = txtPass.getPassword();
+        if(!user.isEmpty() && (pswd.length != 0)) {
+            char[] realPass = "admin".toCharArray();
+            if(user.equals("admin")) {
+                if(Arrays.equals(pswd, realPass)) {
+                    JOptionPane.showMessageDialog(null, "Bienvenido, " + user + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
+                    Main disp = new Main();
+                    disp.setVisible(true);
+                    this.dispose();
+                }
+                else JOptionPane.showMessageDialog(null, "La contraseña escrita no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(null, "El usuario específicado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirm == JOptionPane.YES_OPTION) {
