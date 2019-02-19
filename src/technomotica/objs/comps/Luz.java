@@ -18,11 +18,11 @@ public class Luz extends Componente {
         return encendido;
     }
     
-    public void changeIntensity(double intensity) {
+    public void cambiarIntensidad(double intensity) {
         intensidad = intensity;
     }
     
-    public double getIntensity() {
+    public double getIntensidad() {
         return intensidad;
     }
     

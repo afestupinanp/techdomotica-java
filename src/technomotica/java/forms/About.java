@@ -25,6 +25,9 @@ public class About extends javax.swing.JDialog {
         initComponents();
         ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(209, 200, Image.SCALE_DEFAULT));
         tIcon.setIcon(img);
+        
+        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        
         setLocationRelativeTo(null);
     }
 

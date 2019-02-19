@@ -19,6 +19,7 @@ public class LoginPage extends javax.swing.JFrame {
         //Solución por Tirz - StackOverflow: https://stackoverflow.com/a/32885963
         imagePlace.setIcon(img);
         
+        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         
         setLocationRelativeTo(null);
     }
