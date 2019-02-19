@@ -47,6 +47,11 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -64,7 +69,70 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("Technomotica");
+        jTabbedPane1.setBackground(new java.awt.Color(24, 78, 202));
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+
+        jPanel1.setBackground(new java.awt.Color(197, 208, 230));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 589, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 301, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Gestor de usuarios", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(197, 208, 230));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 589, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 301, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Gestion de dispositivos", jPanel2);
+
+        jPanel3.setBackground(new java.awt.Color(197, 208, 230));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 589, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 301, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Gestión de ambiente", jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(197, 208, 230));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 589, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 301, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Mi perfil", jPanel4);
+
+        jMenu1.setText("TechDomotica");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem4.setText("Cerrar sesión");
@@ -123,11 +191,11 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 329, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -170,7 +238,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     public void openConfig() {
-        Configuration cfg = new Configuration(this, true);
+        Configuration cfg = new Configuration(Main.this, true);
         cfg.setVisible(true);
     }
     
@@ -188,42 +256,52 @@ public class Main extends javax.swing.JFrame {
             Image img = new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
             //Image img = Toolkit.getDefaultToolkit().getImage("src/technomotica/media/L4.png");
             //Glitch: No hay imagen.
-            JFrame frame = this;
-            
-            ActionListener listener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    MenuItem item = (MenuItem)e.getSource();
-                    String label = item.getLabel();
-                    if(label.equalsIgnoreCase("abrir aplicación")) openApp();
-                    else if(label.equalsIgnoreCase("cerrar sesión")) logOut();
-                    else if(label.equalsIgnoreCase("configuración")) openConfig();
-                    else if(label.equalsIgnoreCase("Salir de la aplicación")) exit();
-                }
-            };
             
             PopupMenu popmenu = new PopupMenu();
             
-            
-            
             MenuItem dfItem = new MenuItem("Abrir aplicación");
-            dfItem.addActionListener(listener);
+            dfItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    openApp();
+                }
+            });
             popmenu.add(dfItem);
             
+            popmenu.addSeparator();
+            
             MenuItem dfItem2 = new MenuItem("Cerrar sesión");
-            dfItem2.addActionListener(listener);
+            dfItem2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar sesión?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(confirm == JOptionPane.YES_OPTION) {
+                        logOut();
+                    }
+                }
+                
+            });
             popmenu.add(dfItem2);
             
             MenuItem dfItem3 = new MenuItem("Configuración");
-            dfItem.addActionListener(listener);
+            dfItem3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    openConfig();
+                }
+            });
             popmenu.add(dfItem3);
             
             MenuItem dfItem4 = new MenuItem("Salir de la aplicación");
-            dfItem.addActionListener(listener);
+            dfItem4.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    exit();
+                }
+            });
             popmenu.add(dfItem4);
             
             appSystemTray = new TrayIcon(img, "Technomotica", popmenu);
-            appSystemTray.addActionListener(listener);
             
             appSystemTray.addMouseListener(new MouseListener() {
                 @Override
@@ -248,7 +326,7 @@ public class Main extends javax.swing.JFrame {
             onSystemTray = true;
             try {
                 tray.add(appSystemTray);
-                appSystemTray.displayMessage("Technomotica no se ha cerrado.", "Technomotica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
+                appSystemTray.displayMessage("Technomotica en segundo plano.", "Technomotica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
             }
             catch(AWTException e) {
                 System.out.println("Error: " + e);
@@ -310,5 +388,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
