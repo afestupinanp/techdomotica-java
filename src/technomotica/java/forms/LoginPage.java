@@ -5,6 +5,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import technomotica.java.forms.About;
+
 public class LoginPage extends javax.swing.JFrame {
 
     public String VERSION = "Versión 0.1";
@@ -78,6 +80,11 @@ public class LoginPage extends javax.swing.JFrame {
         jMenu2.setText("Acerca de");
 
         jMenuItem1.setText("Sobre Technomotica");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
@@ -147,6 +154,12 @@ public class LoginPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         exit();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        About about = new About(this, true);
+        about.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
