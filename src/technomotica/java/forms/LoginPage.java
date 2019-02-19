@@ -1,6 +1,7 @@
 package technomotica.java.forms;
 
 import java.awt.Image;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -37,6 +38,7 @@ public class LoginPage extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -64,7 +66,7 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("Archivo");
+        jMenu1.setText("Technomotica");
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem2.setText("Salir");
@@ -79,6 +81,16 @@ public class LoginPage extends javax.swing.JFrame {
 
         jMenu2.setText("Acerca de");
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
+        jMenuItem3.setText("Documentación");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
         jMenuItem1.setText("Sobre Technomotica");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,9 +152,16 @@ public class LoginPage extends javax.swing.JFrame {
         String user = txtUser.getText();
         char[] pswd = txtPass.getPassword();
         if(!user.isEmpty() && (pswd.length != 0)) {
-            
+            char[] realPass = "admin".toCharArray();
+            if(user.equals("admin")) {
+                if(Arrays.equals(pswd, realPass)) {
+                    JOptionPane.showMessageDialog(null, "Bienvenido, " + user + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(null, "La contraseña escrita no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(null, "El usuario específicado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else JOptionPane.showMessageDialog(null, "Uno o más campos de texto está vácio.", "Error", JOptionPane.ERROR_MESSAGE);
+        else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -160,6 +179,11 @@ public class LoginPage extends javax.swing.JFrame {
         About about = new About(this, true);
         about.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO: Añadir código para abrir la documentación.
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -209,6 +233,7 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
