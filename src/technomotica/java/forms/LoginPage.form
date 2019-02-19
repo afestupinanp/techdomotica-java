@@ -6,7 +6,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Archivo"/>
+            <Property name="text" type="java.lang.String" value="Technomotica"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
@@ -27,10 +27,27 @@
             <Property name="text" type="java.lang.String" value="Acerca de"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F11"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Documentaci&#xf3;n"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F12"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Sobre Technomotica"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
