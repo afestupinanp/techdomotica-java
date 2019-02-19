@@ -6,14 +6,16 @@ public class Usuario {
                    nombre2 = "",
                    apellido1 = "",
                    apellido2 = "",
-                   correo = "";
+                   correo = "",
+                   documento = "";
     
-    public Usuario(String name1, String name2, String ape1, String ape2, String corre) {
+    public Usuario(String name1, String name2, String ape1, String ape2, String corre, String doc) {
         nombre1 = name1;
         nombre2 = name2;
         apellido1 = ape1;
         apellido2 = ape2;
         correo = corre;
+        documento = doc;
     }
 
     public String getNombre1() {
@@ -58,6 +60,14 @@ public class Usuario {
     
     public String getFullName() {
         return nombre1 + " " +  nombre2 + " " + apellido1 + " " + apellido2;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
     
 }
