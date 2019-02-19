@@ -10,9 +10,11 @@ import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
+import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -43,6 +45,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -57,6 +60,15 @@ public class Main extends javax.swing.JFrame {
         });
 
         jMenu1.setText("Technomotica");
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem4.setText("Cerrar sesión");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem2.setText("Salir");
@@ -126,8 +138,17 @@ public class Main extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         addAppToSystemTray();
+        this.dispose();
         //exit();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar sesión?\nSerás retornado al menú de inicio.", "¿Cerrar sesión?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(confirm == JOptionPane.YES_OPTION) {
+            logOut();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -140,7 +161,8 @@ public class Main extends javax.swing.JFrame {
         if(SystemTray.isSupported()) {
             TrayIcon trayIcon = null;
             SystemTray tray = SystemTray.getSystemTray();
-            Image img = new ImageIcon("src/technomotica/media/L4.png").getImage();
+            Image img = new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+            //Image img = Toolkit.getDefaultToolkit().getImage("src/technomotica/media/L4.png");
             //Glitch: No hay imagen.
             
             ActionListener listener = new ActionListener() {
@@ -158,11 +180,19 @@ public class Main extends javax.swing.JFrame {
             trayIcon.addActionListener(listener);
             try {
                 tray.add(trayIcon);
+                trayIcon.displayMessage("Technomotica no se ha cerrado.", "Technomotica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
             }
             catch(AWTException e) {
                 System.out.println("Error: " + e);
             }
+            
         }
+    }
+    
+    private void logOut() {
+        LoginPage login = new LoginPage();
+        login.setVisible(true);
+        this.dispose();
     }
     
     /**
@@ -203,5 +233,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }
