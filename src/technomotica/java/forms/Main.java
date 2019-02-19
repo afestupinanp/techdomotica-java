@@ -14,8 +14,11 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -28,6 +31,9 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Dispositivos
      */
+    public boolean onSystemTray = false;
+    private TrayIcon appSystemTray = null;
+    
     public Main() {
         initComponents();
         setLocationRelativeTo(null);
@@ -46,6 +52,7 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -69,6 +76,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem5.setText("Configuración");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem2.setText("Salir");
@@ -138,7 +154,7 @@ public class Main extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         addAppToSystemTray();
-        this.dispose();
+        this.setVisible(false);
         //exit();
     }//GEN-LAST:event_formWindowClosing
 
@@ -150,6 +166,16 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        openConfig();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    public void openConfig() {
+        Configuration cfg = new Configuration(this, true);
+        cfg.setVisible(true);
+    }
+    
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirm == JOptionPane.YES_OPTION) {
@@ -158,35 +184,86 @@ public class Main extends javax.swing.JFrame {
     }
     
     public void addAppToSystemTray() {
-        if(SystemTray.isSupported()) {
-            TrayIcon trayIcon = null;
+        if(SystemTray.isSupported() && !onSystemTray) {
+            appSystemTray = null;
             SystemTray tray = SystemTray.getSystemTray();
             Image img = new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
             //Image img = Toolkit.getDefaultToolkit().getImage("src/technomotica/media/L4.png");
             //Glitch: No hay imagen.
+            JFrame frame = this;
             
             ActionListener listener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    
+                    MenuItem item = (MenuItem)e.getSource();
+                    String label = item.getLabel();
+                    if(label.equalsIgnoreCase("abrir aplicación")) openApp();
+                    else if(label.equalsIgnoreCase("cerrar sesión")) logOut();
+                    else if(label.equalsIgnoreCase("configuración")) openConfig();
+                    else if(label.equalsIgnoreCase("Salir de la aplicación")) exit();
                 }
             };
             
             PopupMenu popmenu = new PopupMenu();
+            
+            
+            
             MenuItem dfItem = new MenuItem("Abrir aplicación");
             dfItem.addActionListener(listener);
             popmenu.add(dfItem);
-            trayIcon = new TrayIcon(img, "Technomotica", popmenu);
-            trayIcon.addActionListener(listener);
+            
+            MenuItem dfItem2 = new MenuItem("Cerrar sesión");
+            dfItem2.addActionListener(listener);
+            popmenu.add(dfItem2);
+            
+            MenuItem dfItem3 = new MenuItem("Configuración");
+            dfItem.addActionListener(listener);
+            popmenu.add(dfItem3);
+            
+            MenuItem dfItem4 = new MenuItem("Salir de la aplicación");
+            dfItem.addActionListener(listener);
+            popmenu.add(dfItem4);
+            
+            appSystemTray = new TrayIcon(img, "Technomotica", popmenu);
+            appSystemTray.addActionListener(listener);
+            
+            appSystemTray.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) { }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    if(e.getClickCount() == 2) openApp();
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) { }
+
+                @Override
+                public void mouseEntered(MouseEvent e) { }
+
+                @Override
+                public void mouseExited(MouseEvent e) { }
+                
+            });
+            
+            onSystemTray = true;
             try {
-                tray.add(trayIcon);
-                trayIcon.displayMessage("Technomotica no se ha cerrado.", "Technomotica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
+                tray.add(appSystemTray);
+                appSystemTray.displayMessage("Technomotica no se ha cerrado.", "Technomotica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
             }
             catch(AWTException e) {
                 System.out.println("Error: " + e);
             }
             
         }
+    }
+    
+    private void openApp() {
+        this.setVisible(true);
+        SystemTray tray = SystemTray.getSystemTray();
+        tray.remove(appSystemTray);
+        onSystemTray = false;
     }
     
     private void logOut() {
@@ -234,5 +311,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }
