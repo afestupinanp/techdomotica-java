@@ -245,9 +245,7 @@ public class Configuration extends javax.swing.JDialog {
             if(confirm == JOptionPane.YES_OPTION) {
                 saveConfig();
             }
-            else {
-                this.dispose();
-            }
+            else this.dispose();
         }
     }//GEN-LAST:event_formWindowClosing
 
