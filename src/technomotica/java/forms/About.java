@@ -49,7 +49,7 @@ public class About extends javax.swing.JDialog {
         tVersion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Acerca de - Techdomotica");
+        setTitle("Acerca de - Tech Domotica");
 
         jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
