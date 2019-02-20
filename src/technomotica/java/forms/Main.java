@@ -5,6 +5,8 @@
  */
 package technomotica.java.forms;
 
+
+import GestorUsuarios.Vtn_Registrar;
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -172,6 +174,11 @@ public class Main extends javax.swing.JFrame {
         jMenu3.setText("Gestor de usuarios");
 
         jMenuItem6.setText("Registro de usuario");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
@@ -252,6 +259,16 @@ public class Main extends javax.swing.JFrame {
         openConfig();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       Vtn_Registrar res = new Vtn_Registrar();
+       res.setVisible(true);
+       dispose();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    public void RegistroUsuario(){
+        RegistroUsuario();
+    }
+    
     public void openConfig() {
         Configuration cfg = new Configuration(Main.this, true);
         cfg.addWindowListener(new WindowAdapter() {
