@@ -61,7 +61,7 @@ public class Configuration extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Configuración de TechDomotica");
+        jLabel2.setText("Configuración de Tech Domotica");
 
         tEjecucion2do.setSelected(true);
         tEjecucion2do.setText("Desactivar");

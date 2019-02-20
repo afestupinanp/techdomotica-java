@@ -106,7 +106,7 @@
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Configuraci&#xf3;n de TechDomotica"/>
+        <Property name="text" type="java.lang.String" value="Configuraci&#xf3;n de Tech Domotica"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="tEjecucion2do">

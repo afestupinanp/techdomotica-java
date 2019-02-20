@@ -83,7 +83,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         jMenuBar1.setBackground(new java.awt.Color(197, 208, 230));
 
-        jMenu1.setText("TechDomotica");
+        jMenu1.setText("Tech Domotica");
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem2.setText("Salir");

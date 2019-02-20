@@ -132,7 +132,7 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Mi perfil", jPanel4);
 
-        jMenu1.setText("TechDomotica");
+        jMenu1.setText("Tech Domotica");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem4.setText("Cerrar sesión");
