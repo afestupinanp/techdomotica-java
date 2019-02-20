@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import technomotica.java.forms.About;
+//import technomotica.java.forms.About;
 
 public class LoginPage extends javax.swing.JFrame {
 
@@ -44,7 +44,7 @@ public class LoginPage extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Iniciar sesión - Technomotica");
+        setTitle("Iniciar sesión - Tech Domotica");
         setBackground(new java.awt.Color(197, 208, 230));
         setIconImages(null);
         setResizable(false);
@@ -56,7 +56,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Iniciar sesión en TechDomotica");
+        jLabel1.setText("Iniciar sesión en Tech Domotica");
 
         jLabel3.setText("Nombre de usuario: ");
 
@@ -205,7 +205,7 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassKeyPressed
 
     public void logIn() {
-        String user = txtUser.getText();
+        String user = txtUser.getText().trim();
         char[] pswd = txtPass.getPassword();
         if(!user.isEmpty() && (pswd.length != 0)) {
             char[] realPass = "admin".toCharArray();
