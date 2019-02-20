@@ -205,7 +205,7 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassKeyPressed
 
     public void logIn() {
-        String user = txtUser.getText();
+        String user = txtUser.getText().trim();
         char[] pswd = txtPass.getPassword();
         if(!user.isEmpty() && (pswd.length != 0)) {
             char[] realPass = "admin".toCharArray();
