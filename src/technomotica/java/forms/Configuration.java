@@ -69,6 +69,11 @@ public class Configuration extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuración - Tech Domotica");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -208,8 +213,7 @@ public class Configuration extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void saveConfig() {
         if(!tHostPort.getText().isEmpty() && !txtHostname.getText().isEmpty()) {
             int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas guardar esta configuración?", "Guardar configuración", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.YES_OPTION) {
@@ -222,7 +226,30 @@ public class Configuration extends javax.swing.JDialog {
             }
         }
         else JOptionPane.showMessageDialog(null, "Uno de los campos de configuración está vacío.", "No se puede guardar", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        saveConfig();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        String daemonOG = cfg.getConfigKey("daemon");
+        String portOG = cfg.getConfigKey("port");
+        String hostnameOG = cfg.getConfigKey("hostname");
+        
+        String currentDaemon = (tEjecucion2do.isSelected()) ? "true" : "false";
+        if(!txtHostname.getText().equalsIgnoreCase(hostnameOG) || !tHostPort.getText().equalsIgnoreCase(portOG) || !currentDaemon.equalsIgnoreCase(daemonOG)) {
+            int confirm = JOptionPane.showConfirmDialog(null, "Hay cambios pendientes para guardar. ¿Deseas guardarlos ahora?", "Configuración no guardada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirm == JOptionPane.YES_OPTION) {
+                saveConfig();
+            }
+            else {
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
