@@ -15,13 +15,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import technomotica.objs.Config;
 
 /**
- *
+ * GLITCH: Al salir del dialog de Configuration.java e intentar refrescar la configuración
+ * no se logra recargar.
  * @author Andres
  */
 public class Main extends javax.swing.JFrame {
@@ -31,6 +33,8 @@ public class Main extends javax.swing.JFrame {
      */
     public boolean onSystemTray = false;
     private TrayIcon appSystemTray = null;
+    
+    private Config cfg = new Config();
     
     public Main() {
         initComponents();
@@ -219,9 +223,11 @@ public class Main extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        addAppToSystemTray();
-        this.setVisible(false);
-        //exit();
+        if(cfg.getConfigKey("daemon").equalsIgnoreCase("true")) {
+            addAppToSystemTray();
+            this.setVisible(false);
+        }
+        else exit();
     }//GEN-LAST:event_formWindowClosing
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -239,11 +245,20 @@ public class Main extends javax.swing.JFrame {
 
     public void openConfig() {
         Configuration cfg = new Configuration(Main.this, true);
+        cfg.addWindowListener(new WindowAdapter() {
+            public void windowClosed() {
+                //Main.this.cfg.refrescarFile();
+                int confirm = JOptionPane.showConfirmDialog(null, "Tech Domotica debe de ser reiniciado para que los cambios surtan efecto.\n¿Deseas hacerlo ahora?", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
         cfg.setVisible(true);
     }
     
     public void exit() {
-        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Tech Domotica?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirm == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

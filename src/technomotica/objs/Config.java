@@ -2,7 +2,6 @@ package technomotica.objs;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.Properties;
 
 public class Config {
@@ -67,6 +66,24 @@ public class Config {
         catch(java.io.IOException e) {
             System.out.println("Error " + e);
         }
+    }
+    
+    /**
+     * Este método permite refrescar el archivo de configuración. Es básicamente similar a openConfigFile.
+     */
+    public void refrescarFile() {
+        if(configReaden) {
+            try {
+                FileInputStream input = new FileInputStream("settings.properties");
+                configHandler = new Properties();
+                configHandler.load(input);
+                input.close();
+            }
+            catch(Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
+        else System.out.println("No hay un archivo de configuración abierto. Debe de haber un archivo abierto para refrescar.");
     }
     
     /***
