@@ -9,7 +9,7 @@ public class Conectar {
     private static final String driver = "com.mysql.jdbc.Driver",
                                 usuario = "root",
                                 contrasena = "",
-                                url = "jdbc:mysql://localhost:3306/technomotica";
+                                url = "jdbc:mysql://" + new Config().getConfigKey("hostname") + ":" + new Config().getConfigKey("port") +"/technomotica";
     //Hay que reemplazar la base de datos de url.
     
     /*private static final String driver = "com.mysql.jdbc.Driver";
