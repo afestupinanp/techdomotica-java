@@ -5,6 +5,8 @@
  */
 package technomotica.java.forms;
 
+
+import GestorUsuarios.Vtn_Registrar;
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -16,9 +18,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+
 import technomotica.objs.Config;
 
 /**
@@ -56,14 +60,19 @@ public class Main extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
+      
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+      
+        jMenu3 = new javax.swing.JMenu();
+      
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+      
+        jMenu6 = new javax.swing.JMenu();
+      
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Menú principal - Tech Domotica");
@@ -110,6 +119,7 @@ public class Main extends javax.swing.JFrame {
         jMenu3.setText("Gestor de usuarios");
 
         jMenuItem6.setText("Registro de usuarios");
+      
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -118,13 +128,13 @@ public class Main extends javax.swing.JFrame {
         jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
-
+      
         jMenu4.setText("Gestion de dispostivos");
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Gestion de ambiente");
         jMenuBar1.add(jMenu5);
-
+      
         jMenu2.setText("Acerca de");
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
@@ -202,9 +212,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
+        Vtn_Registrar res = new Vtn_Registrar();
+        res.setVisible(true);
+        this.dispose();
+    }
+  
+    public void RegistroUsuario(){
+        RegistroUsuario();
+    }
+    
     public void openConfig() {
         Configuration cfg = new Configuration(Main.this, true);
         cfg.addWindowListener(new WindowAdapter() {
@@ -363,6 +379,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -370,5 +387,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+
+   /* private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    */
     // End of variables declaration//GEN-END:variables
 }
