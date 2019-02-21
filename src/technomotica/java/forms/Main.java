@@ -6,7 +6,7 @@
 package technomotica.java.forms;
 
 
-import GestorUsuarios.Vtn_Registrar;
+import technomotica.java.forms.gestorusuarios.Registrar;
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -211,8 +211,8 @@ public class Main extends javax.swing.JFrame {
         openConfig();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Vtn_Registrar res = new Vtn_Registrar();
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        Registrar res = new Registrar();
         res.setVisible(true);
         this.dispose();
     }

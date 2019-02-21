@@ -3,29 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GestorUsuarios;
+package technomotica.java.forms.gestorusuarios;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import technomotica.java.forms.Main;
 import technomotica.objs.Usuario;
+import technomotica.objs.Util;
 
 /**
  *
  * @author SENA
  */
-public class Vtn_Registrar extends javax.swing.JFrame {
+public class Registrar extends javax.swing.JFrame {
 
     /**
      * Creates new form Registro
      */
-    public Vtn_Registrar() {
+    public Registrar() {
         initComponents();
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
 
         ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L1.png").getImage().getScaledInstance(122, 66, Image.SCALE_DEFAULT));
         Imageplace.setIcon(img);
+        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -57,14 +61,20 @@ public class Vtn_Registrar extends javax.swing.JFrame {
         tfd_Apellido2 = new javax.swing.JTextField();
         Imageplace = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Registro de usuario");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Registrar usuario - Tech Domotica");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Registrar Usuario");
+        jLabel4.setText("Registrar usuario");
 
         jLabel2.setText("Contraseña");
 
@@ -126,9 +136,11 @@ public class Vtn_Registrar extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addComponent(btn_registrar)
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(32, 32, 32))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -222,6 +234,13 @@ public class Vtn_Registrar extends javax.swing.JFrame {
         pri.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void redirigir() {
+        Main pri = new Main();
+        pri.setVisible(true);
+        dispose();
+    }
+    
     public void limpiar() {
         tfd_Nombre1.setText("");
         tfd_Nombre2.setText("");
@@ -239,17 +258,33 @@ public class Vtn_Registrar extends javax.swing.JFrame {
         String apellido2 = tfd_Apellido2.getText();
         String correo = tfd_correo.getText();
         String documento = tfd_documento.getText();
-        String contraseña = tfd_contraseña.getText();
+        String contra = tfd_contraseña.getText();
 
-        Usuario person = new Usuario(nombre1, nombre2, apellido1, apellido2, correo, documento, contraseña);
+        //Usuario person = new Usuario(nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
 
-
-        limpiar();
+        String str = String.format("Por favor, confirme los siguientes datos:\n\nPrimer nombre: %s\nSegundo nombre: %s.\nPrimer apellido: %s\nSegundo apellido: %s\nCorreo electrónico: %s\nDocumento de identidad: %s\nContraseña: %s", nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
+        if(Util.chequearStrings(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) JOptionPane.showMessageDialog(null, "Uno de los campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+        else {
+            int confirm = JOptionPane.showConfirmDialog(null, str, "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirm == JOptionPane.YES_OPTION) {
+                confirm = JOptionPane.showConfirmDialog(null, "¿Deseas seguir agregando usuarios?", "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirm == JOptionPane.YES_OPTION) {
+                    limpiar();
+                }
+                else redirigir();
+            }
+        }
+        
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_registrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registrarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_registrarMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        redirigir();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -261,21 +296,24 @@ public class Vtn_Registrar extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Vtn_Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Vtn_Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Vtn_Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Vtn_Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -288,7 +326,7 @@ public class Vtn_Registrar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Vtn_Registrar().setVisible(true);
+                new Registrar().setVisible(true);
             }
         });
     }
