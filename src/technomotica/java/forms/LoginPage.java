@@ -1,5 +1,6 @@
 package technomotica.java.forms;
 
+import Controladores.ConLogin;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -12,16 +13,16 @@ import javax.swing.UIManager;
 public class LoginPage extends javax.swing.JFrame {
 
     public String VERSION = "Versión 0.1";
-    
+
     public LoginPage() {
         initComponents();
-        
+
         ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L1.png").getImage().getScaledInstance(240, 140, Image.SCALE_DEFAULT));
         //Solución por Tirz - StackOverflow: https://stackoverflow.com/a/32885963
         imagePlace.setIcon(img);
-        
+
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
-        
+
         setLocationRelativeTo(null);
     }
 
@@ -60,9 +61,17 @@ public class LoginPage extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre de usuario: ");
 
+        txtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserActionPerformed(evt);
+            }
+        });
         txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtUserKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUserKeyTyped(evt);
             }
         });
 
@@ -71,6 +80,9 @@ public class LoginPage extends javax.swing.JFrame {
         txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPassKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPassKeyTyped(evt);
             }
         });
 
@@ -187,49 +199,64 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO: Añadir código para abrir la documentación.
-        
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
 
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            logIn();
-        }
     }//GEN-LAST:event_txtUserKeyPressed
 
     private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed
 
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             logIn();
         }
     }//GEN-LAST:event_txtPassKeyPressed
 
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserActionPerformed
+
+    private void txtPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyTyped
+     ;
+            
+    }//GEN-LAST:event_txtPassKeyTyped
+
+    private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyTyped
+       /*ConLogin Clogin = new ConLogin();
+       Clogin.UsuarioSoloLetras(evt);
+        */
+    }//GEN-LAST:event_txtUserKeyTyped
+   
     public void logIn() {
         String user = txtUser.getText().trim();
         char[] pswd = txtPass.getPassword();
-        if(!user.isEmpty() && (pswd.length != 0)) {
+        if (!user.isEmpty() && (pswd.length != 0)) {
             char[] realPass = "admin".toCharArray();
-            if(user.equals("admin")) {
-                if(Arrays.equals(pswd, realPass)) {
+            if (user.equals("admin")) {
+                if (Arrays.equals(pswd, realPass)) {
                     JOptionPane.showMessageDialog(null, "Bienvenido, " + user + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
                     Main disp = new Main();
                     disp.setVisible(true);
                     this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "La contraseña escrita no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog(null, "La contraseña escrita no coincide.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario específicado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(null, "El usuario específicado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirm == JOptionPane.YES_OPTION) {
+        if (confirm == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
