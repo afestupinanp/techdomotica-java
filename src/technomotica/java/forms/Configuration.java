@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import technomotica.objs.Config;
+import technomotica.objs.Util;
 
 /**
  *
@@ -214,7 +215,7 @@ public class Configuration extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void saveConfig() {
-        if(!tHostPort.getText().isEmpty() && !txtHostname.getText().isEmpty()) {
+        if(!Util.chequearStrings(tHostPort.getText(), txtHostname.getText())) {
             int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas guardar esta configuración?", "Guardar configuración", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.YES_OPTION) {
                 cfg.cambiarConfigKey("daemon", (tEjecucion2do.isSelected()) ? "true" : "false");

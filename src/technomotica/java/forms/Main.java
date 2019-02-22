@@ -80,7 +80,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("Tech Domotica");
+        jMenu1.setText("Archivo");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem4.setText("Cerrar sesión");
@@ -111,11 +111,12 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu6.setText("Mi perfil");
+        jMenu6.setText("Perfil");
         jMenuBar1.add(jMenu6);
 
-        jMenu3.setText("Gestor de usuarios");
+        jMenu3.setText("Gestión de usuarios");
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem6.setText("Registro de usuario");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,10 +127,10 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Gestion de dispostivos");
+        jMenu4.setText("Gestión de dispostivos");
         jMenuBar1.add(jMenu4);
 
-        jMenu5.setText("Gestion de ambiente");
+        jMenu5.setText("Gestión de ambiente");
         jMenuBar1.add(jMenu5);
 
         jMenu2.setText("Acerca de");
