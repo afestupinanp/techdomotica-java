@@ -29,7 +29,7 @@ public class Registrar extends javax.swing.JFrame {
         ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L1.png").getImage().getScaledInstance(122, 66, Image.SCALE_SMOOTH));
         Imageplace.setIcon(img);
         
-        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -256,7 +256,11 @@ public class Registrar extends javax.swing.JFrame {
         tfd_documento.setText("");
     }
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
+        guardar();
+    }//GEN-LAST:event_btn_registrarActionPerformed
 
+    private void guardar() {
+        
         String nombre1 = tfd_Nombre1.getText();
         String nombre2 = tfd_Nombre2.getText();
         String apellido1 = tfd_Apellido1.getText();
@@ -268,27 +272,50 @@ public class Registrar extends javax.swing.JFrame {
         //Usuario person = new Usuario(nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
 
         String str = String.format("Por favor, confirme los siguientes datos:\n\nPrimer nombre: %s\nSegundo nombre: %s.\nPrimer apellido: %s\nSegundo apellido: %s\nCorreo electrónico: %s\nDocumento de identidad: %s\nContraseña: %s", nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
-        if(Util.chequearStrings(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) JOptionPane.showMessageDialog(null, "Uno de los campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
-        else {
-            int confirm = JOptionPane.showConfirmDialog(null, str, "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(confirm == JOptionPane.YES_OPTION) {
-                confirm = JOptionPane.showConfirmDialog(null, "¿Deseas seguir agregando usuarios?", "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirm == JOptionPane.YES_OPTION) {
-                    limpiar();
+        if(Util.chequearStrings(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
+            if(Util.esCorreo(correo)) {
+                if(Util.esNumerico(documento)) {
+                    int confirm = JOptionPane.showConfirmDialog(null, str, "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(confirm == JOptionPane.YES_OPTION) {
+                        confirm = JOptionPane.showConfirmDialog(null, "¿Deseas seguir agregando usuarios?", "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if(confirm == JOptionPane.YES_OPTION) {
+                            limpiar();
+                        }
+                        else redirigir();
+                    }
                 }
-                else redirigir();
+                else JOptionPane.showMessageDialog(null, "El documento de identidad posee caracteres no numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            else JOptionPane.showMessageDialog(null, "El campo de correo electrónico no contiene un correo válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-    }//GEN-LAST:event_btn_registrarActionPerformed
-
+        else JOptionPane.showMessageDialog(null, "Uno de los campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
     private void btn_registrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_registrarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_registrarMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        redirigir();
+        String nombre1 = tfd_Nombre1.getText();
+        String nombre2 = tfd_Nombre2.getText();
+        String apellido1 = tfd_Apellido1.getText();
+        String apellido2 = tfd_Apellido2.getText();
+        String correo = tfd_correo.getText();
+        String documento = tfd_documento.getText();
+        String contra = tfd_contraseña.getText();
+        if(Util.chequearStringsNoOb(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
+            int confirm = JOptionPane.showConfirmDialog(null, "Los campos de texto poseen datos que no han sido guardados.\n¿Deseas cerrar esta ventana?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirm == JOptionPane.YES_OPTION) {
+                guardar();
+                redirigir();
+            }
+        }
+        else {
+            int confirm = JOptionPane.showConfirmDialog(null, "¿Quieres cerrar esta ventana de todas maneras?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirm == JOptionPane.YES_OPTION) redirigir();
+        }
+        
     }//GEN-LAST:event_formWindowClosing
 
     /**
