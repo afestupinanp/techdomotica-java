@@ -46,9 +46,8 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
-        camera1.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera.png").getImage().getScaledInstance(209, 200, Image.SCALE_SMOOTH)));
         
-        
+        camera1.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
     }
 
     /**
@@ -60,15 +59,8 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel(){
-            @Override
-            protected void paintComponent(Graphics g){
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g;
-                g2.drawImage(new ImageIcon("src/technomotica/media/simulator/sala.png").getImage(), 0, 0, null);
-            }
-        };
         camera1 = new javax.swing.JLabel();
+        mapaSala = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -95,27 +87,13 @@ public class Main extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        camera1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                camera1MouseClicked(evt);
-            }
-        });
+        camera1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        getContentPane().add(camera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 40));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(camera1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 575, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(camera1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 339, Short.MAX_VALUE))
-        );
+        mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/sala.png"))); // NOI18N
+        getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 420));
 
         jMenu1.setText("Archivo");
 
@@ -194,17 +172,6 @@ public class Main extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -248,13 +215,8 @@ public class Main extends javax.swing.JFrame {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
-        jPanel1.repaint();
+        
     }//GEN-LAST:event_formComponentResized
-
-    private void camera1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera1MouseClicked
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "juajauja");
-    }//GEN-LAST:event_camera1MouseClicked
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         Registrar res = new Registrar();
@@ -432,7 +394,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel mapaSala;
     // End of variables declaration//GEN-END:variables
     private technomotica.objs.JPanelImage jPanelImg;
 }
