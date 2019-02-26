@@ -272,7 +272,7 @@ public class Registrar extends javax.swing.JFrame {
         //Usuario person = new Usuario(nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
 
         String str = String.format("Por favor, confirme los siguientes datos:\n\nPrimer nombre: %s\nSegundo nombre: %s.\nPrimer apellido: %s\nSegundo apellido: %s\nCorreo electrónico: %s\nDocumento de identidad: %s\nContraseña: %s", nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
-        if(Util.chequearStrings(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
+        if(Util.stringsVacios(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
             if(Util.esCorreo(correo)) {
                 if(Util.esNumerico(documento)) {
                     int confirm = JOptionPane.showConfirmDialog(null, str, "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -304,7 +304,7 @@ public class Registrar extends javax.swing.JFrame {
         String correo = tfd_correo.getText();
         String documento = tfd_documento.getText();
         String contra = tfd_contraseña.getText();
-        if(Util.chequearStringsNoOb(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
+        if(Util.stringsVacios(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
             int confirm = JOptionPane.showConfirmDialog(null, "Los campos de texto poseen datos que no han sido guardados.\n¿Deseas cerrar esta ventana?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.YES_OPTION) {
                 guardar();
@@ -317,7 +317,7 @@ public class Registrar extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_formWindowClosing
-
+    //<editor-fold>
     /**
      * @param args the command line arguments
      */
@@ -338,21 +338,6 @@ public class Registrar extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

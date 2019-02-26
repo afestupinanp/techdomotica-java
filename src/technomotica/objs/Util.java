@@ -10,40 +10,35 @@ public class Util {
      * @param str String a verificar.
      * @return Retorna true si está vacío. False si no lo está.
      */
-    public static boolean chequearString(String str) {
+    public static boolean stringVacio(String str) {
         return str.isEmpty();
     }
     
     /**
-     * Versión múltiple del método chequearString.
-     * @param str Argumentos N Strings a chequear.
-     * @return Retorna si TODOS los strings están vacíos. True si lo están, false si al menos hay un String que no está vacio.
+     * Chequea si todos los argumentos Strings N están vacios. Todos los campos son obligatorios.
+     * @param str Argumentos str N a verificar.
+     * @return Retorna verdadero/falso dependiendo si todos los strings están vacios.
      */
-    public static boolean chequearStrings(String... str) {
-        boolean allEmpty = false;
-        for(String st : str) {
-            if(!chequearString(st)) {
-                allEmpty = true;
-                break;
-            }
+    public static boolean stringsVacios(String... str) {
+        for(String s : str) {
+            if(s.isEmpty()) return true;
         }
-        return allEmpty;
+        return false;
     }
     
     /**
-     * Versión alternativa y múltiple del método chequearString. Este método comprueba si hay al menos un solo argumento que este vacio.
-     * @param str Argumentos N Strings a chequear.
-     * @return Retorna si TODOS los strings están vacíos. True si lo están, false si al menos hay un String que no está vacio.
+     * Chequea si todos los argumentos Strings N están vacíos. Se necesita al menos un campo lleno.
+     * @param str
+     * @return 
      */
-    public static boolean chequearStringsNoOb(String... str) {
-        boolean emptyness = false;
-        for(String st : str) {
-            if(!chequearString(st)) {
-                emptyness = true;
-                break;
+    public static boolean alMenosUnString(String... str) {
+        boolean hayUno = false;
+        for(String s : str) {
+            if(!s.isEmpty()) {
+                hayUno = true;
             }
         }
-        return emptyness;
+        return hayUno;
     }
     
     /**
