@@ -210,12 +210,18 @@ public class Configuration extends javax.swing.JDialog {
             cfg.cambiarConfigKey("port", "3306");
             cfg.closeConfigFile();
             JOptionPane.showMessageDialog(null, "Configuración reestablecida.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
+            confirm = JOptionPane.showConfirmDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios.\n¿Deseas hacerlo ahora?\n\nSi has cambiado la configuración avanzada, es muy aconsejable reiniciar la aplicación", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirm == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+            else {
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void saveConfig() {
-        if(Util.stringsVacios(tHostPort.getText(), txtHostname.getText())) {
+        if(!Util.stringsVacios(tHostPort.getText(), txtHostname.getText())) {
             int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas guardar esta configuración?", "Guardar configuración", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.YES_OPTION) {
                 cfg.cambiarConfigKey("daemon", (tEjecucion2do.isSelected()) ? "true" : "false");
@@ -223,7 +229,14 @@ public class Configuration extends javax.swing.JDialog {
                 cfg.cambiarConfigKey("hostname", txtHostname.getText());
                 cfg.closeConfigFile();
                 JOptionPane.showMessageDialog(null, "Configuración guardada.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
+                this.setVisible(false);
+                confirm = JOptionPane.showConfirmDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios.\n¿Deseas hacerlo ahora?\n\nSi has cambiado la configuración avanzada, es muy aconsejable reiniciar la aplicación", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+                else {
+                    this.dispose();
+                }
             }
         }
         else JOptionPane.showMessageDialog(null, "Uno de los campos de configuración está vacío.", "No se puede guardar", JOptionPane.ERROR_MESSAGE);

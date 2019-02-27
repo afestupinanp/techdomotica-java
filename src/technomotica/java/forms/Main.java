@@ -47,7 +47,10 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         
-        camera1.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+        camera1.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera-r.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        camera2.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        camera3.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera-r.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        camera4.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
     }
 
     /**
@@ -60,6 +63,9 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         camera1 = new javax.swing.JLabel();
+        camera2 = new javax.swing.JLabel();
+        camera3 = new javax.swing.JLabel();
+        camera4 = new javax.swing.JLabel();
         mapaSala = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -77,6 +83,7 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Menú principal - Tech Domotica");
+        setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
@@ -90,10 +97,39 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         camera1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
-        getContentPane().add(camera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 40));
+        camera1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                camera1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(camera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 50, 50));
+
+        camera2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        camera2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                camera2MouseClicked(evt);
+            }
+        });
+        getContentPane().add(camera2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 50, 50));
+
+        camera3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        camera3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                camera3MouseClicked(evt);
+            }
+        });
+        getContentPane().add(camera3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 50, 50));
+
+        camera4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        camera4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                camera4MouseClicked(evt);
+            }
+        });
+        getContentPane().add(camera4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 50, 50));
 
         mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/sala.png"))); // NOI18N
-        getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 420));
+        getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 370));
 
         jMenu1.setText("Archivo");
 
@@ -218,6 +254,29 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formComponentResized
 
+    private void camera1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera1MouseClicked
+        cameraView("camara1", "Vista de cámara 1 - Tech Domótica");
+    }//GEN-LAST:event_camera1MouseClicked
+
+    private void camera4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera4MouseClicked
+        cameraView("camara4", "Vista de cámara 4 - Tech Domótica");
+    }//GEN-LAST:event_camera4MouseClicked
+
+    private void camera2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera2MouseClicked
+        cameraView("camara2", "Vista de cámara 2 - Tech Domótica");
+    }//GEN-LAST:event_camera2MouseClicked
+
+    private void camera3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera3MouseClicked
+        cameraView("camara3", "Vista de cámara 3 - Tech Domótica");
+    }//GEN-LAST:event_camera3MouseClicked
+
+    private void cameraView(String campath, String title) {
+        CameraView camView = new CameraView();
+        camView.cameraView.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/" + campath + ".png").getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
+        camView.setTitle(title);
+        camView.setVisible(true);
+    }
+    
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         Registrar res = new Registrar();
         res.setVisible(true);
@@ -326,7 +385,7 @@ public class Main extends javax.swing.JFrame {
             onSystemTray = true;
             try {
                 tray.add(appSystemTray);
-                appSystemTray.displayMessage("Technomotica en segundo plano.", "Technomotica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
+                appSystemTray.displayMessage("Tech Dómotica ha quedado en segundo plano.", "Tech Domótica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
             }
             catch(AWTException e) {
                 System.out.println("Error: " + e);
@@ -381,6 +440,9 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel camera1;
+    private javax.swing.JLabel camera2;
+    private javax.swing.JLabel camera3;
+    private javax.swing.JLabel camera4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
