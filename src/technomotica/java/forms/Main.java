@@ -24,8 +24,10 @@ import java.awt.event.WindowAdapter;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import technomotica.objs.Admin;
 
 import technomotica.objs.Config;
+import technomotica.objs.Ambiente;
 
 /**
  * GLITCH: Al salir del dialog de Configuration.java e intentar refrescar la configuración
@@ -38,12 +40,18 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Dispositivos
      */
     public boolean onSystemTray = false;
+    private Admin adminEncargado = null;
+    private Ambiente ambiente = null;
+    
+    
     private TrayIcon appSystemTray = null;
     
     private Config cfg = new Config();
     
     public Main() {
         initComponents();
+        ambiente = new Ambiente(adminEncargado);
+        
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         
@@ -255,25 +263,26 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentResized
 
     private void camera1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera1MouseClicked
-        cameraView("camara1", "Vista de cámara 1 - Tech Domótica");
+        cameraView("camara1", "Vista de cámara 1");
     }//GEN-LAST:event_camera1MouseClicked
 
     private void camera4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera4MouseClicked
-        cameraView("camara4", "Vista de cámara 4 - Tech Domótica");
+        cameraView("camara4", "Vista de cámara 4");
     }//GEN-LAST:event_camera4MouseClicked
 
     private void camera2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera2MouseClicked
-        cameraView("camara2", "Vista de cámara 2 - Tech Domótica");
+        cameraView("camara2", "Vista de cámara 2");
     }//GEN-LAST:event_camera2MouseClicked
 
     private void camera3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera3MouseClicked
-        cameraView("camara3", "Vista de cámara 3 - Tech Domótica");
+        cameraView("camara3", "Vista de cámara 3");
     }//GEN-LAST:event_camera3MouseClicked
 
     private void cameraView(String campath, String title) {
         CameraView camView = new CameraView();
         camView.cameraView.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/" + campath + ".png").getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
-        camView.setTitle(title);
+        camView.cameraViewNum.setText(title);
+        camView.setTitle(title + " - Tech Domótica");
         camView.setVisible(true);
     }
     
@@ -282,6 +291,11 @@ public class Main extends javax.swing.JFrame {
         res.setVisible(true);
         this.dispose();
     }
+    
+    private Admin getAdminEncargado() {
+        return adminEncargado;
+    }
+    
   
     public void RegistroUsuario(){
         RegistroUsuario();

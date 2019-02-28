@@ -50,9 +50,12 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Vista de c&#xe1;mara:"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="370" width="300" height="30"/>
+          <AbsoluteConstraints x="10" y="370" width="290" height="30"/>
         </Constraint>
       </Constraints>
     </Component>

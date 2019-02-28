@@ -23,8 +23,6 @@ public class CameraView extends javax.swing.JFrame {
         initComponents();
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         setLocationRelativeTo(null);
-        
-        
     }
 
     /**
@@ -52,7 +50,7 @@ public class CameraView extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, 110, 30));
 
         cameraViewNum.setText("Vista de cámara:");
-        getContentPane().add(cameraViewNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 300, 30));
+        getContentPane().add(cameraViewNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 290, 30));
         getContentPane().add(cameraView, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 370));
 
         pack();
@@ -90,7 +88,7 @@ public class CameraView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel cameraView;
-    private javax.swing.JLabel cameraViewNum;
+    public javax.swing.JLabel cameraViewNum;
     private javax.swing.JLabel dateTime;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
