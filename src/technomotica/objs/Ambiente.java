@@ -20,8 +20,18 @@ public class Ambiente {
     public Ambiente(Admin encargado) {
         adminEncargado = encargado;
         for(int i = 0 ; i < 2 ; i++) {
-            acondicionado[i] = new ACondicionado("Watercool 2", "LG", 0);
+            acondicionado[i] = new ACondicionado("Watercool 2", "LG");
         }
+        
+        for(int i = 0 ; i < 12 ; i++) {
+            luces[i] = new Luz("Wattmax 200", "OSRAM");
+        }
+        
+        for(int i = 0 ; i < 4 ; i++) {
+            sensores[i] = new Sensor("Wattmax 200", "OSRAM");
+        }
+        
+        proyector = new Televisor("Samsung", "Projector");
         
         ambienteThread = new Thread(new Runnable() {
             double increment = acondicionado[0].getTemperatura();

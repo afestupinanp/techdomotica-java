@@ -41,7 +41,7 @@ public class Main extends javax.swing.JFrame {
     public Thread mainChanger;
     
     private Admin adminEncargado = null;
-    private Ambiente ambiente = null;
+    public Ambiente ambiente;
     
     
     private TrayIcon appSystemTray = null;
@@ -341,7 +341,7 @@ public class Main extends javax.swing.JFrame {
         jMenu4.add(jMenu9);
 
         jMenuItem16.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem16.setText("Estado de los dispositivos");
+        jMenuItem16.setText("Mostrar todos los dispositivos");
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem16ActionPerformed(evt);
@@ -467,7 +467,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        
+        System.out.println("Por que putas soy null");
+        DeviceManager manager = new DeviceManager();
+        if(ambiente == null) {
+            System.out.println("Por que putas soy null");
+        }
+        else {
+            System.out.println("no soy null");
+            manager.ambiente = this.ambiente;
+            manager.setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void cameraView(String campath, String title) {
@@ -492,11 +501,6 @@ public class Main extends javax.swing.JFrame {
     
     private Admin getAdminEncargado() {
         return adminEncargado;
-    }
-    
-  
-    public void RegistroUsuario(){
-        RegistroUsuario();
     }
     
     public void openConfig() {

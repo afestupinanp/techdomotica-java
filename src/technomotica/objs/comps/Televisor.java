@@ -8,6 +8,10 @@ public class Televisor extends Componente {
     public Televisor(String nombre, String marca, double uso) {
         super(nombre, marca, uso);
     }
+    
+    public Televisor(String nombre, String marca) {
+        super(nombre, marca);
+    }
 
     public String getCalidadTV() {
         return calidadTV;

@@ -13,6 +13,12 @@ public class Componente {
         marcaComponente = marca;
         usoComponente = uso;
     }
+    
+    public Componente(String nombre, String marca) {
+        nombreComponente = nombre;
+        marcaComponente = marca;
+        usoComponente = 100.0;
+    }
 
     public String getNombreComponente() {
         return nombreComponente;
@@ -44,6 +50,10 @@ public class Componente {
     
     public double getGastoEnergetico() {
         return gastoEnergetico;
+    }
+
+    public String getComponenteFullName() {
+        return marcaComponente + " " + nombreComponente;
     }
     
 }

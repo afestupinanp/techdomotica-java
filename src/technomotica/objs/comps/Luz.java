@@ -10,6 +10,11 @@ public class Luz extends Componente {
         encendido = false;
     }
     
+    public Luz(String nombre, String marca) {
+        super(nombre, marca);
+    }
+    
+    
     public void toggleLuz() {
         encendido = !encendido;
     }

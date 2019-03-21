@@ -8,6 +8,10 @@ public class ACondicionado extends Componente {
         super(nombre, marca, uso);
     }
     
+    public ACondicionado(String nombre, String marca) {
+        super(nombre, marca);
+    }
+    
     public double getTemperatura() {
         return temperatura;
     }
