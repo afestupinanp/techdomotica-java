@@ -4,7 +4,7 @@ import technomotica.objs.comps.*;
 
 public class Ambiente {
     
-    public Thread ambienteThread;
+    private Thread ambienteThread;
     
     private String perfilActual = "";
     private Admin adminEncargado = null;
@@ -20,7 +20,7 @@ public class Ambiente {
     public Ambiente(Admin encargado) {
         adminEncargado = encargado;
         for(int i = 0 ; i < 2 ; i++) {
-            acondicionado[i] = new ACondicionado("Watercool 2", "LG");
+            acondicionado[i] = new ACondicionado("Watercool 2", "LG", 30.0);
         }
         
         for(int i = 0 ; i < 12 ; i++) {
@@ -91,5 +91,9 @@ public class Ambiente {
     
     public double getTemperaturaSala() {
         return temperaturaSala;
+    }
+    
+    public Thread getAmbienteThread() {
+        return ambienteThread;
     }
 }

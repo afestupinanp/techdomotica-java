@@ -1,5 +1,6 @@
 package technomotica.java.forms;
 
+import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import technomotica.objs.Ambiente;
@@ -12,9 +13,9 @@ public class DeviceManager extends javax.swing.JFrame {
 
     public Ambiente ambiente;
     
-    public DeviceManager() {
+    public DeviceManager(Ambiente amb) {
         initComponents();
-        
+        ambiente = amb;
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         setLocationRelativeTo(null);
 
@@ -22,6 +23,12 @@ public class DeviceManager extends javax.swing.JFrame {
         displaydeviceac2.setText(ambiente.getACondicionado(1).getComponenteFullName());
         deviceprogressac1.setValue((int)ambiente.getACondicionado(0).getUsoComponente());
         deviceprogressac2.setValue((int)ambiente.getACondicionado(1).getUsoComponente());
+        
+        if(ambiente.getACondicionado(0).getUsoComponente() <= 60) btnrepairac1.setEnabled(true);
+        if(ambiente.getACondicionado(0).getUsoComponente() <= 40) displaydeviceac1.setForeground(Color.red);
+        
+        if(ambiente.getACondicionado(1).getUsoComponente() <= 60) btnrepairac2.setEnabled(true);
+        if(ambiente.getACondicionado(1).getUsoComponente() <= 40) displaydeviceac2.setForeground(Color.red);
         
     }
 
@@ -45,9 +52,9 @@ public class DeviceManager extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         displaydeviceac1 = new javax.swing.JLabel();
         deviceprogressac1 = new javax.swing.JProgressBar();
-        jButton1 = new javax.swing.JButton();
+        btndeleteac1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnrepairac1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -56,8 +63,8 @@ public class DeviceManager extends javax.swing.JFrame {
         deviceprogressac2 = new javax.swing.JProgressBar();
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btndeleteac2 = new javax.swing.JButton();
+        btnrepairac2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -95,17 +102,24 @@ public class DeviceManager extends javax.swing.JFrame {
         deviceprogressac1.setToolTipText("");
         deviceprogressac1.setValue(100);
 
-        jButton1.setText("Eliminar");
+        btndeleteac1.setText("Eliminar");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Estado");
 
-        jButton2.setText("Mantener");
+        btnrepairac1.setText("Reparar");
+        btnrepairac1.setEnabled(false);
+        btnrepairac1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepairac1ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Dispositivos que requieran mantenimiento aparecerán señalados en rojo.");
 
         btndeviceac1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Encendido");
 
         btndeviceac1.add(jRadioButton2);
@@ -127,9 +141,10 @@ public class DeviceManager extends javax.swing.JFrame {
         jRadioButton4.setSelected(true);
         jRadioButton4.setText("Encendido");
 
-        jButton5.setText("Eliminar");
+        btndeleteac2.setText("Eliminar");
 
-        jButton6.setText("Mantener");
+        btnrepairac2.setText("Reparar");
+        btnrepairac2.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,8 +167,8 @@ public class DeviceManager extends javax.swing.JFrame {
                             .addComponent(deviceprogressac1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
+                            .addComponent(btndeleteac1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnrepairac1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -169,8 +184,8 @@ public class DeviceManager extends javax.swing.JFrame {
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))))
+                            .addComponent(btndeleteac2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnrepairac2, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -180,12 +195,12 @@ public class DeviceManager extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jButton1))
+                        .addComponent(btndeleteac1))
                     .addComponent(displaydeviceac1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deviceprogressac1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnrepairac1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton1)
                         .addComponent(jRadioButton2)))
@@ -193,12 +208,12 @@ public class DeviceManager extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
-                        .addComponent(jButton5))
+                        .addComponent(btndeleteac2))
                     .addComponent(displaydeviceac2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deviceprogressac2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnrepairac2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton4)
                         .addComponent(jRadioButton3)))
@@ -276,11 +291,9 @@ public class DeviceManager extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jRadioButton8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton7)
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)))
+                        .addComponent(jRadioButton7))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jProgressBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -394,6 +407,13 @@ public class DeviceManager extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnrepairac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairac1ActionPerformed
+        // TODO add your handling code here:
+        progressDialog dialogo = new progressDialog(this, true);
+        dialogo.textVar.setText("Realizando una operación de mantenimiento, por favor espere...");
+        //progressDialog.setVisible(true);
+    }//GEN-LAST:event_btnrepairac1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -419,28 +439,28 @@ public class DeviceManager extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DeviceManager().setVisible(true);
+                new DeviceManager(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btndeleteac1;
+    private javax.swing.JButton btndeleteac2;
     private javax.swing.ButtonGroup btndeviceac1;
     private javax.swing.ButtonGroup btndeviceac2;
     private javax.swing.ButtonGroup btndevicecamera1;
     private javax.swing.ButtonGroup btndevicecamera2;
     private javax.swing.ButtonGroup btndevicecamera3;
     private javax.swing.ButtonGroup btndevicecamera4;
+    private javax.swing.JButton btnrepairac1;
+    private javax.swing.JButton btnrepairac2;
     private javax.swing.JProgressBar deviceprogressac1;
     private javax.swing.JProgressBar deviceprogressac2;
     private javax.swing.JLabel displaydeviceac1;
     private javax.swing.JLabel displaydeviceac2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;

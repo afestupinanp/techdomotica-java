@@ -53,7 +53,7 @@ public class Main extends javax.swing.JFrame {
         runTime.start();
         
         ambiente = new Ambiente(adminEncargado);
-        ambiente.ambienteThread.start();
+        ambiente.getAmbienteThread().start();
         
         mainChanger = new Thread(new Runnable() {
             @Override
@@ -75,7 +75,6 @@ public class Main extends javax.swing.JFrame {
             }
             
         });
-        
         mainChanger.start();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
@@ -467,16 +466,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        System.out.println("Por que putas soy null");
-        DeviceManager manager = new DeviceManager();
-        if(ambiente == null) {
-            System.out.println("Por que putas soy null");
-        }
-        else {
-            System.out.println("no soy null");
-            manager.ambiente = this.ambiente;
-            manager.setVisible(true);
-        }
+        DeviceManager dmanager = new DeviceManager(ambiente);
+        
+        dmanager.setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void cameraView(String campath, String title) {
@@ -499,8 +491,12 @@ public class Main extends javax.swing.JFrame {
         res.setVisible(true);
     }
     
-    private Admin getAdminEncargado() {
+    public Admin getAdminEncargado() {
         return adminEncargado;
+    }
+    
+    public Ambiente getAmbiente() {
+        return ambiente;
     }
     
     public void openConfig() {

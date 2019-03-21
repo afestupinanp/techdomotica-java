@@ -99,8 +99,8 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jButton1" max="32767" attributes="0"/>
-                                  <Component id="jButton2" pref="90" max="32767" attributes="0"/>
+                                  <Component id="btndeleteac1" max="32767" attributes="0"/>
+                                  <Component id="btnrepairac1" pref="90" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -122,8 +122,8 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jButton6" alignment="0" pref="91" max="32767" attributes="0"/>
+                                  <Component id="btndeleteac2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnrepairac2" alignment="0" pref="91" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -138,14 +138,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btndeleteac1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="displaydeviceac1" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="deviceprogressac1" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnrepairac1" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -155,14 +155,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btndeleteac2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="displaydeviceac2" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="deviceprogressac2" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="jButton6" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnrepairac2" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="jRadioButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jRadioButton3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -187,7 +187,7 @@
                 <Property name="value" type="int" value="100"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btndeleteac1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
@@ -198,10 +198,14 @@
                 <Property name="text" type="java.lang.String" value="Estado"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnrepairac1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mantener"/>
+                <Property name="text" type="java.lang.String" value="Reparar"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnrepairac1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -214,6 +218,7 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="btndeviceac1"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Encendido"/>
               </Properties>
             </Component>
@@ -260,14 +265,15 @@
                 <Property name="text" type="java.lang.String" value="Encendido"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton5">
+            <Component class="javax.swing.JButton" name="btndeleteac2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton6">
+            <Component class="javax.swing.JButton" name="btnrepairac2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mantener"/>
+                <Property name="text" type="java.lang.String" value="Reparar"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -343,13 +349,10 @@
                                       <Component id="jRadioButton8" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="jRadioButton7" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel12" min="-2" pref="159" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel12" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jProgressBar4" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel13" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
