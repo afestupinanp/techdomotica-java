@@ -90,9 +90,13 @@ public class CameraView extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        this.dispose();
+        handleClose();
     }//GEN-LAST:event_formWindowClosing
 
+    public void handleClose() {
+        this.dispose();
+    }
+    
     /**
      * @param args the command line arguments
      */

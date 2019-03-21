@@ -126,6 +126,7 @@ public class Main extends javax.swing.JFrame {
         jMenu8 = new javax.swing.JMenu();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -339,6 +340,15 @@ public class Main extends javax.swing.JFrame {
 
         jMenu4.add(jMenu9);
 
+        jMenuItem16.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem16.setText("Estado de los dispositivos");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem16);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Gestión de ambiente");
@@ -456,8 +466,18 @@ public class Main extends javax.swing.JFrame {
         cameraView("camara4", "Vista de cámara 4");
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
     private void cameraView(String campath, String title) {
-        CameraView camView = new CameraView();
+        CameraView camView = new CameraView() {
+            @Override
+            public void handleClose() {
+                super.handleClose();
+                System.out.println("Llamado desde Main!");
+            }
+        };
         camView.timeThread = runTime;
         camView.cameraView.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/" + campath + ".png").getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
         camView.cameraViewNum.setText(title);
@@ -655,6 +675,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
