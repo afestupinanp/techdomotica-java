@@ -5,7 +5,10 @@
  */
 package technomotica.java.forms;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import technomotica.objs.Time;
 
@@ -23,8 +26,14 @@ public class CameraView extends javax.swing.JFrame {
     
     public CameraView() {
         initComponents();
+        /*
+        SimpleDateFormat frmt = new SimpleDateFormat("hh:mm:ss a - dd/MM/yyyy");;
+        dateTime.setText(frmt.format(new Date(timeThread.currentTime)));
+        */
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         setLocationRelativeTo(null);
+        
+        
     }
 
     /**
@@ -45,15 +54,20 @@ public class CameraView extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dateTime.setText("00:00 - 01/01/1970");
-        getContentPane().add(dateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 120, 30));
+        getContentPane().add(dateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, 190, 30));
 
         jLabel3.setText("Hora y fecha:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 110, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 90, 30));
 
         cameraViewNum.setText("Vista de cámara:");
         getContentPane().add(cameraViewNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 120, 30));
@@ -73,6 +87,11 @@ public class CameraView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

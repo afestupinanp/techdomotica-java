@@ -6,8 +6,6 @@
 package technomotica.java.forms;
 
 import java.awt.AWTException;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -18,9 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -33,8 +28,6 @@ import technomotica.objs.Time;
 import technomotica.java.forms.gestorusuarios.Registrar;
 
 /**
- * GLITCH: Al salir del dialog de Configuration.java e intentar refrescar la configuración
- * no se logra recargar.
  * @author Andres
  */
 public class Main extends javax.swing.JFrame {
@@ -189,7 +182,7 @@ public class Main extends javax.swing.JFrame {
         mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/sala.png"))); // NOI18N
         getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 380));
 
-        tempAire.setText("Temperatura de la sala: 17,0°C");
+        tempAire.setText("Temperatura de la sala: 23,0°C");
 
         jLabel2.setText("Temperatura real:");
 
@@ -465,9 +458,9 @@ public class Main extends javax.swing.JFrame {
 
     private void cameraView(String campath, String title) {
         CameraView camView = new CameraView();
+        camView.timeThread = runTime;
         camView.cameraView.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/" + campath + ".png").getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
         camView.cameraViewNum.setText(title);
-        camView.timeThread = runTime;
         camView.setTitle(title + " - Tech Domótica");
         camView.setVisible(true);
     }

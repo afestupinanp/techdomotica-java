@@ -374,7 +374,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="tempAire">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Temperatura de la sala: 17,0&#xb0;C"/>
+            <Property name="text" type="java.lang.String" value="Temperatura de la sala: 23,0&#xb0;C"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

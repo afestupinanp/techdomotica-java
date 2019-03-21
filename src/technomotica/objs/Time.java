@@ -9,12 +9,17 @@ public class Time extends Thread {
         while(true) {
             try {
                 Thread.sleep(1000);
-                currentTime++;
+                increaseTime();
             } 
             catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
         }
+    }
+    
+    public void increaseTime() {
+        System.out.println("plus plus from" + this.getName());
+        currentTime++;
     }
     
 }

@@ -2,7 +2,7 @@ package technomotica.objs.comps;
 
 public class ACondicionado extends Componente {
     
-    private double temperatura = 17.0;
+    private double temperatura = 23.0;
     
     public ACondicionado(String nombre, String marca, double uso) {
         super(nombre, marca, uso);

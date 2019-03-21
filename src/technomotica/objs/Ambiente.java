@@ -24,13 +24,11 @@ public class Ambiente {
         }
         
         ambienteThread = new Thread(new Runnable() {
-            
             double increment = acondicionado[0].getTemperatura();
             double increment2 = acondicionado[1].getTemperatura();
             
             @Override
             public void run() {
-                
                 while(true) {
                     try {
                         Thread.sleep(2500);
@@ -44,16 +42,15 @@ public class Ambiente {
                             increment2 -= 0.02;
                             System.out.println("Bajo");
                         }
-                        
                         acondicionado[0].changeTemperatura(increment);
                         acondicionado[1].changeTemperatura(increment2);
                         temperaturaSala = (increment + increment2) / 2;
-                    } catch (InterruptedException ex) {
+                    } 
+                    catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
-            
         });
     }
 

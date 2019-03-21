@@ -300,8 +300,8 @@ public class Registrar extends javax.swing.JFrame {
         String correo = tfd_correo.getText();
         String documento = tfd_documento.getText();
         String contra = tfd_contraseña.getText();
-        if(Util.stringsVacios(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
-            int confirm = JOptionPane.showConfirmDialog(null, "Los campos de texto poseen datos que no han sido guardados.\n¿Deseas cerrar esta ventana?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(!Util.stringsVacios(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
+            int confirm = JOptionPane.showConfirmDialog(null, "Uno o más campos de texto poseen datos que no han sido guardados.\n¿Deseas cerrar esta ventana?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.YES_OPTION) {
                 guardar();
                 redirigir();
