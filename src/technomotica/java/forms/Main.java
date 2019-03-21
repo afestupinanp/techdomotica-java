@@ -5,8 +5,6 @@
  */
 package technomotica.java.forms;
 
-
-import technomotica.java.forms.gestorusuarios.Registrar;
 import java.awt.AWTException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -20,14 +18,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import technomotica.objs.Admin;
 
+import technomotica.objs.Admin;
 import technomotica.objs.Config;
 import technomotica.objs.Ambiente;
+import technomotica.objs.Time;
+import technomotica.java.forms.gestorusuarios.Registrar;
 
 /**
  * GLITCH: Al salir del dialog de Configuration.java e intentar refrescar la configuración
@@ -40,6 +43,10 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Dispositivos
      */
     public boolean onSystemTray = false;
+    
+    public Time runTime = new Time();
+    public Thread mainChanger;
+    
     private Admin adminEncargado = null;
     private Ambiente ambiente = null;
     
@@ -50,8 +57,33 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
-        ambiente = new Ambiente(adminEncargado);
+        runTime.start();
         
+        ambiente = new Ambiente(adminEncargado);
+        ambiente.ambienteThread.start();
+        
+        mainChanger = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while(true) {
+                        Thread.sleep(2500);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                tempAire.setText(String.format("Temperatura de la sala: %.1f°C", ambiente.getTemperaturaSala()));
+                            }
+                        });
+                    }
+                } 
+                catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            
+        });
+        
+        mainChanger.start();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         
@@ -75,14 +107,22 @@ public class Main extends javax.swing.JFrame {
         camera3 = new javax.swing.JLabel();
         camera4 = new javax.swing.JLabel();
         mapaSala = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        tempAire = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu10 = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -91,7 +131,10 @@ public class Main extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -144,7 +187,39 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(camera4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 50, 50));
 
         mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/sala.png"))); // NOI18N
-        getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 370));
+        getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 380));
+
+        tempAire.setText("Temperatura de la sala: 17,0°C");
+
+        jLabel2.setText("Temperatura real:");
+
+        jLabel3.setText("Cantidad de personas: 0");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tempAire, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tempAire)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 660, 30));
 
         jMenu1.setText("Archivo");
 
@@ -178,6 +253,11 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu6.setText("Perfil");
+
+        jMenuItem15.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem15.setText("Mi perfil");
+        jMenu6.add(jMenuItem15);
+
         jMenuBar1.add(jMenu6);
 
         jMenu3.setText("Gestión de usuarios");
@@ -190,6 +270,18 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem6);
+
+        jMenu10.setText("Modificar usuario");
+
+        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItem13.setText("Modificar");
+        jMenu10.add(jMenuItem13);
+
+        jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItem14.setText("Eliminar");
+        jMenu10.add(jMenuItem14);
+
+        jMenu3.add(jMenu10);
 
         jMenuBar1.add(jMenu3);
 
@@ -247,9 +339,21 @@ public class Main extends javax.swing.JFrame {
         jMenu8.setText("Sensores");
         jMenu4.add(jMenu8);
 
+        jMenu9.setText("Aires acondicionados");
+
+        jMenuItem7.setText("Gestionar");
+        jMenu9.add(jMenuItem7);
+
+        jMenu4.add(jMenu9);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Gestión de ambiente");
+
+        jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem17.setText("Configurar eventos");
+        jMenu5.add(jMenuItem17);
+
         jMenuBar1.add(jMenu5);
 
         jMenu2.setText("Acerca de");
@@ -264,7 +368,7 @@ public class Main extends javax.swing.JFrame {
         jMenu2.add(jMenuItem3);
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
-        jMenuItem1.setText("Sobre Technomotica");
+        jMenuItem1.setText("Sobre Tech Domótica");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -363,6 +467,7 @@ public class Main extends javax.swing.JFrame {
         CameraView camView = new CameraView();
         camView.cameraView.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/" + campath + ".png").getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
         camView.cameraViewNum.setText(title);
+        camView.timeThread = runTime;
         camView.setTitle(title + " - Tech Domótica");
         camView.setVisible(true);
     }
@@ -370,7 +475,6 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         Registrar res = new Registrar();
         res.setVisible(true);
-        this.dispose();
     }
     
     private Admin getAdminEncargado() {
@@ -538,7 +642,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel camera2;
     private javax.swing.JLabel camera3;
     private javax.swing.JLabel camera4;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -546,19 +653,26 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mapaSala;
+    private javax.swing.JLabel tempAire;
     // End of variables declaration//GEN-END:variables
-    private technomotica.objs.JPanelImage jPanelImg;
 }

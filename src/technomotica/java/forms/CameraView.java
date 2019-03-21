@@ -7,6 +7,7 @@ package technomotica.java.forms;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import technomotica.objs.Time;
 
 /**
  *
@@ -18,6 +19,7 @@ public class CameraView extends javax.swing.JFrame {
      * Creates new form CameraView
      */
     
+    public Time timeThread;
     
     public CameraView() {
         initComponents();
@@ -34,24 +36,40 @@ public class CameraView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btngrp1 = new javax.swing.ButtonGroup();
         dateTime = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cameraViewNum = new javax.swing.JLabel();
         cameraView = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dateTime.setText("00:00 - 01/01/1970");
-        getContentPane().add(dateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 370, 170, 30));
+        getContentPane().add(dateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 120, 30));
 
         jLabel3.setText("Hora y fecha:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, 110, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 110, 30));
 
         cameraViewNum.setText("Vista de cámara:");
-        getContentPane().add(cameraViewNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 290, 30));
+        getContentPane().add(cameraViewNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 120, 30));
         getContentPane().add(cameraView, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 370));
+
+        jLabel1.setText("Estado:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, -1, 30));
+
+        btngrp1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("Activado");
+        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, 30));
+
+        btngrp1.add(jRadioButton2);
+        jRadioButton2.setText("Desactivado");
+        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, -1, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -87,9 +105,13 @@ public class CameraView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btngrp1;
     public javax.swing.JLabel cameraView;
     public javax.swing.JLabel cameraViewNum;
     private javax.swing.JLabel dateTime;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     // End of variables declaration//GEN-END:variables
 }
