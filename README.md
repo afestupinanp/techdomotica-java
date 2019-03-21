@@ -1,2 +1,4 @@
-# Tech Domotica (Versión Java)
-Tech Domotica es un simulador de un ambiente domótico que se caracterizará por su fiabilidad, eficiencia y amigabilidad con el usuario.
+# Tech Domotica
+Este es el repositorio de la versión de Java.
+
+Dueño del repositorio: xman40100.
