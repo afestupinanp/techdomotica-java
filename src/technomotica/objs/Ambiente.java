@@ -35,12 +35,12 @@ public class Ambiente {
                         if(Math.round(Math.random()) == 1) {
                             increment += 0.02;
                             increment2 += 0.02;
-                            System.out.println("Subio");
+                            //System.out.println("Subio");
                         }
                         else {
                             increment -= 0.02;
                             increment2 -= 0.02;
-                            System.out.println("Bajo");
+                            //System.out.println("Bajo");
                         }
                         acondicionado[0].changeTemperatura(increment);
                         acondicionado[1].changeTemperatura(increment2);

@@ -18,7 +18,7 @@ public class Time extends Thread {
     }
     
     public void increaseTime() {
-        System.out.println("plus plus from" + this.getName());
+        //System.out.println("plus plus from" + this.getName());
         currentTime++;
     }
     
