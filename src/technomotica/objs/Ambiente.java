@@ -5,6 +5,7 @@ import technomotica.objs.comps.*;
 public class Ambiente {
     
     private Thread ambienteThread;
+    private boolean continueThread = true;
     
     private String perfilActual = "";
     private Admin adminEncargado = null;
@@ -30,39 +31,7 @@ public class Ambiente {
         }
         
         proyector = new Televisor("Samsung", "Projector");
-        
-        ambienteThread = new Thread(new Runnable() {
-            double increment = 0.0;
-            double increment2 = 0.0;
-            
-            @Override
-            public void run() {
-                while(true) {
-                    increment = acondicionado[0].getTemperatura();
-                    increment2 = acondicionado[1].getTemperatura();
-                    System.out.println("Temp 1: " + increment + " | Temp 2: " + increment2);
-                    try {
-                        Thread.sleep(2500);
-                        if(Math.round(Math.random()) == 1) {
-                            increment += 0.02;
-                            increment2 += 0.02;
-                            //System.out.println("Subio");
-                        }
-                        else {
-                            increment -= 0.02;
-                            increment2 -= 0.02;
-                            //System.out.println("Bajo");
-                        }
-                        acondicionado[0].changeTemperatura(increment);
-                        acondicionado[1].changeTemperatura(increment2);
-                        temperaturaSala = (increment + increment2) / 2;
-                    } 
-                    catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        });
+        startAmbienteThread();
     }
 
     public void cargarPerfil() {
@@ -97,4 +66,45 @@ public class Ambiente {
     public Thread getAmbienteThread() {
         return ambienteThread;
     }
+    
+    public void startAmbienteThread() {
+        System.out.println("I've been caleld!");
+        ambienteThread = new Thread(new Runnable() {
+            double increment = 0.0;
+            double increment2 = 0.0;
+            
+            @Override
+            public void run() {
+                System.out.println("ContinueThread es " + ((continueThread) ? "true" : "false"));
+                while(continueThread) {
+                    increment = acondicionado[0].getTemperatura();
+                    increment2 = acondicionado[1].getTemperatura();
+                    System.out.println("Temp 1: " + increment + " | Temp 2: " + increment2);
+                    try {
+                        Thread.sleep(2500);
+                        if(Math.round(Math.random()) == 1) {
+                            increment += 0.02;
+                            increment2 += 0.02;
+                        }
+                        else {
+                            increment -= 0.02;
+                            increment2 -= 0.02;
+                        }
+                        acondicionado[0].changeTemperatura(increment);
+                        acondicionado[1].changeTemperatura(increment2);
+                        temperaturaSala = (increment + increment2) / 2;
+                    } 
+                    catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+        ambienteThread.start();
+    }
+    
+    public void toggleAmbienteThread() {
+        continueThread = !continueThread;
+    }
+    
 }

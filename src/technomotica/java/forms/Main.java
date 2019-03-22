@@ -38,7 +38,7 @@ public class Main extends javax.swing.JFrame {
     public boolean onSystemTray = false;
     
     public Time runTime = new Time();
-    public Thread mainChanger;
+    private Thread mainChanger;
     
     private Admin adminEncargado = null;
     public Ambiente ambiente;
@@ -53,13 +53,12 @@ public class Main extends javax.swing.JFrame {
         runTime.start();
         
         ambiente = new Ambiente(adminEncargado);
-        ambiente.getAmbienteThread().start();
         
         mainChanger = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    while(true) {
+                    while(ambiente != null) {
                         Thread.sleep(2500);
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
@@ -466,25 +465,29 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        DeviceManager dmanager = new DeviceManager(ambiente);/* {
+        ambiente.toggleAmbienteThread();
+        ambiente.getAmbienteThread().interrupt();
+        DeviceManager dmanager = new DeviceManager(ambiente) {
             @Override
             public void saveChangesToMain() {
                 super.saveChangesToMain();
-                ambiente = super.ambiente;
+                System.out.println("We're out of here!");
+                ambiente.startAmbienteThread();
+                ambiente.toggleAmbienteThread();
+                
             }
-        };*/
+        };
         dmanager.setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void cameraView(String campath, String title) {
-        CameraView camView = new CameraView() {
+        CameraView camView = new CameraView(runTime) {
             @Override
             public void handleClose() {
                 super.handleClose();
                 System.out.println("Llamado desde Main!");
             }
         };
-        camView.timeThread = runTime;
         camView.cameraView.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/" + campath + ".png").getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
         camView.cameraViewNum.setText(title);
         camView.setTitle(title + " - Tech Domótica");
@@ -530,8 +533,6 @@ public class Main extends javax.swing.JFrame {
             appSystemTray = null;
             SystemTray tray = SystemTray.getSystemTray();
             Image img = new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-            //Image img = Toolkit.getDefaultToolkit().getImage("src/technomotica/media/L4.png");
-            //Glitch: No hay imagen.
             
             PopupMenu popmenu = new PopupMenu();
             
@@ -621,6 +622,9 @@ public class Main extends javax.swing.JFrame {
     private void logOut() {
         LoginPage login = new LoginPage();
         login.setVisible(true);
+        mainChanger.interrupt();
+        runTime.interrupt();
+        ambiente = null;
         this.dispose();
     }
     

@@ -494,16 +494,18 @@ public class DeviceManager extends javax.swing.JFrame {
     }
     
     public void changeTemp(int id) {
-        String newtempStr = JOptionPane.showInputDialog(null, "Ingrese la nueva temperatura a insertar entre 17°C y 30°C.\nPuede ser un número entero o decimal.", "Ingreso de nueva temperatura", JOptionPane.QUESTION_MESSAGE);
-        if(Util.esNumerico(newtempStr)) {
-            double temperatura = Double.parseDouble(newtempStr);
-            if(temperatura >= 17.0 && temperatura <= 30.0) {
-                ambiente.getACondicionado(id).changeTemperatura(temperatura);
-                JOptionPane.showMessageDialog(null, "Se ha cambiado la temperatura del aire acondicionado", "Cambio realizado", JOptionPane.INFORMATION_MESSAGE);
+        String newtempStr = JOptionPane.showInputDialog(null, "Ingrese la nueva temperatura a insertar entre 17°C y 30°C.\nPuede ser un número entero o decimal.\n\nLa temperatura actual asignada a este aire acondicionado es de " + ambiente.getACondicionado(id).getTemperatura() + "°C.", "Ingreso de nueva temperatura", JOptionPane.QUESTION_MESSAGE);
+        if(!newtempStr.isEmpty()) {
+            if(Util.esNumerico(newtempStr)) {
+                double temperatura = Double.parseDouble(newtempStr);
+                if(temperatura >= 17.0 && temperatura <= 30.0) {
+                    ambiente.getACondicionado(id).changeTemperatura(temperatura);
+                    JOptionPane.showMessageDialog(null, "Se ha cambiado la temperatura del aire acondicionado", "Cambio realizado", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else JOptionPane.showMessageDialog(null, "La temperatura debe de estar entre los 17°C y 30°C.", "Temperatura inválida", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(null, "La temperatura debe de estar entre los 17°C y 30°C.", "Temperatura inválida", JOptionPane.ERROR_MESSAGE);
+            else JOptionPane.showMessageDialog(null, "La temperatura específicada no es numérica. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else JOptionPane.showMessageDialog(null, "La temperatura específicada no es numérica. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
     }
     
     public void makeMaintance(Componente comp, progressDialog dialogo) {

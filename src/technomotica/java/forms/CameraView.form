@@ -35,21 +35,11 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="dateTime">
       <Properties>
-        <Property name="text" type="java.lang.String" value="00:00 - 01/01/1970"/>
+        <Property name="text" type="java.lang.String" value="-"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="410" y="370" width="190" height="30"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Hora y fecha:"/>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="330" y="370" width="90" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -88,9 +78,6 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButton1">
       <Properties>
-        <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="default"/>
-        </Property>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btngrp1"/>
         </Property>
@@ -105,9 +92,6 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButton2">
       <Properties>
-        <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="default"/>
-        </Property>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="btngrp1"/>
         </Property>

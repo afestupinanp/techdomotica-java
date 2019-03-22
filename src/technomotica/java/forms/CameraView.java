@@ -5,10 +5,12 @@
  */
 package technomotica.java.forms;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
+//import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import technomotica.objs.Time;
 
@@ -20,20 +22,43 @@ public class CameraView extends javax.swing.JFrame {
 
     /**
      * Creates new form CameraView
+     * @param timeThread Hilo de tiempo.
      */
     
-    public Time timeThread;
+    private Time currentTime;
     
-    public CameraView() {
+    private Thread changeUI;
+    private boolean stopit = true;
+    
+    public CameraView(Time timeThread) {
         initComponents();
-        /*
-        SimpleDateFormat frmt = new SimpleDateFormat("hh:mm:ss a - dd/MM/yyyy");;
-        dateTime.setText(frmt.format(new Date(timeThread.currentTime)));
-        */
+        currentTime = timeThread;
+
         setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
         setLocationRelativeTo(null);
         
         
+        changeUI = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(stopit) {
+                    try {
+                        Thread.sleep(1000);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                dateTime.setText(java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-YYYY - hh:mm:ss a")));
+                            }
+                        });
+                    } 
+                    catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+            }
+        });
+        changeUI.start();
     }
 
     /**
@@ -47,7 +72,6 @@ public class CameraView extends javax.swing.JFrame {
 
         btngrp1 = new javax.swing.ButtonGroup();
         dateTime = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         cameraViewNum = new javax.swing.JLabel();
         cameraView = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -63,11 +87,8 @@ public class CameraView extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        dateTime.setText("00:00 - 01/01/1970");
+        dateTime.setText("-");
         getContentPane().add(dateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, 190, 30));
-
-        jLabel3.setText("Hora y fecha:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 90, 30));
 
         cameraViewNum.setText("Vista de cámara:");
         getContentPane().add(cameraViewNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 120, 30));
@@ -94,6 +115,8 @@ public class CameraView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     public void handleClose() {
+        changeUI.interrupt();
+        stopit = false;
         this.dispose();
     }
     
@@ -122,7 +145,7 @@ public class CameraView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CameraView().setVisible(true);
+                new CameraView(null).setVisible(true);
             }
         });
     }
@@ -133,7 +156,6 @@ public class CameraView extends javax.swing.JFrame {
     public javax.swing.JLabel cameraViewNum;
     private javax.swing.JLabel dateTime;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     // End of variables declaration//GEN-END:variables
