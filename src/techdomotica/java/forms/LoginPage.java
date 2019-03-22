@@ -1,4 +1,4 @@
-package technomotica.java.forms;
+package techdomotica.java.forms;
 //lol
 import java.awt.Image;
 import java.awt.event.KeyEvent;

@@ -1,4 +1,4 @@
-package technomotica.objs;
+package techdomotica.objs;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

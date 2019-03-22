@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package technomotica.java.forms;
+package techdomotica.java.forms;
 
 import java.awt.AWTException;
 import java.awt.Image;
@@ -21,11 +21,11 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import technomotica.objs.Admin;
-import technomotica.objs.Config;
-import technomotica.objs.Ambiente;
-import technomotica.objs.Time;
-import technomotica.java.forms.gestorusuarios.Registrar;
+import techdomotica.objs.Admin;
+import techdomotica.objs.Config;
+import techdomotica.objs.Ambiente;
+import techdomotica.objs.Time;
+import techdomotica.java.forms.gestorusuarios.Registrar;
 
 /**
  * @author Andres

@@ -1,4 +1,4 @@
-package technomotica.objs.comps;
+package techdomotica.objs.comps;
 
 public class Camara extends Componente {
     
@@ -7,6 +7,10 @@ public class Camara extends Componente {
     
     public Camara(String nombre, String marca, double uso) {
         super(nombre, marca, uso);
+    }
+    
+    public Camara(String nombre, String marca) {
+        super(nombre, marca, 100.0);
     }
     
     public void setResolucion(String res) {

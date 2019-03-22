@@ -1,4 +1,4 @@
-package technomotica.objs;
+package techdomotica.objs;
 
 public class Admin extends Usuario {
     

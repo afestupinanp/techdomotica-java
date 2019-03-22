@@ -1,4 +1,4 @@
-package technomotica.objs.comps;
+package techdomotica.objs.comps;
 
 public class Sensor extends Componente {
     

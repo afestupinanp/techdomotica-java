@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package technomotica.java.forms;
+package techdomotica.java.forms;
 
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 //import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import technomotica.objs.Time;
+import techdomotica.objs.Time;
 
 /**
  *

@@ -1,4 +1,4 @@
-package technomotica.objs;
+package techdomotica.objs;
 
 import java.sql.*;
 

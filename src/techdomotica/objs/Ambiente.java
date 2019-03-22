@@ -1,6 +1,10 @@
-package technomotica.objs;
+package techdomotica.objs;
 
-import technomotica.objs.comps.*;
+import techdomotica.objs.comps.Televisor;
+import techdomotica.objs.comps.Sensor;
+import techdomotica.objs.comps.Luz;
+import techdomotica.objs.comps.Camara;
+import techdomotica.objs.comps.ACondicionado;
 
 public class Ambiente {
     
@@ -20,21 +24,49 @@ public class Ambiente {
     
     public Ambiente(Admin encargado) {
         adminEncargado = encargado;
-        acondicionado[0] = new ACondicionado("Watercool 2", "LG", 30.0);
-        acondicionado[1] = new ACondicionado("Watercool 2", "LG", 0.0);
-        for(int i = 0 ; i < 12 ; i++) {
-            luces[i] = new Luz("Wattmax 200", "OSRAM");
-        }
+        loadComponentes();
         
-        for(int i = 0 ; i < 4 ; i++) {
-            sensores[i] = new Sensor("Wattmax 200", "OSRAM");
-        }
-        
-        proyector = new Televisor("Samsung", "Projector");
         startAmbienteThread();
     }
 
-    public void cargarPerfil() {
+    public void loadComponentes() {
+        loadACondicionados();
+        loadLuces();
+        loadSensores();
+        loadProyector();
+        loadCamaras();
+        loadPerfil();
+    }
+    
+    public void loadACondicionados() {
+        acondicionado[0] = new ACondicionado("9000btu", "LG", 45.0);
+        acondicionado[1] = new ACondicionado("9000btu", "LG", 30.0);
+    }
+    
+    public void loadLuces() {
+        for(int i = 0 ; i < 12 ; i++) {
+            luces[i] = new Luz("Wattmax 200", "OSRAM");
+        }
+    }
+    
+    public void loadSensores() {
+        for(int i = 0 ; i < 4 ; i++) {
+            sensores[i] = new Sensor("Wattmax 200", "OSRAM");
+        }
+    }
+    
+    public void loadProyector() {
+        proyector = new Televisor("Samsung", "Projector");
+    }
+    
+    public void loadCamaras() {
+        for(int i = 0; i < 4 ; i++) {
+            camaras[i] = new Camara("Mini DVR", "HIKVISION");
+        }
+    }
+    
+    public void loadPerfil() {
+        System.out.println("Not implemented!");
         //Conectar con = new Conectar();
         //con.consultarbd("SELECT * FROM ...");
     }

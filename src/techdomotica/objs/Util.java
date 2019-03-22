@@ -1,4 +1,4 @@
-package technomotica.objs;
+package techdomotica.objs;
 
 /**
  * Clase de funciones o métodos útiles. No es necesario instanciar esta clase, es una clase estática.

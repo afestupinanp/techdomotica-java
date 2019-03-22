@@ -289,6 +289,9 @@
                 <Property name="text" type="java.lang.String" value="Reparar"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnrepairac2ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btntemperaturaac1">
               <Properties>

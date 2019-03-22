@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package technomotica.java.forms.gestorusuarios;
+package techdomotica.java.forms.gestorusuarios;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import technomotica.java.forms.Main;
-import technomotica.objs.Usuario;
-import technomotica.objs.Util;
+import techdomotica.java.forms.Main;
+import techdomotica.objs.Usuario;
+import techdomotica.objs.Util;
 
 /**
  *

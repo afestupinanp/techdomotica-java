@@ -1,4 +1,4 @@
-package technomotica.java.forms;
+package techdomotica.java.forms;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -6,9 +6,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import technomotica.objs.Ambiente;
-import technomotica.objs.Util;
-import technomotica.objs.comps.Componente;
+import techdomotica.objs.Ambiente;
+import techdomotica.objs.Util;
+import techdomotica.objs.comps.Componente;
 
 /**
  *
@@ -153,6 +153,11 @@ public class DeviceManager extends javax.swing.JFrame {
 
         btnrepairac2.setText("Reparar");
         btnrepairac2.setEnabled(false);
+        btnrepairac2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepairac2ActionPerformed(evt);
+            }
+        });
 
         btntemperaturaac1.setText("Establecer temperatura");
         btntemperaturaac1.addActionListener(new java.awt.event.ActionListener() {
@@ -488,6 +493,19 @@ public class DeviceManager extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         saveChangesToMain();
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnrepairac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairac2ActionPerformed
+        makeMaintance(ambiente.getACondicionado(1), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getACondicionado(1).setUsoComponente(100.0);
+                deviceprogressac2.setValue(100);
+                btnrepairac2.setEnabled(false);
+                checkComponentUse();
+            }
+        });
+    }//GEN-LAST:event_btnrepairac2ActionPerformed
 
     public void saveChangesToMain() {
         
