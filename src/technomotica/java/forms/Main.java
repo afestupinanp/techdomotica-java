@@ -466,8 +466,13 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        DeviceManager dmanager = new DeviceManager(ambiente);
-        
+        DeviceManager dmanager = new DeviceManager(ambiente);/* {
+            @Override
+            public void saveChangesToMain() {
+                super.saveChangesToMain();
+                ambiente = super.ambiente;
+            }
+        };*/
         dmanager.setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 

@@ -2,8 +2,13 @@ package technomotica.java.forms;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import technomotica.objs.Ambiente;
+import technomotica.objs.Util;
+import technomotica.objs.comps.Componente;
 
 /**
  *
@@ -24,11 +29,7 @@ public class DeviceManager extends javax.swing.JFrame {
         deviceprogressac1.setValue((int)ambiente.getACondicionado(0).getUsoComponente());
         deviceprogressac2.setValue((int)ambiente.getACondicionado(1).getUsoComponente());
         
-        if(ambiente.getACondicionado(0).getUsoComponente() <= 60) btnrepairac1.setEnabled(true);
-        if(ambiente.getACondicionado(0).getUsoComponente() <= 40) displaydeviceac1.setForeground(Color.red);
-        
-        if(ambiente.getACondicionado(1).getUsoComponente() <= 60) btnrepairac2.setEnabled(true);
-        if(ambiente.getACondicionado(1).getUsoComponente() <= 40) displaydeviceac2.setForeground(Color.red);
+        checkComponentUse();
         
     }
 
@@ -65,6 +66,8 @@ public class DeviceManager extends javax.swing.JFrame {
         jRadioButton4 = new javax.swing.JRadioButton();
         btndeleteac2 = new javax.swing.JButton();
         btnrepairac2 = new javax.swing.JButton();
+        btntemperaturaac1 = new javax.swing.JButton();
+        btntemperaturaac2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -91,6 +94,11 @@ public class DeviceManager extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de dispositivos - Tech Domótica");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -146,6 +154,20 @@ public class DeviceManager extends javax.swing.JFrame {
         btnrepairac2.setText("Reparar");
         btnrepairac2.setEnabled(false);
 
+        btntemperaturaac1.setText("Establecer temperatura");
+        btntemperaturaac1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntemperaturaac1ActionPerformed(evt);
+            }
+        });
+
+        btntemperaturaac2.setText("Establecer temperatura");
+        btntemperaturaac2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntemperaturaac2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -185,7 +207,12 @@ public class DeviceManager extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btndeleteac2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnrepairac2, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))))
+                            .addComponent(btnrepairac2, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btntemperaturaac1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btntemperaturaac2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -204,7 +231,9 @@ public class DeviceManager extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton1)
                         .addComponent(jRadioButton2)))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btntemperaturaac1)
+                .addGap(1, 1, 1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
@@ -217,7 +246,9 @@ public class DeviceManager extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton4)
                         .addComponent(jRadioButton3)))
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btntemperaturaac2)
+                .addGap(8, 8, 8)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -365,7 +396,7 @@ public class DeviceManager extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 186, Short.MAX_VALUE)
+                .addGap(0, 190, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -383,7 +414,7 @@ public class DeviceManager extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
+                .addContainerGap(190, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -407,13 +438,80 @@ public class DeviceManager extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void checkComponentUse() {
+        checkACUse();
+    }
+    
+    private void checkACUse() {
+        JButton btnAires[] = {btnrepairac1, btnrepairac2};
+        JLabel labelAires[] = {displaydeviceac1, displaydeviceac2};
+        for(int i = 0 ; i < 2 ; i++) {
+            if(ambiente.getACondicionado(i) != null) {
+                if(ambiente.getACondicionado(i).getUsoComponente() >= 80 && ambiente.getACondicionado(i).getUsoComponente() <= 100) {
+                    btnAires[i].setEnabled(false);
+                    btnAires[i].setToolTipText("Este aire acondicionado está en condiciones óptimas de uso.");
+                    labelAires[i].setForeground(Color.black);
+                }
+                if(ambiente.getACondicionado(i).getUsoComponente() <= 60) btnAires[i].setEnabled(true);
+                if(ambiente.getACondicionado(i).getUsoComponente() <= 40) labelAires[i].setForeground(Color.red);
+                if(ambiente.getACondicionado(i).getUsoComponente() == 0) {
+                    btnAires[i].setEnabled(false);
+                    btnAires[i].setToolTipText("Este aire acondicionado ya está demasiado dañado para ser reparado. Eliminalo y reemplazalo por uno nuevo.");
+                }
+            }
+        }
+    }
+    
     private void btnrepairac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairac1ActionPerformed
         // TODO add your handling code here:
-        progressDialog dialogo = new progressDialog(this, true);
-        dialogo.textVar.setText("Realizando una operación de mantenimiento, por favor espere...");
-        //progressDialog.setVisible(true);
+        makeMaintance(ambiente.getACondicionado(0), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getACondicionado(0).setUsoComponente(100.0);
+                deviceprogressac1.setValue(100);
+                btnrepairac1.setEnabled(false);
+                checkComponentUse();
+            }
+        });
+        
     }//GEN-LAST:event_btnrepairac1ActionPerformed
 
+    private void btntemperaturaac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntemperaturaac1ActionPerformed
+        changeTemp(0);
+    }//GEN-LAST:event_btntemperaturaac1ActionPerformed
+
+    private void btntemperaturaac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntemperaturaac2ActionPerformed
+        changeTemp(1);
+    }//GEN-LAST:event_btntemperaturaac2ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        saveChangesToMain();
+    }//GEN-LAST:event_formWindowClosing
+
+    public void saveChangesToMain() {
+        
+    }
+    
+    public void changeTemp(int id) {
+        String newtempStr = JOptionPane.showInputDialog(null, "Ingrese la nueva temperatura a insertar entre 17°C y 30°C.\nPuede ser un número entero o decimal.", "Ingreso de nueva temperatura", JOptionPane.QUESTION_MESSAGE);
+        if(Util.esNumerico(newtempStr)) {
+            double temperatura = Double.parseDouble(newtempStr);
+            if(temperatura >= 17.0 && temperatura <= 30.0) {
+                ambiente.getACondicionado(id).changeTemperatura(temperatura);
+                JOptionPane.showMessageDialog(null, "Se ha cambiado la temperatura del aire acondicionado", "Cambio realizado", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(null, "La temperatura debe de estar entre los 17°C y 30°C.", "Temperatura inválida", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null, "La temperatura específicada no es numérica. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void makeMaintance(Componente comp, progressDialog dialogo) {
+        dialogo.setTitle("Reparando " + comp.getComponenteFullName());
+        dialogo.textVar.setText("<html>Realizando una operación de mantenimiento al componente " + comp.getComponenteFullName() +", por favor espere...</html>");
+        dialogo.setVisible(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -455,6 +553,8 @@ public class DeviceManager extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btndevicecamera4;
     private javax.swing.JButton btnrepairac1;
     private javax.swing.JButton btnrepairac2;
+    private javax.swing.JButton btntemperaturaac1;
+    private javax.swing.JButton btntemperaturaac2;
     private javax.swing.JProgressBar deviceprogressac1;
     private javax.swing.JProgressBar deviceprogressac2;
     private javax.swing.JLabel displaydeviceac1;

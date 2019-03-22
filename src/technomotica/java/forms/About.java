@@ -15,7 +15,7 @@ import javax.swing.UIManager;
  */
 public class About extends javax.swing.JDialog {
 
-    public String VERSION = "Versión 0.2";
+    public String VERSION = "Versión 0.3.1";
     
     /**
      * Creates new form About

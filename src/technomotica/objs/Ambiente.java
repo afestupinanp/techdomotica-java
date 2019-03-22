@@ -19,10 +19,8 @@ public class Ambiente {
     
     public Ambiente(Admin encargado) {
         adminEncargado = encargado;
-        for(int i = 0 ; i < 2 ; i++) {
-            acondicionado[i] = new ACondicionado("Watercool 2", "LG", 30.0);
-        }
-        
+        acondicionado[0] = new ACondicionado("Watercool 2", "LG", 30.0);
+        acondicionado[1] = new ACondicionado("Watercool 2", "LG", 0.0);
         for(int i = 0 ; i < 12 ; i++) {
             luces[i] = new Luz("Wattmax 200", "OSRAM");
         }
@@ -34,12 +32,15 @@ public class Ambiente {
         proyector = new Televisor("Samsung", "Projector");
         
         ambienteThread = new Thread(new Runnable() {
-            double increment = acondicionado[0].getTemperatura();
-            double increment2 = acondicionado[1].getTemperatura();
+            double increment = 0.0;
+            double increment2 = 0.0;
             
             @Override
             public void run() {
                 while(true) {
+                    increment = acondicionado[0].getTemperatura();
+                    increment2 = acondicionado[1].getTemperatura();
+                    System.out.println("Temp 1: " + increment + " | Temp 2: " + increment2);
                     try {
                         Thread.sleep(2500);
                         if(Math.round(Math.random()) == 1) {

@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package technomotica.java.forms;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 /**
@@ -23,10 +17,11 @@ public class progressDialog extends javax.swing.JDialog {
         public void run() {
             try {
                 while(progressionBar.getValue() != 100) {
-                    Thread.sleep(25);
+                    Thread.sleep(35);
                     progressionBar.setValue(progressionBar.getValue() + 1);
                 }
-                setTitle(getTitle() + "Operación completada con éxito");
+                setTitle(getTitle() + " - Operación completada con éxito");
+                progressBarFilled();
                 Thread.sleep(2000);
                 isCompleted = true;
                 dispose();
@@ -46,7 +41,9 @@ public class progressDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }
     
-    
+    public void progressBarFilled() {
+        //Add your stuff here!
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,8 +57,13 @@ public class progressDialog extends javax.swing.JDialog {
         textVar = new javax.swing.JLabel();
         progressionBar = new javax.swing.JProgressBar();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,6 +88,10 @@ public class progressDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        JOptionPane.showMessageDialog(null, "No se puede cerrar ahora, se está realizando una operación.", "Error", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
