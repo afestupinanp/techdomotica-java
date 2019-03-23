@@ -28,9 +28,9 @@ public class Configuration extends javax.swing.JDialog {
     public Configuration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(209, 200, Image.SCALE_DEFAULT));
+        ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage().getScaledInstance(209, 200, Image.SCALE_DEFAULT));
         
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         
         setLocationRelativeTo(null);
         

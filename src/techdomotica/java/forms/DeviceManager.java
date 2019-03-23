@@ -21,7 +21,7 @@ public class DeviceManager extends javax.swing.JFrame {
     public DeviceManager(Ambiente amb) {
         initComponents();
         ambiente = amb;
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         setLocationRelativeTo(null);
 
         displaydeviceac1.setText(ambiente.getACondicionado(0).getComponenteFullName());

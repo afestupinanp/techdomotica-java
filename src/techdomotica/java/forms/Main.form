@@ -102,7 +102,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de dispostivos"/>
+            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de dispositivos"/>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="jMenu7">
@@ -278,7 +278,7 @@
     <Component class="javax.swing.JLabel" name="camera1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/technomotica/media/simulator/camera.png"/>
+          <Image iconType="3" name="/resources/media/simulator/camera.png"/>
         </Property>
       </Properties>
       <Events>
@@ -293,7 +293,7 @@
     <Component class="javax.swing.JLabel" name="camera2">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/technomotica/media/simulator/camera.png"/>
+          <Image iconType="3" name="/resources/media/simulator/camera.png"/>
         </Property>
       </Properties>
       <Events>
@@ -308,7 +308,7 @@
     <Component class="javax.swing.JLabel" name="camera3">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/technomotica/media/simulator/camera.png"/>
+          <Image iconType="3" name="/resources/media/simulator/camera.png"/>
         </Property>
       </Properties>
       <Events>
@@ -323,7 +323,7 @@
     <Component class="javax.swing.JLabel" name="camera4">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/technomotica/media/simulator/camera.png"/>
+          <Image iconType="3" name="/resources/media/simulator/camera.png"/>
         </Property>
       </Properties>
       <Events>
@@ -338,7 +338,7 @@
     <Component class="javax.swing.JLabel" name="mapaSala">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/technomotica/media/simulator/sala.png"/>
+          <Image iconType="3" name="/resources/media/simulator/sala.png"/>
         </Property>
       </Properties>
       <Constraints>

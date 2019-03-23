@@ -34,7 +34,7 @@ public class CameraView extends javax.swing.JFrame {
         initComponents();
         currentTime = timeThread;
 
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         setLocationRelativeTo(null);
         
         

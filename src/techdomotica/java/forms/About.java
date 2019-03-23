@@ -8,27 +8,25 @@ package techdomotica.java.forms;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+import techdomotica.objs.Util;
 
 /**
  *
  * @author Andres
  */
 public class About extends javax.swing.JDialog {
-
-    public String VERSION = "Versión 0.3.1";
-    
     /**
      * Creates new form About
      */
     public About(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(209, 200, Image.SCALE_DEFAULT));
+        ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage().getScaledInstance(209, 200, Image.SCALE_DEFAULT));
         tIcon.setIcon(img);
         
-        tVersion.setText(VERSION);
+        tVersion.setText("Versión " + Util.VERSION);
         
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         
         setLocationRelativeTo(null);
     }

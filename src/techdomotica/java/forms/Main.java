@@ -76,12 +76,12 @@ public class Main extends javax.swing.JFrame {
         });
         mainChanger.start();
         setLocationRelativeTo(null);
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         
-        camera1.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera-r.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        camera2.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        camera3.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera-r.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        camera4.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camera.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        camera1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera-r.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        camera2.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        camera3.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera-r.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        camera4.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
     }
 
     /**
@@ -146,7 +146,7 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        camera1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        camera1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/camera.png"))); // NOI18N
         camera1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 camera1MouseClicked(evt);
@@ -154,7 +154,7 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().add(camera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 50, 50));
 
-        camera2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        camera2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/camera.png"))); // NOI18N
         camera2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 camera2MouseClicked(evt);
@@ -162,7 +162,7 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().add(camera2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 50, 50));
 
-        camera3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        camera3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/camera.png"))); // NOI18N
         camera3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 camera3MouseClicked(evt);
@@ -170,7 +170,7 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().add(camera3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 50, 50));
 
-        camera4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/camera.png"))); // NOI18N
+        camera4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/camera.png"))); // NOI18N
         camera4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 camera4MouseClicked(evt);
@@ -178,7 +178,7 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().add(camera4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 50, 50));
 
-        mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/technomotica/media/simulator/sala.png"))); // NOI18N
+        mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/sala.png"))); // NOI18N
         getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 380));
 
         tempAire.setText("Temperatura de la sala: 23,0°C");
@@ -277,7 +277,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Gestión de dispostivos");
+        jMenu4.setText("Gestión de dispositivos");
 
         jMenu7.setText("Vista de cámaras");
 
@@ -488,7 +488,7 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("Llamado desde Main!");
             }
         };
-        camView.cameraView.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/" + campath + ".png").getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
+        camView.cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/" + campath + ".png")).getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
         camView.cameraViewNum.setText(title);
         camView.setTitle(title + " - Tech Domótica");
         camView.setVisible(true);
@@ -532,7 +532,7 @@ public class Main extends javax.swing.JFrame {
         if(SystemTray.isSupported() && !onSystemTray) {
             appSystemTray = null;
             SystemTray tray = SystemTray.getSystemTray();
-            Image img = new ImageIcon("src/technomotica/media/L4.png").getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+            Image img = new ImageIcon(getClass().getResource("media/L4.png")).getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
             
             PopupMenu popmenu = new PopupMenu();
             
@@ -578,7 +578,7 @@ public class Main extends javax.swing.JFrame {
             });
             popmenu.add(dfItem4);
             
-            appSystemTray = new TrayIcon(img, "Technomotica", popmenu);
+            appSystemTray = new TrayIcon(img, "Tech Dómotica", popmenu);
             
             appSystemTray.addMouseListener(new MouseListener() {
                 @Override

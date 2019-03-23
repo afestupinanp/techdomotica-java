@@ -11,16 +11,14 @@ import javax.swing.UIManager;
 
 public class LoginPage extends javax.swing.JFrame {
 
-    public String VERSION = "Versión 0.1";
-
     public LoginPage() {
         initComponents();
 
-        ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L1.png").getImage().getScaledInstance(240, 140, Image.SCALE_DEFAULT));
+        ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L1.png")).getImage().getScaledInstance(240, 140, Image.SCALE_DEFAULT));
         //Solución por Tirz - StackOverflow: https://stackoverflow.com/a/32885963
         imagePlace.setIcon(img);
 
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
 
         setLocationRelativeTo(null);
     }
@@ -247,7 +245,7 @@ public class LoginPage extends javax.swing.JFrame {
     }
 
     public void exit() {
-        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Technomotica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Tech Domótica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (confirm == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

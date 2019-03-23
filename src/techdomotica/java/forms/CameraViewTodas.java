@@ -22,12 +22,12 @@ public class CameraViewTodas extends javax.swing.JFrame {
     
     public CameraViewTodas() {
         initComponents();
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         
-        camera1.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camara1.png").getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
-        camera2.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camara2.png").getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
-        camera3.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camara3.png").getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
-        camera4.setIcon(new ImageIcon(new ImageIcon("src/technomotica/media/simulator/camara4.png").getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
+        camera1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camara1.png")).getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
+        camera2.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camara2.png")).getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
+        camera3.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camara3.png")).getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
+        camera4.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camara4.png")).getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
         
         setLocationRelativeTo(null);
     }

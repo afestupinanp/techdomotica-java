@@ -24,9 +24,9 @@ public class Registrar extends javax.swing.JFrame {
      */
     public Registrar() {
         initComponents();
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
 
-        ImageIcon img = new ImageIcon(new ImageIcon("src/technomotica/media/L1.png").getImage().getScaledInstance(122, 66, Image.SCALE_SMOOTH));
+        ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L1.png")).getImage().getScaledInstance(122, 66, Image.SCALE_SMOOTH));
         Imageplace.setIcon(img);
         
         setLocationRelativeTo(null);

@@ -36,7 +36,7 @@ public class progressDialog extends javax.swing.JDialog {
     public progressDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setIconImage(new ImageIcon("src/technomotica/media/L4.png").getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         completion.start();
         setLocationRelativeTo(null);
     }
