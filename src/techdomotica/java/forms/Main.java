@@ -448,7 +448,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        CameraViewTodas todas = new CameraViewTodas();
+        CameraViewTodas todas = new CameraViewTodas(ambiente);
         todas.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
@@ -471,7 +471,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void saveChangesToMain() {
                 super.saveChangesToMain();
-                System.out.println("We're out of here!");
+                //System.out.println("We're out of here!");
                 ambiente.startAmbienteThread();
                 ambiente.toggleAmbienteThread();
                 
@@ -489,10 +489,6 @@ public class Main extends javax.swing.JFrame {
             }
         };
         int camaraid = Character.getNumericValue(campath.charAt(campath.length() - 1)) - 1;
-        if(ambiente.getCamara(camaraid).getComponenteEncendidoState()) {
-            camView.cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/" + campath + ".png")).getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
-        }
-        else camView.cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal.png")).getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
         camView.cameraViewNum.setText(title);
         camView.setTitle(title + " - Tech Domótica");
         camView.setVisible(true);
