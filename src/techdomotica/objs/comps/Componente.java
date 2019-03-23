@@ -2,11 +2,13 @@ package techdomotica.objs.comps;
 
 public class Componente {
     
-    private String nombreComponente = "",
-            marcaComponente = "";
+    private String nombreComponente = "";
+    private String marcaComponente = "";
     
-    private double usoComponente = 100.0,
-            gastoEnergetico = 0.0;
+    private double usoComponente = 100.0;
+    private double gastoEnergetico = 0.0;
+    
+    private boolean componenteEncendido = false;
     
     public Componente(String nombre, String marca, double uso) {
         nombreComponente = nombre;
@@ -56,4 +58,15 @@ public class Componente {
         return marcaComponente + " " + nombreComponente;
     }
     
+    public void toggleComponenteEncendido() {
+        componenteEncendido = !componenteEncendido;
+    }
+    
+    public void toggleComponenteEncendido(boolean en) {
+        componenteEncendido = en;
+    }
+    
+    public boolean getComponenteEncendidoState() {
+        return componenteEncendido;
+    }
 }

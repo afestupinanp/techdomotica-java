@@ -5,13 +5,12 @@
  */
 package techdomotica.java.forms;
 
+import java.awt.Image;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
-//import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import techdomotica.objs.Ambiente;
 import techdomotica.objs.Time;
 
 /**
@@ -26,18 +25,28 @@ public class CameraView extends javax.swing.JFrame {
      */
     
     private Time currentTime;
+    private Ambiente ambient;
     
     private Thread changeUI;
+    
     private boolean stopit = true;
     
-    public CameraView(Time timeThread) {
+    private String cameraPath;
+    private int cameraID;
+    
+    public CameraView(Ambiente ambiente, Time timeThread, String campath, boolean ison) {
         initComponents();
+        ambient = ambiente;
         currentTime = timeThread;
+        cameraPath = campath;
+        
+        cameraID = Character.getNumericValue(campath.charAt(campath.length() - 1)) - 1;
 
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         setLocationRelativeTo(null);
         
-        
+        loadViewIcon(cameraPath, ison);
+
         changeUI = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -70,13 +79,13 @@ public class CameraView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btngrp1 = new javax.swing.ButtonGroup();
+        cameraOn = new javax.swing.ButtonGroup();
         dateTime = new javax.swing.JLabel();
         cameraViewNum = new javax.swing.JLabel();
         cameraView = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        camerabtnon = new javax.swing.JRadioButton();
+        camerabtnoff = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -97,14 +106,24 @@ public class CameraView extends javax.swing.JFrame {
         jLabel1.setText("Estado:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, -1, 30));
 
-        btngrp1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Activado");
-        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, 30));
+        cameraOn.add(camerabtnon);
+        camerabtnon.setSelected(true);
+        camerabtnon.setText("Activado");
+        camerabtnon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camerabtnonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(camerabtnon, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, -1, 30));
 
-        btngrp1.add(jRadioButton2);
-        jRadioButton2.setText("Desactivado");
-        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, -1, 30));
+        cameraOn.add(camerabtnoff);
+        camerabtnoff.setText("Desactivado");
+        camerabtnoff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camerabtnoffActionPerformed(evt);
+            }
+        });
+        getContentPane().add(camerabtnoff, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, -1, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -114,6 +133,57 @@ public class CameraView extends javax.swing.JFrame {
         handleClose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void camerabtnonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camerabtnonActionPerformed
+        progressDialog dialogo = new progressDialog(this, true, 10){
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambient.getCamara(cameraID).toggleComponenteEncendido(true);
+                try {
+                    Thread.sleep(500);
+                    loadViewIcon(cameraPath, true);
+                } 
+                catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        dialogo.setTitle("Encendiendo cámara");
+        dialogo.textVar.setText("Encendiendo la cámara " + ambient.getCamara(cameraID).getComponenteFullName() + ". Por favor espere...");
+        dialogo.setVisible(true);
+    }//GEN-LAST:event_camerabtnonActionPerformed
+
+    private void camerabtnoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camerabtnoffActionPerformed
+        progressDialog dialogo = new progressDialog(this, true, 10){
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambient.getCamara(cameraID).toggleComponenteEncendido(false);
+                try {
+                    Thread.sleep(500);
+                    loadViewIcon(cameraPath, false);
+                } 
+                catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        dialogo.setTitle("Apagando cámara");
+        dialogo.textVar.setText("Apagando la cámara " + ambient.getCamara(cameraID).getComponenteFullName() + ". Por favor espere...");
+        dialogo.setVisible(true);
+    }//GEN-LAST:event_camerabtnoffActionPerformed
+
+    public void loadViewIcon(String campath, boolean ison) {
+        if(ison) {
+            cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/" + campath + ".png")).getImage().getScaledInstance(cameraView.getSize().width, cameraView.getSize().height, Image.SCALE_SMOOTH)));
+            camerabtnon.setSelected(true);
+        }
+        else {
+            cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal.png")).getImage().getScaledInstance(cameraView.getSize().width, cameraView.getSize().height, Image.SCALE_SMOOTH)));
+            camerabtnoff.setSelected(true);
+        }
+    }
+    
     public void handleClose() {
         changeUI.interrupt();
         stopit = false;
@@ -145,18 +215,18 @@ public class CameraView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CameraView(null).setVisible(true);
+                new CameraView(null, null, null, false).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup btngrp1;
+    private javax.swing.ButtonGroup cameraOn;
     public javax.swing.JLabel cameraView;
     public javax.swing.JLabel cameraViewNum;
+    private javax.swing.JRadioButton camerabtnoff;
+    private javax.swing.JRadioButton camerabtnon;
     private javax.swing.JLabel dateTime;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     // End of variables declaration//GEN-END:variables
 }

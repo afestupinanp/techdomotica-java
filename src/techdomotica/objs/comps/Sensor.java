@@ -2,8 +2,8 @@ package techdomotica.objs.comps;
 
 public class Sensor extends Componente {
     
-    private String tipoSensor = "",
-                   ubicacion = "";
+    private String tipoSensor = "";
+    private String ubicacion = "";
     
     public Sensor(String nombre, String marca, double uso) {
         super(nombre, marca, uso);

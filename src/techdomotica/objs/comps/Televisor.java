@@ -2,8 +2,8 @@ package techdomotica.objs.comps;
 
 public class Televisor extends Componente {
     
-    private String calidadTV = "HD",
-            resolucion = "1280x720";
+    private String calidadTV = "HD";
+    private String resolucion = "1280x720";
     
     public Televisor(String nombre, String marca, double uso) {
         super(nombre, marca, uso);

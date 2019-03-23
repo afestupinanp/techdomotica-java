@@ -1,12 +1,16 @@
 package techdomotica.java.forms;
 
 import java.awt.Color;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import techdomotica.objs.Ambiente;
+import techdomotica.objs.Time;
 import techdomotica.objs.Util;
 import techdomotica.objs.comps.Componente;
 
@@ -17,17 +21,14 @@ import techdomotica.objs.comps.Componente;
 public class DeviceManager extends javax.swing.JFrame {
 
     public Ambiente ambiente;
+    private Time timeThread;
     
-    public DeviceManager(Ambiente amb) {
+    public DeviceManager(Ambiente amb, Time runtime) {
         initComponents();
         ambiente = amb;
+        timeThread = runtime;
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         setLocationRelativeTo(null);
-
-        displaydeviceac1.setText(ambiente.getACondicionado(0).getComponenteFullName());
-        displaydeviceac2.setText(ambiente.getACondicionado(1).getComponenteFullName());
-        deviceprogressac1.setValue((int)ambiente.getACondicionado(0).getUsoComponente());
-        deviceprogressac2.setValue((int)ambiente.getACondicionado(1).getUsoComponente());
         
         checkComponentUse();
         
@@ -57,13 +58,13 @@ public class DeviceManager extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnrepairac1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rdbtnonac1 = new javax.swing.JRadioButton();
+        rdbtnoffac1 = new javax.swing.JRadioButton();
         displaydeviceac2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         deviceprogressac2 = new javax.swing.JProgressBar();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        rdbtnoffac2 = new javax.swing.JRadioButton();
+        rdbtnonac2 = new javax.swing.JRadioButton();
         btndeleteac2 = new javax.swing.JButton();
         btnrepairac2 = new javax.swing.JButton();
         btntemperaturaac1 = new javax.swing.JButton();
@@ -72,20 +73,38 @@ public class DeviceManager extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
+        displaydevicecam1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jProgressBar2 = new javax.swing.JProgressBar();
-        jButton3 = new javax.swing.JButton();
+        btndeletecam1 = new javax.swing.JButton();
+        rdbtnoncam1 = new javax.swing.JRadioButton();
+        rdbtnoffcam1 = new javax.swing.JRadioButton();
+        deviceprogresscam1 = new javax.swing.JProgressBar();
+        btnrepaircam1 = new javax.swing.JButton();
+        btnvideofeedcam1 = new javax.swing.JButton();
+        btnvideofeedcam2 = new javax.swing.JButton();
+        rdbtnoncam2 = new javax.swing.JRadioButton();
+        rdbtnoffcam2 = new javax.swing.JRadioButton();
+        deviceprogresscam2 = new javax.swing.JProgressBar();
+        btnrepaircam2 = new javax.swing.JButton();
+        btndeletecam2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
+        displaydevicecam2 = new javax.swing.JLabel();
+        displaydevicecam3 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        btndeletecam3 = new javax.swing.JButton();
+        rdbtnoncam3 = new javax.swing.JRadioButton();
+        rdbtnoffcam3 = new javax.swing.JRadioButton();
+        deviceprogresscam3 = new javax.swing.JProgressBar();
+        btnrepaircam3 = new javax.swing.JButton();
+        btnvideofeedcam3 = new javax.swing.JButton();
+        btndeletecam4 = new javax.swing.JButton();
+        displaydevicecam4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jProgressBar4 = new javax.swing.JProgressBar();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnrepaircam4 = new javax.swing.JButton();
+        rdbtnoncam4 = new javax.swing.JRadioButton();
+        deviceprogresscam4 = new javax.swing.JProgressBar();
+        btnvideofeedcam4 = new javax.swing.JButton();
+        rdbtnoffcam4 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -107,10 +126,17 @@ public class DeviceManager extends javax.swing.JFrame {
         displaydeviceac1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         displaydeviceac1.setText("DISPLAY_DEVICE");
 
+        deviceprogressac1.setForeground(new java.awt.Color(0, 153, 0));
         deviceprogressac1.setToolTipText("");
         deviceprogressac1.setValue(100);
+        deviceprogressac1.setStringPainted(true);
 
         btndeleteac1.setText("Eliminar");
+        btndeleteac1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeleteac1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Estado");
@@ -126,12 +152,21 @@ public class DeviceManager extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Dispositivos que requieran mantenimiento aparecerán señalados en rojo.");
 
-        btndeviceac1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Encendido");
+        btndeviceac1.add(rdbtnonac1);
+        rdbtnonac1.setText("Encendido");
+        rdbtnonac1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnonac1ActionPerformed(evt);
+            }
+        });
 
-        btndeviceac1.add(jRadioButton2);
-        jRadioButton2.setText("Apagado");
+        btndeviceac1.add(rdbtnoffac1);
+        rdbtnoffac1.setText("Apagado");
+        rdbtnoffac1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffac1ActionPerformed(evt);
+            }
+        });
 
         displaydeviceac2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         displaydeviceac2.setText("DISPLAY_DEVICE");
@@ -139,17 +174,33 @@ public class DeviceManager extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Estado");
 
+        deviceprogressac2.setForeground(new java.awt.Color(0, 153, 0));
         deviceprogressac2.setToolTipText("");
         deviceprogressac2.setValue(100);
+        deviceprogressac2.setStringPainted(true);
 
-        btndeviceac2.add(jRadioButton3);
-        jRadioButton3.setText("Apagado");
+        btndeviceac2.add(rdbtnoffac2);
+        rdbtnoffac2.setText("Apagado");
+        rdbtnoffac2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffac2ActionPerformed(evt);
+            }
+        });
 
-        btndeviceac2.add(jRadioButton4);
-        jRadioButton4.setSelected(true);
-        jRadioButton4.setText("Encendido");
+        btndeviceac2.add(rdbtnonac2);
+        rdbtnonac2.setText("Encendido");
+        rdbtnonac2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnonac2ActionPerformed(evt);
+            }
+        });
 
         btndeleteac2.setText("Eliminar");
+        btndeleteac2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeleteac2ActionPerformed(evt);
+            }
+        });
 
         btnrepairac2.setText("Reparar");
         btnrepairac2.setEnabled(false);
@@ -184,9 +235,9 @@ public class DeviceManager extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(rdbtnonac1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2))
+                                .addComponent(rdbtnoffac1))
                             .addComponent(displaydeviceac1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,9 +250,9 @@ public class DeviceManager extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton4)
+                                .addComponent(rdbtnonac2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton3)
+                                .addComponent(rdbtnoffac2)
                                 .addGap(18, 18, 18))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(displaydeviceac2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -234,8 +285,8 @@ public class DeviceManager extends javax.swing.JFrame {
                     .addComponent(deviceprogressac1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnrepairac1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton1)
-                        .addComponent(jRadioButton2)))
+                        .addComponent(rdbtnonac1)
+                        .addComponent(rdbtnoffac1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btntemperaturaac1)
                 .addGap(1, 1, 1)
@@ -249,8 +300,8 @@ public class DeviceManager extends javax.swing.JFrame {
                     .addComponent(deviceprogressac2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnrepairac2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton4)
-                        .addComponent(jRadioButton3)))
+                        .addComponent(rdbtnonac2)
+                        .addComponent(rdbtnoffac2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btntemperaturaac2)
                 .addGap(8, 8, 8)
@@ -264,44 +315,201 @@ public class DeviceManager extends javax.swing.JFrame {
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("DISPLAY_DEVICE");
+        displaydevicecam1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        displaydevicecam1.setText("DISPLAY_DEVICE");
 
-        jProgressBar2.setToolTipText("");
-        jProgressBar2.setValue(100);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Estado");
 
-        jButton3.setText("Eliminar");
+        btndeletecam1.setText("Eliminar");
+        btndeletecam1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeletecam1ActionPerformed(evt);
+            }
+        });
+
+        btndevicecamera1.add(rdbtnoncam1);
+        rdbtnoncam1.setText("Encendido");
+        rdbtnoncam1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoncam1ActionPerformed(evt);
+            }
+        });
+
+        btndevicecamera1.add(rdbtnoffcam1);
+        rdbtnoffcam1.setText("Apagado");
+        rdbtnoffcam1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffcam1ActionPerformed(evt);
+            }
+        });
+
+        deviceprogresscam1.setForeground(new java.awt.Color(0, 153, 0));
+        deviceprogresscam1.setToolTipText("");
+        deviceprogresscam1.setValue(100);
+        deviceprogresscam1.setStringPainted(true);
+
+        btnrepaircam1.setText("Reparar");
+        btnrepaircam1.setEnabled(false);
+        btnrepaircam1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepaircam1ActionPerformed(evt);
+            }
+        });
+
+        btnvideofeedcam1.setText("Ver señal de vídeo");
+        btnvideofeedcam1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvideofeedcam1ActionPerformed(evt);
+            }
+        });
+
+        btnvideofeedcam2.setText("Ver señal de vídeo");
+        btnvideofeedcam2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvideofeedcam2ActionPerformed(evt);
+            }
+        });
+
+        btndevicecamera2.add(rdbtnoncam2);
+        rdbtnoncam2.setText("Encendido");
+        rdbtnoncam2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoncam2ActionPerformed(evt);
+            }
+        });
+
+        btndevicecamera2.add(rdbtnoffcam2);
+        rdbtnoffcam2.setText("Apagado");
+        rdbtnoffcam2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffcam2ActionPerformed(evt);
+            }
+        });
+
+        deviceprogresscam2.setForeground(new java.awt.Color(0, 153, 0));
+        deviceprogresscam2.setToolTipText("");
+        deviceprogresscam2.setValue(100);
+        deviceprogresscam2.setStringPainted(true);
+
+        btnrepaircam2.setText("Reparar");
+        btnrepaircam2.setEnabled(false);
+        btnrepaircam2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepaircam2ActionPerformed(evt);
+            }
+        });
+
+        btndeletecam2.setText("Eliminar");
+        btndeletecam2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeletecam2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Estado");
 
-        jButton4.setText("Mantener");
+        displaydevicecam2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        displaydevicecam2.setText("DISPLAY_DEVICE");
 
-        btndevicecamera1.add(jRadioButton5);
-        jRadioButton5.setSelected(true);
-        jRadioButton5.setText("Encendido");
+        displaydevicecam3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        displaydevicecam3.setText("DISPLAY_DEVICE");
 
-        btndevicecamera1.add(jRadioButton6);
-        jRadioButton6.setText("Apagado");
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Estado");
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel12.setText("DISPLAY_DEVICE");
+        btndeletecam3.setText("Eliminar");
+        btndeletecam3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeletecam3ActionPerformed(evt);
+            }
+        });
 
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Estado");
+        btndevicecamera3.add(rdbtnoncam3);
+        rdbtnoncam3.setText("Encendido");
+        rdbtnoncam3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoncam3ActionPerformed(evt);
+            }
+        });
 
-        jProgressBar4.setToolTipText("");
-        jProgressBar4.setValue(100);
+        btndevicecamera3.add(rdbtnoffcam3);
+        rdbtnoffcam3.setText("Apagado");
+        rdbtnoffcam3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffcam3ActionPerformed(evt);
+            }
+        });
 
-        btndevicecamera2.add(jRadioButton7);
-        jRadioButton7.setText("Apagado");
+        deviceprogresscam3.setForeground(new java.awt.Color(0, 153, 0));
+        deviceprogresscam3.setToolTipText("");
+        deviceprogresscam3.setValue(100);
+        deviceprogresscam3.setStringPainted(true);
 
-        btndevicecamera2.add(jRadioButton8);
-        jRadioButton8.setText("Encendido");
+        btnrepaircam3.setText("Reparar");
+        btnrepaircam3.setEnabled(false);
+        btnrepaircam3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepaircam3ActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("Eliminar");
+        btnvideofeedcam3.setText("Ver señal de vídeo");
+        btnvideofeedcam3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvideofeedcam3ActionPerformed(evt);
+            }
+        });
 
-        jButton8.setText("Mantener");
+        btndeletecam4.setText("Eliminar");
+        btndeletecam4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeletecam4ActionPerformed(evt);
+            }
+        });
+
+        displaydevicecam4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        displaydevicecam4.setText("DISPLAY_DEVICE");
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Estado");
+
+        btnrepaircam4.setText("Reparar");
+        btnrepaircam4.setEnabled(false);
+        btnrepaircam4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepaircam4ActionPerformed(evt);
+            }
+        });
+
+        btndevicecamera4.add(rdbtnoncam4);
+        rdbtnoncam4.setText("Encendido");
+        rdbtnoncam4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoncam4ActionPerformed(evt);
+            }
+        });
+
+        deviceprogresscam4.setForeground(new java.awt.Color(0, 153, 0));
+        deviceprogresscam4.setToolTipText("");
+        deviceprogresscam4.setValue(100);
+        deviceprogresscam4.setStringPainted(true);
+
+        btnvideofeedcam4.setText("Ver señal de vídeo");
+        btnvideofeedcam4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnvideofeedcam4ActionPerformed(evt);
+            }
+        });
+
+        btndevicecamera4.add(rdbtnoffcam4);
+        rdbtnoffcam4.setText("Apagado");
+        rdbtnoffcam4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffcam4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -309,65 +517,144 @@ public class DeviceManager extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(displaydevicecam1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnvideofeedcam1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(rdbtnoncam1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(rdbtnoffcam1)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(deviceprogresscam1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btndeletecam1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnrepaircam1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jRadioButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton6))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jRadioButton8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton7))
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jProgressBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(displaydevicecam2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnvideofeedcam2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addComponent(rdbtnoncam2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(rdbtnoffcam2)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(deviceprogresscam2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btndeletecam2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnrepaircam2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(displaydevicecam3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnvideofeedcam3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addComponent(rdbtnoncam3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(rdbtnoffcam3)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(deviceprogresscam3, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btndeletecam3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnrepaircam3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(displaydevicecam4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnvideofeedcam4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addComponent(rdbtnoncam4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(rdbtnoffcam4)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(deviceprogresscam4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btndeletecam4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnrepaircam4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(jButton3))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton5)
-                        .addComponent(jRadioButton6)))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displaydevicecam1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(btndeletecam1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel13)
-                        .addComponent(jButton7))
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton8)
-                        .addComponent(jRadioButton7)))
-                .addGap(52, 52, 52))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbtnoncam1)
+                    .addComponent(rdbtnoffcam1)
+                    .addComponent(deviceprogresscam1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnrepaircam1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnvideofeedcam1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displaydevicecam2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(btndeletecam2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbtnoncam2)
+                    .addComponent(rdbtnoffcam2)
+                    .addComponent(deviceprogresscam2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnrepaircam2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnvideofeedcam2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displaydevicecam3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(btndeletecam3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbtnoncam3)
+                    .addComponent(rdbtnoffcam3)
+                    .addComponent(deviceprogresscam3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnrepaircam3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnvideofeedcam3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displaydevicecam4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(btndeletecam4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbtnoncam4)
+                    .addComponent(rdbtnoffcam4)
+                    .addComponent(deviceprogresscam4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnrepaircam4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnvideofeedcam4)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel5);
@@ -382,8 +669,8 @@ public class DeviceManager extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -401,7 +688,7 @@ public class DeviceManager extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 190, Short.MAX_VALUE)
+                .addGap(0, 213, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -419,7 +706,7 @@ public class DeviceManager extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(190, Short.MAX_VALUE)
+                .addContainerGap(213, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -437,7 +724,7 @@ public class DeviceManager extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
         );
 
         pack();
@@ -445,24 +732,103 @@ public class DeviceManager extends javax.swing.JFrame {
 
     private void checkComponentUse() {
         checkACUse();
+        checkCamUse();
     }
     
     private void checkACUse() {
-        JButton btnAires[] = {btnrepairac1, btnrepairac2};
-        JLabel labelAires[] = {displaydeviceac1, displaydeviceac2};
+        JButton btnRep[] = {btnrepairac1, btnrepairac2};
+        JButton btnDel[] = {btndeleteac1, btndeleteac2};
+        JButton btnAiresSet[] = {btntemperaturaac1, btntemperaturaac2};
+        JLabel deviceLabel[] = {displaydeviceac1, displaydeviceac2};
+        JProgressBar progressDevice[] = {deviceprogressac1, deviceprogressac2};
+        JRadioButton radiosDevice[][] = {{rdbtnonac1, rdbtnoffac1}, {rdbtnonac2, rdbtnoffac2}};
+        
         for(int i = 0 ; i < 2 ; i++) {
+            btnRep[i].setToolTipText(null);
+            radiosDevice[i][0].setToolTipText(null);
+            radiosDevice[i][1].setToolTipText(null);
+            btnAiresSet[i].setToolTipText(null);
             if(ambiente.getACondicionado(i) != null) {
+                deviceLabel[i].setText(ambiente.getACondicionado(i).getComponenteFullName());
+                progressDevice[i].setValue((int)ambiente.getACondicionado(i).getUsoComponente());
+                if(ambiente.getACondicionado(i).getComponenteEncendidoState()) radiosDevice[i][0].setSelected(true);
+                else radiosDevice[i][1].setSelected(true);
+                
                 if(ambiente.getACondicionado(i).getUsoComponente() >= 80 && ambiente.getACondicionado(i).getUsoComponente() <= 100) {
-                    btnAires[i].setEnabled(false);
-                    btnAires[i].setToolTipText("Este aire acondicionado está en condiciones óptimas de uso.");
-                    labelAires[i].setForeground(Color.black);
+                    btnRep[i].setEnabled(false);
+                    btnRep[i].setToolTipText("Este aire acondicionado está en condiciones óptimas de uso.");
+                    deviceLabel[i].setForeground(Color.black);
                 }
-                if(ambiente.getACondicionado(i).getUsoComponente() <= 60) btnAires[i].setEnabled(true);
-                if(ambiente.getACondicionado(i).getUsoComponente() <= 40) labelAires[i].setForeground(Color.red);
+                if(ambiente.getACondicionado(i).getUsoComponente() <= 60) btnRep[i].setEnabled(true);
+                if(ambiente.getACondicionado(i).getUsoComponente() <= 40) deviceLabel[i].setForeground(Color.red);
                 if(ambiente.getACondicionado(i).getUsoComponente() == 0) {
-                    btnAires[i].setEnabled(false);
-                    btnAires[i].setToolTipText("Este aire acondicionado ya está demasiado dañado para ser reparado. Eliminalo y reemplazalo por uno nuevo.");
+                    btnRep[i].setEnabled(false);
+                    btnRep[i].setToolTipText("Este aire acondicionado ya está demasiado dañado para ser reparado.\nEliminalo y reemplazalo por uno nuevo.");
                 }
+            }
+            else {
+                String no = "Agrega un dispositivo para interactuar con el.";
+                btnDel[i].setText("Agregar");
+                deviceLabel[i].setText("Dispositivo no agregado.");
+                progressDevice[i].setValue(0);
+                btnRep[i].setEnabled(false);
+                radiosDevice[i][0].setEnabled(false);
+                radiosDevice[i][1].setEnabled(false);
+                btnAiresSet[i].setEnabled(false);
+                
+                btnRep[i].setToolTipText(no);
+                radiosDevice[i][0].setToolTipText(no);
+                radiosDevice[i][1].setToolTipText(no);
+                btnAiresSet[i].setToolTipText(no);
+            }
+        }
+    }
+    
+    private void checkCamUse() {
+        JButton btnRep[] = {btnrepaircam1, btnrepaircam2, btnrepaircam3, btnrepaircam4};
+        JButton btnDel[] = {btndeletecam1, btndeletecam2, btndeletecam3, btndeletecam4};
+        JButton btnCamCheck[] = {btnvideofeedcam1, btnvideofeedcam2, btnvideofeedcam3, btnvideofeedcam4};
+        JLabel deviceLabel[] = {displaydevicecam1, displaydevicecam2, displaydevicecam3, displaydevicecam4};
+        JProgressBar progressDevice[] = {deviceprogresscam1, deviceprogresscam2, deviceprogresscam3, deviceprogresscam4};
+        JRadioButton radiosDevice[][] = {{rdbtnoncam1, rdbtnoffcam1}, {rdbtnoncam2, rdbtnoffcam2}, {rdbtnoncam3, rdbtnoffcam3}, {rdbtnoncam4, rdbtnoffcam4}};//, {rdbtnonac2, rdbtnoffac2}};
+        
+        for(int i = 0 ; i < 4 ; i++) {
+            btnRep[i].setToolTipText(null);
+            radiosDevice[i][0].setToolTipText(null);
+            radiosDevice[i][1].setToolTipText(null);
+            btnCamCheck[i].setToolTipText(null);
+            if(ambiente.getCamara(i) != null) {
+                deviceLabel[i].setText(ambiente.getCamara(i).getComponenteFullName());
+                progressDevice[i].setValue((int)ambiente.getCamara(i).getUsoComponente());
+                if(ambiente.getCamara(i).getComponenteEncendidoState()) radiosDevice[i][0].setSelected(true);
+                else radiosDevice[i][1].setSelected(true);
+                
+                if(ambiente.getCamara(i).getUsoComponente() >= 80 && ambiente.getCamara(i).getUsoComponente() <= 100) {
+                    btnRep[i].setEnabled(false);
+                    btnRep[i].setToolTipText("Esta cámara está en condiciones óptimas de uso.");
+                    deviceLabel[i].setForeground(Color.black);
+                }
+                if(ambiente.getCamara(i).getUsoComponente() <= 60) btnRep[i].setEnabled(true);
+                if(ambiente.getCamara(i).getUsoComponente() <= 40) deviceLabel[i].setForeground(Color.red);
+                if(ambiente.getCamara(i).getUsoComponente() == 0) {
+                    btnRep[i].setEnabled(false);
+                    btnRep[i].setToolTipText("Esta cámara ya está demasiado dañada para ser reparada.\nEliminala y reemplazala por una nueva.");
+                }
+            }
+            else {
+                String no = "Agrega un dispositivo para interactuar con el.";
+                btnDel[i].setText("Agregar");
+                deviceLabel[i].setText("Dispositivo no agregado.");
+                progressDevice[i].setValue(0);
+                btnRep[i].setEnabled(false);
+                radiosDevice[i][0].setEnabled(false);
+                radiosDevice[i][1].setEnabled(false);
+                btnCamCheck[i].setEnabled(false);
+                
+                btnRep[i].setToolTipText(no);
+                radiosDevice[i][0].setToolTipText(no);
+                radiosDevice[i][1].setToolTipText(no);
+                btnCamCheck[i].setToolTipText(no);
             }
         }
     }
@@ -507,8 +873,162 @@ public class DeviceManager extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_btnrepairac2ActionPerformed
 
+    private void btndeleteac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteac1ActionPerformed
+        if(ambiente.getACondicionado(0) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getACondicionado(0).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) {
+                ambiente.destroyACondicionado(0);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "TBA", "TBA", JOptionPane.INFORMATION_MESSAGE);
+        }
+        checkComponentUse();
+    }//GEN-LAST:event_btndeleteac1ActionPerformed
+
+    private void rdbtnonac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnonac1ActionPerformed
+        ambiente.getACondicionado(0).toggleComponenteEncendido(true);
+    }//GEN-LAST:event_rdbtnonac1ActionPerformed
+
+    private void rdbtnoffac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffac1ActionPerformed
+        ambiente.getACondicionado(0).toggleComponenteEncendido(false);
+    }//GEN-LAST:event_rdbtnoffac1ActionPerformed
+
+    private void rdbtnonac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnonac2ActionPerformed
+        ambiente.getACondicionado(1).toggleComponenteEncendido(true);
+    }//GEN-LAST:event_rdbtnonac2ActionPerformed
+
+    private void rdbtnoffac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffac2ActionPerformed
+        ambiente.getACondicionado(1).toggleComponenteEncendido(false);
+    }//GEN-LAST:event_rdbtnoffac2ActionPerformed
+
+    private void btndeleteac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteac2ActionPerformed
+        if(ambiente.getACondicionado(1) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getACondicionado(1).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) {
+                ambiente.destroyACondicionado(1);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "TBA", "TBA", JOptionPane.INFORMATION_MESSAGE);
+        }
+        checkComponentUse();
+    }//GEN-LAST:event_btndeleteac2ActionPerformed
+
+    private void btndeletecam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btndeletecam1ActionPerformed
+
+    private void rdbtnoncam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoncam1ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(0, true);
+    }//GEN-LAST:event_rdbtnoncam1ActionPerformed
+
+    private void rdbtnoffcam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffcam1ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(0, false);
+    }//GEN-LAST:event_rdbtnoffcam1ActionPerformed
+
+    private void btnrepaircam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnrepaircam1ActionPerformed
+
+    private void btnvideofeedcam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvideofeedcam1ActionPerformed
+        cameraView("camara1", "Vista de cámara 1", ambiente.getCamara(0).getComponenteEncendidoState());
+    }//GEN-LAST:event_btnvideofeedcam1ActionPerformed
+
+    private void btnvideofeedcam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvideofeedcam2ActionPerformed
+        // TODO add your handling code here:
+        cameraView("camara2", "Vista de cámara 2", ambiente.getCamara(1).getComponenteEncendidoState());
+    }//GEN-LAST:event_btnvideofeedcam2ActionPerformed
+
+    private void rdbtnoncam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoncam2ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(1, true);
+    }//GEN-LAST:event_rdbtnoncam2ActionPerformed
+
+    private void rdbtnoffcam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffcam2ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(1, false);
+    }//GEN-LAST:event_rdbtnoffcam2ActionPerformed
+
+    private void btnrepaircam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnrepaircam2ActionPerformed
+
+    private void btndeletecam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btndeletecam2ActionPerformed
+
+    private void btndeletecam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btndeletecam3ActionPerformed
+
+    private void rdbtnoncam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoncam3ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(2, true);
+    }//GEN-LAST:event_rdbtnoncam3ActionPerformed
+
+    private void rdbtnoffcam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffcam3ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(2, false);
+    }//GEN-LAST:event_rdbtnoffcam3ActionPerformed
+
+    private void btnrepaircam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnrepaircam3ActionPerformed
+
+    private void btnvideofeedcam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvideofeedcam3ActionPerformed
+        cameraView("camara3", "Vista de cámara 3", ambiente.getCamara(2).getComponenteEncendidoState());
+    }//GEN-LAST:event_btnvideofeedcam3ActionPerformed
+
+    private void btndeletecam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btndeletecam4ActionPerformed
+
+    private void btnrepaircam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnrepaircam4ActionPerformed
+
+    private void rdbtnoncam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoncam4ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(3, true);
+    }//GEN-LAST:event_rdbtnoncam4ActionPerformed
+
+    private void btnvideofeedcam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvideofeedcam4ActionPerformed
+        cameraView("camara4", "Vista de cámara 4", ambiente.getCamara(3).getComponenteEncendidoState());
+    }//GEN-LAST:event_btnvideofeedcam4ActionPerformed
+
+    private void rdbtnoffcam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffcam4ActionPerformed
+        // TODO add your handling code here:
+        toggleCamera(3, false);
+    }//GEN-LAST:event_rdbtnoffcam4ActionPerformed
+
     public void saveChangesToMain() {
         
+    }
+    
+    private void toggleCamera(int id, boolean onoff) {
+        onoffCamera(ambiente.getCamara(id), new progressDialog(this, true, 10) {
+            @Override
+            public void progressBarFilled() {
+                ambiente.getCamara(id).toggleComponenteEncendido(onoff);
+            }
+        }, "Encendiendo componente", "Modificando valores de la cámara " + ambiente.getCamara(id).getComponenteFullName() + ", puede tardar unos segundos.");
+    }
+    
+    private void cameraView(String campath, String title, boolean ison) {
+        CameraView camView = new CameraView(ambiente, timeThread, campath, ison) {
+            @Override
+            public void handleClose() {
+                super.handleClose();
+                checkComponentUse();
+            }
+        };
+        int camaraid = Character.getNumericValue(campath.charAt(campath.length() - 1)) - 1;
+        camView.cameraViewNum.setText(title);
+        camView.setTitle(title + " - Tech Domótica");
+        camView.setVisible(true);
     }
     
     public void changeTemp(int id) {
@@ -529,6 +1049,12 @@ public class DeviceManager extends javax.swing.JFrame {
     public void makeMaintance(Componente comp, progressDialog dialogo) {
         dialogo.setTitle("Reparando " + comp.getComponenteFullName());
         dialogo.textVar.setText("<html>Realizando una operación de mantenimiento al componente " + comp.getComponenteFullName() +", por favor espere...</html>");
+        dialogo.setVisible(true);
+    }
+    
+    public void onoffCamera(Componente comp, progressDialog dialogo, String title, String textvar) {
+        dialogo.setTitle(title);
+        dialogo.textVar.setText("<html>" + textvar + ". Por favor espere...</html>");
         dialogo.setVisible(true);
     }
     
@@ -557,7 +1083,7 @@ public class DeviceManager extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DeviceManager(null).setVisible(true);
+                new DeviceManager(null, null).setVisible(true);
             }
         });
     }
@@ -565,6 +1091,10 @@ public class DeviceManager extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btndeleteac1;
     private javax.swing.JButton btndeleteac2;
+    private javax.swing.JButton btndeletecam1;
+    private javax.swing.JButton btndeletecam2;
+    private javax.swing.JButton btndeletecam3;
+    private javax.swing.JButton btndeletecam4;
     private javax.swing.ButtonGroup btndeviceac1;
     private javax.swing.ButtonGroup btndeviceac2;
     private javax.swing.ButtonGroup btndevicecamera1;
@@ -573,20 +1103,32 @@ public class DeviceManager extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btndevicecamera4;
     private javax.swing.JButton btnrepairac1;
     private javax.swing.JButton btnrepairac2;
+    private javax.swing.JButton btnrepaircam1;
+    private javax.swing.JButton btnrepaircam2;
+    private javax.swing.JButton btnrepaircam3;
+    private javax.swing.JButton btnrepaircam4;
     private javax.swing.JButton btntemperaturaac1;
     private javax.swing.JButton btntemperaturaac2;
+    private javax.swing.JButton btnvideofeedcam1;
+    private javax.swing.JButton btnvideofeedcam2;
+    private javax.swing.JButton btnvideofeedcam3;
+    private javax.swing.JButton btnvideofeedcam4;
     private javax.swing.JProgressBar deviceprogressac1;
     private javax.swing.JProgressBar deviceprogressac2;
+    private javax.swing.JProgressBar deviceprogresscam1;
+    private javax.swing.JProgressBar deviceprogresscam2;
+    private javax.swing.JProgressBar deviceprogresscam3;
+    private javax.swing.JProgressBar deviceprogresscam4;
     private javax.swing.JLabel displaydeviceac1;
     private javax.swing.JLabel displaydeviceac2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JLabel displaydevicecam1;
+    private javax.swing.JLabel displaydevicecam2;
+    private javax.swing.JLabel displaydevicecam3;
+    private javax.swing.JLabel displaydevicecam4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -599,17 +1141,19 @@ public class DeviceManager extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JProgressBar jProgressBar2;
-    private javax.swing.JProgressBar jProgressBar4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JRadioButton rdbtnoffac1;
+    private javax.swing.JRadioButton rdbtnoffac2;
+    private javax.swing.JRadioButton rdbtnoffcam1;
+    private javax.swing.JRadioButton rdbtnoffcam2;
+    private javax.swing.JRadioButton rdbtnoffcam3;
+    private javax.swing.JRadioButton rdbtnoffcam4;
+    private javax.swing.JRadioButton rdbtnonac1;
+    private javax.swing.JRadioButton rdbtnonac2;
+    private javax.swing.JRadioButton rdbtnoncam1;
+    private javax.swing.JRadioButton rdbtnoncam2;
+    private javax.swing.JRadioButton rdbtnoncam3;
+    private javax.swing.JRadioButton rdbtnoncam4;
     // End of variables declaration//GEN-END:variables
 }

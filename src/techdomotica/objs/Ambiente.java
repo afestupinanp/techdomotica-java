@@ -31,16 +31,16 @@ public class Ambiente {
 
     public void loadComponentes() {
         loadACondicionados();
+        loadCamaras();
         loadLuces();
         loadSensores();
         loadProyector();
-        loadCamaras();
         loadPerfil();
     }
     
     public void loadACondicionados() {
-        acondicionado[0] = new ACondicionado("9000btu", "LG", 45.0);
-        acondicionado[1] = new ACondicionado("9000btu", "LG", 30.0);
+       acondicionado[0] = new ACondicionado("9000btu", "LG", 45.0);
+        
     }
     
     public void loadLuces() {
@@ -62,6 +62,7 @@ public class Ambiente {
     public void loadCamaras() {
         for(int i = 0; i < 4 ; i++) {
             camaras[i] = new Camara("Mini DVR", "HIKVISION");
+            camaras[i].toggleComponenteEncendido(true);
         }
     }
     
@@ -72,11 +73,15 @@ public class Ambiente {
     }
     
     public ACondicionado getACondicionado(int index) {
-        return acondicionado[index];
+        return (acondicionado[index] != null) ? acondicionado[index] : null;
+    }
+    
+    public void destroyACondicionado(int index) {
+        acondicionado[index] = null;
     }
     
     public Camara getCamara(int index) {
-        return camaras[index];
+        return (camaras[index] != null) ? camaras[index] : null;
     }
     
     public Luz getLuz(int index) {
@@ -84,11 +89,11 @@ public class Ambiente {
     }
     
     public Sensor getSensor(int index) {
-        return sensores[index];
+        return (sensores[index] != null) ? sensores[index] : null;
     }
     
     public Televisor getTelevisor() {
-        return proyector;
+        return (proyector != null) ? proyector : null;
     }
     
     public double getTemperaturaSala() {
@@ -100,34 +105,53 @@ public class Ambiente {
     }
     
     public void startAmbienteThread() {
-        System.out.println("I've been caleld!");
+        //System.out.println("I've been caleld!");
         ambienteThread = new Thread(new Runnable() {
             double increment = 0.0;
             double increment2 = 0.0;
             
             @Override
             public void run() {
-                System.out.println("ContinueThread es " + ((continueThread) ? "true" : "false"));
-                while(continueThread) {
-                    increment = acondicionado[0].getTemperatura();
-                    increment2 = acondicionado[1].getTemperatura();
-                    System.out.println("Temp 1: " + increment + " | Temp 2: " + increment2);
-                    try {
-                        Thread.sleep(2500);
-                        if(Math.round(Math.random()) == 1) {
-                            increment += 0.02;
-                            increment2 += 0.02;
+                //System.out.println("ContinueThread es " + ((continueThread) ? "true" : "false"));
+                if(acondicionado[0] != null && acondicionado[1] != null) {
+                    while(continueThread) {
+                        increment = acondicionado[0].getTemperatura();
+                        increment2 = acondicionado[1].getTemperatura();
+                        System.out.println("Temp 1: " + increment + " | Temp 2: " + increment2);
+                        try {
+                            Thread.sleep(2500);
+                            if(Math.round(Math.random()) == 1) {
+                                increment += 0.02;
+                                increment2 += 0.02;
+                            }
+                            else {
+                                increment -= 0.02;
+                                increment2 -= 0.02;
+                            }
+                            acondicionado[0].changeTemperatura(increment);
+                            acondicionado[1].changeTemperatura(increment2);
+                            temperaturaSala = (increment + increment2) / 2;
+                        } 
+                        catch (InterruptedException ex) {
+                            ex.printStackTrace();
                         }
-                        else {
-                            increment -= 0.02;
-                            increment2 -= 0.02;
+                    }
+                }
+                else if(acondicionado[0] != null && acondicionado[1] == null) {
+                    while(continueThread) {
+                        increment = acondicionado[0].getTemperatura();
+                        System.out.println("Temp 1: " + increment);
+                        try {
+                            Thread.sleep(2500);
+                            if(Math.round(Math.random()) == 1) increment += 0.02;
+                            else increment -= 0.02;
+                            
+                            acondicionado[0].changeTemperatura(increment);
+                            temperaturaSala = increment;
+                        } 
+                        catch (InterruptedException ex) {
+                            ex.printStackTrace();
                         }
-                        acondicionado[0].changeTemperatura(increment);
-                        acondicionado[1].changeTemperatura(increment2);
-                        temperaturaSala = (increment + increment2) / 2;
-                    } 
-                    catch (InterruptedException ex) {
-                        ex.printStackTrace();
                     }
                 }
             }

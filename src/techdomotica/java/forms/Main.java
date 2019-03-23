@@ -428,23 +428,23 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentResized
 
     private void camera1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera1MouseClicked
-        cameraView("camara1", "Vista de cámara 1");
+        cameraView("camara1", "Vista de cámara 1", ambiente.getCamara(0).getComponenteEncendidoState());
     }//GEN-LAST:event_camera1MouseClicked
 
     private void camera4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera4MouseClicked
-        cameraView("camara4", "Vista de cámara 4");
+        cameraView("camara4", "Vista de cámara 4", ambiente.getCamara(3).getComponenteEncendidoState());
     }//GEN-LAST:event_camera4MouseClicked
 
     private void camera2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera2MouseClicked
-        cameraView("camara2", "Vista de cámara 2");
+        cameraView("camara2", "Vista de cámara 2", ambiente.getCamara(1).getComponenteEncendidoState());
     }//GEN-LAST:event_camera2MouseClicked
 
     private void camera3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_camera3MouseClicked
-        cameraView("camara3", "Vista de cámara 3");
+        cameraView("camara3", "Vista de cámara 3", ambiente.getCamara(2).getComponenteEncendidoState());
     }//GEN-LAST:event_camera3MouseClicked
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        cameraView("camara1", "Vista de cámara 1");
+        cameraView("camara1", "Vista de cámara 1", ambiente.getCamara(0).getComponenteEncendidoState());
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -453,21 +453,21 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        cameraView("camara2", "Vista de cámara 2");
+        cameraView("camara2", "Vista de cámara 2", ambiente.getCamara(1).getComponenteEncendidoState());
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        cameraView("camara3", "Vista de cámara 3");
+        cameraView("camara3", "Vista de cámara 3", ambiente.getCamara(2).getComponenteEncendidoState());
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        cameraView("camara4", "Vista de cámara 4");
+        cameraView("camara4", "Vista de cámara 4", ambiente.getCamara(3).getComponenteEncendidoState());
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         ambiente.toggleAmbienteThread();
         ambiente.getAmbienteThread().interrupt();
-        DeviceManager dmanager = new DeviceManager(ambiente) {
+        DeviceManager dmanager = new DeviceManager(ambiente, runTime) {
             @Override
             public void saveChangesToMain() {
                 super.saveChangesToMain();
@@ -480,15 +480,19 @@ public class Main extends javax.swing.JFrame {
         dmanager.setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
-    private void cameraView(String campath, String title) {
-        CameraView camView = new CameraView(runTime) {
+    private void cameraView(String campath, String title, boolean ison) {
+        CameraView camView = new CameraView(ambiente, runTime, campath, ison) {
             @Override
             public void handleClose() {
                 super.handleClose();
                 System.out.println("Llamado desde Main!");
             }
         };
-        camView.cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/" + campath + ".png")).getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
+        int camaraid = Character.getNumericValue(campath.charAt(campath.length() - 1)) - 1;
+        if(ambiente.getCamara(camaraid).getComponenteEncendidoState()) {
+            camView.cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/" + campath + ".png")).getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
+        }
+        else camView.cameraView.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal.png")).getImage().getScaledInstance(camView.cameraView.getSize().width, camView.cameraView.getSize().height, Image.SCALE_SMOOTH)));
         camView.cameraViewNum.setText(title);
         camView.setTitle(title + " - Tech Domótica");
         camView.setVisible(true);

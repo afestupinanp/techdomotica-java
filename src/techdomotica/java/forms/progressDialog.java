@@ -11,13 +11,14 @@ import javax.swing.UIManager;
 public class progressDialog extends javax.swing.JDialog {
 
     private boolean isCompleted = false;
+    private int progressRate = 35;
     
     private Thread completion  = new Thread(new Runnable() {
         @Override
         public void run() {
             try {
                 while(progressionBar.getValue() != 100) {
-                    Thread.sleep(35);
+                    Thread.sleep(progressRate);
                     progressionBar.setValue(progressionBar.getValue() + 1);
                 }
                 setTitle(getTitle() + " - Operación completada con éxito");
@@ -33,13 +34,27 @@ public class progressDialog extends javax.swing.JDialog {
         
     });
     
+    public progressDialog(java.awt.Frame parent, boolean modal, int progressRa) {
+        super(parent, modal);
+        initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
+        progressRate = progressRa;
+        completion.start();
+        setLocationRelativeTo(null);
+    }
+    
     public progressDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
+        progressRate = 35;
         completion.start();
         setLocationRelativeTo(null);
     }
+    
+    /*public void changeProgressRate(int rate) {
+        progressRate = rate;
+    }*/
     
     public void progressBarFilled() {
         //Add your stuff here!
@@ -64,6 +79,9 @@ public class progressDialog extends javax.swing.JDialog {
                 formWindowClosing(evt);
             }
         });
+
+        progressionBar.setForeground(new java.awt.Color(0, 153, 0));
+        progressionBar.setStringPainted(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,7 +136,7 @@ public class progressDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                progressDialog dialog = new progressDialog(new javax.swing.JFrame(), true);
+                progressDialog dialog = new progressDialog(new javax.swing.JFrame(), true, 35);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

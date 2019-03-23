@@ -2,8 +2,8 @@ package techdomotica.objs.comps;
 
 public class Camara extends Componente {
     
-    private String resolucion = "HD",
-                   ubicacion = "";
+    private String resolucion = "HD";
+    private String ubicacion = "";
     
     public Camara(String nombre, String marca, double uso) {
         super(nombre, marca, uso);
