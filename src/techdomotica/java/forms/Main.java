@@ -123,6 +123,8 @@ public class Main extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -338,6 +340,20 @@ public class Main extends javax.swing.JFrame {
         jMenu4.add(jMenu7);
 
         jMenu8.setText("Sensores");
+
+        jMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem18.setText("Sensores de movimiento");
+        jMenu8.add(jMenuItem18);
+
+        jMenuItem19.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem19.setText("Seguro de puerta");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem19);
+
         jMenu4.add(jMenu8);
 
         jMenu9.setText("Aires acondicionados");
@@ -479,6 +495,11 @@ public class Main extends javax.swing.JFrame {
         };
         dmanager.setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        SensorView view = new SensorView(ambiente);
+        view.setVisible(true);
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void cameraView(String campath, String title, boolean ison) {
         CameraView camView = new CameraView(ambiente, runTime, campath, ison) {
@@ -686,6 +707,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
