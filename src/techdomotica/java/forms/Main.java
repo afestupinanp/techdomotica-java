@@ -60,10 +60,12 @@ public class Main extends javax.swing.JFrame {
                 try {
                     while(ambiente != null) {
                         Thread.sleep(2500);
+                        changeAmbientWeather();
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                tempAire.setText(String.format("Temperatura de la sala: %.1f°C", ambiente.getTemperaturaSala()));
+                                tempAire.setText(String.format("Temperatura ajustada: %.1f°C", ambiente.getTemperaturaSala()));
+                                tempAmbience.setText(String.format("Temperatura ambiente: %.1f°C", ambiente.getTemperaturaAmbiente()));
                             }
                         });
                     }
@@ -73,6 +75,16 @@ public class Main extends javax.swing.JFrame {
                 }
             }
             
+            //Cambio de temperatura ambiente por medio del hilo del tiempo.
+            public void changeAmbientWeather() {
+                System.out.println("Hours: " + runTime.getHours());
+                if(runTime.getHours() >= 0 && runTime.getHours() <= 5) ambiente.setTemperaturaAmbiente(23);
+                else if(runTime.getHours() >= 6 && runTime.getHours() <= 12) ambiente.setTemperaturaAmbiente(25);
+                else if(runTime.getHours() >= 13 && runTime.getHours() <= 17) ambiente.setTemperaturaAmbiente(26);
+                else if(runTime.getHours() >= 18 && runTime.getHours() <= 20) ambiente.setTemperaturaAmbiente(25);
+                else if(runTime.getHours() >= 21 && runTime.getHours() <= 23) ambiente.setTemperaturaAmbiente(24);
+                ambiente.setTemperaturaAmbiente((ambiente.getTemperaturaAmbiente() + ambiente.getTemperaturaSala()) / 2);
+            }
         });
         mainChanger.start();
         setLocationRelativeTo(null);
@@ -82,6 +94,8 @@ public class Main extends javax.swing.JFrame {
         camera2.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         camera3.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera-r.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         camera4.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        
+        sensor1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensor.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
     }
 
     /**
@@ -97,10 +111,11 @@ public class Main extends javax.swing.JFrame {
         camera2 = new javax.swing.JLabel();
         camera3 = new javax.swing.JLabel();
         camera4 = new javax.swing.JLabel();
+        sensor1 = new javax.swing.JLabel();
         mapaSala = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         tempAire = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        tempAmbience = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -129,6 +144,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -180,12 +196,19 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().add(camera4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 50, 50));
 
+        sensor1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sensor1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(sensor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 30, 30));
+
         mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/sala.png"))); // NOI18N
         getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 380));
 
-        tempAire.setText("Temperatura de la sala: 23,0°C");
+        tempAire.setText("Temperatura ajustada: 23,0°C");
 
-        jLabel2.setText("Temperatura real:");
+        tempAmbience.setText("Temperatura ambiente: 26,0°C");
 
         jLabel3.setText("Cantidad de personas: 0");
 
@@ -194,22 +217,22 @@ public class Main extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(tempAire, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(tempAmbience, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tempAire)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(tempAmbience)
+                    .addComponent(jLabel3)
+                    .addComponent(tempAire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -371,6 +394,10 @@ public class Main extends javax.swing.JFrame {
         jMenuItem17.setText("Configurar eventos");
         jMenu5.add(jMenuItem17);
 
+        jMenuItem20.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem20.setText("Estadísticas de la sala");
+        jMenu5.add(jMenuItem20);
+
         jMenuBar1.add(jMenu5);
 
         jMenu2.setText("Acerca de");
@@ -501,6 +528,11 @@ public class Main extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
+    private void sensor1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sensor1MouseClicked
+        SensorView view = new SensorView(ambiente);
+        view.setVisible(true);
+    }//GEN-LAST:event_sensor1MouseClicked
+
     private void cameraView(String campath, String title, boolean ison) {
         CameraView camView = new CameraView(ambiente, runTime, campath, ison) {
             @Override
@@ -553,7 +585,7 @@ public class Main extends javax.swing.JFrame {
         if(SystemTray.isSupported() && !onSystemTray) {
             appSystemTray = null;
             SystemTray tray = SystemTray.getSystemTray();
-            Image img = new ImageIcon(getClass().getResource("media/L4.png")).getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+            Image img = new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
             
             PopupMenu popmenu = new PopupMenu();
             
@@ -685,7 +717,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel camera2;
     private javax.swing.JLabel camera3;
     private javax.swing.JLabel camera4;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
@@ -710,6 +741,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -719,6 +751,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mapaSala;
+    private javax.swing.JLabel sensor1;
     private javax.swing.JLabel tempAire;
+    private javax.swing.JLabel tempAmbience;
     // End of variables declaration//GEN-END:variables
 }

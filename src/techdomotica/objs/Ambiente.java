@@ -14,12 +14,15 @@ public class Ambiente {
     private String perfilActual = "";
     private Admin adminEncargado = null;
     
-    private double temperaturaSala = 0.0;
+    private int personasEnAmbiente = 0;//Cada persona debería de generar una temperatura de 1°C
+    
+    private double temperaturaSala = 0.0,//La temperatura de la sala se modifica dentro de este archivo.
+            temperaturaAmbiente = 0.0;//La temperatura ambiente se modifica dentro del Main, debido a que no hay acceso al hilo de tiempo.
 
     private ACondicionado[] acondicionado = new ACondicionado[2];
     private Camara[] camaras = new Camara[4];
     private Luz[] luces = new Luz[12];
-    private Sensor[] sensores = new Sensor[4];
+    private Sensor[] sensores = new Sensor[2];
     private Televisor proyector = null;
     
     public Ambiente(Admin encargado) {
@@ -50,9 +53,10 @@ public class Ambiente {
     }
     
     public void loadSensores() {
-        for(int i = 0 ; i < 4 ; i++) {
-            sensores[i] = new Sensor("Wattmax 200", "OSRAM");
-        }
+        sensores[0] = new Sensor("Security Products", "Mangal");
+        sensores[1] = new Sensor("Alarms", "Mangal");
+        
+        sensores[0].toggleComponenteEncendido(true);
     }
     
     public void loadProyector() {
@@ -100,6 +104,14 @@ public class Ambiente {
         return temperaturaSala;
     }
     
+    public double getTemperaturaAmbiente() {
+        return temperaturaAmbiente;
+    }
+    
+    public void setTemperaturaAmbiente(double temp) {
+        temperaturaAmbiente = temp;
+    }
+    
     public Thread getAmbienteThread() {
         return ambienteThread;
     }
@@ -113,6 +125,7 @@ public class Ambiente {
             @Override
             public void run() {
                 //System.out.println("ContinueThread es " + ((continueThread) ? "true" : "false"));
+                //Temperatura de la sala:
                 if(acondicionado[0] != null && acondicionado[1] != null) {
                     while(continueThread) {
                         increment = acondicionado[0].getTemperatura();
@@ -121,12 +134,24 @@ public class Ambiente {
                         try {
                             Thread.sleep(2500);
                             if(Math.round(Math.random()) == 1) {
-                                increment += 0.02;
-                                increment2 += 0.02;
+                                if(temperaturaAmbiente > temperaturaSala) {
+                                    increment += 0.06;
+                                    increment2 += 0.06;
+                                }
+                                else {
+                                    increment += 0.02;
+                                    increment2 += 0.02;
+                                }
                             }
                             else {
-                                increment -= 0.02;
-                                increment2 -= 0.02;
+                                if(temperaturaAmbiente > temperaturaSala) {
+                                    increment -= 0.06;
+                                    increment2 -= 0.06;
+                                }
+                                else {
+                                    increment -= 0.02;
+                                    increment2 -= 0.02;
+                                }
                             }
                             acondicionado[0].changeTemperatura(increment);
                             acondicionado[1].changeTemperatura(increment2);
@@ -143,8 +168,14 @@ public class Ambiente {
                         System.out.println("Temp 1: " + increment);
                         try {
                             Thread.sleep(2500);
-                            if(Math.round(Math.random()) == 1) increment += 0.02;
-                            else increment -= 0.02;
+                            if(Math.round(Math.random()) == 1) {
+                                if(temperaturaAmbiente > temperaturaSala) increment += 0.02;
+                                else increment += 0.06;
+                            }
+                            else {
+                                if(temperaturaAmbiente > temperaturaSala) increment -= 0.06;
+                                else increment -= 0.02;
+                            }
                             
                             acondicionado[0].changeTemperatura(increment);
                             temperaturaSala = increment;
@@ -153,6 +184,9 @@ public class Ambiente {
                             ex.printStackTrace();
                         }
                     }
+                }
+                else {
+                    
                 }
             }
         });

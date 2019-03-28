@@ -14,16 +14,25 @@ public class SensorView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         checkDoorState();
+        if(ambiente.getSensor(0) != null) labelDeviceName.setText("Estado de " + ambiente.getSensor(0).getComponenteFullName());
     }
 
     public void checkDoorState() {
-        if(ambiente.getSensor(0).getComponenteEncendidoState()) {
-            dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooron.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
-            activestate.setSelected(true);
+        if(ambiente.getSensor(0) != null) {
+            if(ambiente.getSensor(0).getComponenteEncendidoState()) {
+                dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooron.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                activestate.setSelected(true);
+            }
+            else {
+                dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooroff.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                inactivestate.setSelected(true);
+            }
         }
         else {
-            dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooroff.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
-            inactivestate.setSelected(true);
+            activestate.setEnabled(false);
+            activestate.setToolTipText("No se detectó dispositivo. Registra uno en el gestor de dispositivos.");
+            inactivestate.setEnabled(false);
+            inactivestate.setToolTipText("No se detectó dispositivo. Registra uno en el gestor de dispositivos.");
         }
     }
     
@@ -41,6 +50,10 @@ public class SensorView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         activestate = new javax.swing.JRadioButton();
         inactivestate = new javax.swing.JRadioButton();
+        labelDeviceName = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sensor de puerta - Tech Domótica");
@@ -66,6 +79,16 @@ public class SensorView extends javax.swing.JFrame {
             }
         });
 
+        labelDeviceName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelDeviceName.setText("Estado de");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Estadísticas");
+
+        jLabel4.setText("Cantidad de personas detectadas (hoy): ");
+
+        jLabel5.setText("Cantidad de personas detectadas (total):");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,11 +97,20 @@ public class SensorView extends javax.swing.JFrame {
                 .addComponent(dooricon, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                    .addComponent(labelDeviceName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(activestate, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(inactivestate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(activestate, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inactivestate, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -87,24 +119,48 @@ public class SensorView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelDeviceName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(activestate)
                     .addComponent(inactivestate))
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void activestateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activestateActionPerformed
-        ambiente.getSensor(0).toggleComponenteEncendido(true);
-        checkDoorState();
+        progressDialog dialog = new progressDialog(this, true, 3) {
+            @Override
+            public void progressBarFilled() {
+                ambiente.getSensor(0).toggleComponenteEncendido(true);
+                checkDoorState();
+            }
+        };
+        dialog.setTitle("Encendiendo sendor de puerta");
+        dialog.textVar.setText("Encendiendo el sensor de la puerta. Por favor, espere...");
+        dialog.setVisible(true);
     }//GEN-LAST:event_activestateActionPerformed
 
     private void inactivestateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivestateActionPerformed
-        ambiente.getSensor(0).toggleComponenteEncendido(false);
-        checkDoorState();
+        progressDialog dialog = new progressDialog(this, true, 3) {
+            @Override
+            public void progressBarFilled() {
+                ambiente.getSensor(0).toggleComponenteEncendido(false);
+                checkDoorState();
+            }
+        };
+        dialog.setTitle("Apagando sendor de puerta");
+        dialog.textVar.setText("Apagando el sensor de la puerta. Por favor, espere...");
+        dialog.setVisible(true);
     }//GEN-LAST:event_inactivestateActionPerformed
 
     /**
@@ -148,5 +204,9 @@ public class SensorView extends javax.swing.JFrame {
     private javax.swing.JLabel dooricon;
     private javax.swing.JRadioButton inactivestate;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel labelDeviceName;
     // End of variables declaration//GEN-END:variables
 }
