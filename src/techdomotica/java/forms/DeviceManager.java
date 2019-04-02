@@ -1,7 +1,6 @@
 package techdomotica.java.forms;
 
 import java.awt.Color;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,7 +9,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import techdomotica.objs.Ambiente;
-import techdomotica.objs.Time;
 import techdomotica.objs.Util;
 import techdomotica.objs.comps.Componente;
 
@@ -21,12 +19,10 @@ import techdomotica.objs.comps.Componente;
 public class DeviceManager extends javax.swing.JFrame {
 
     public Ambiente ambiente;
-    private Time timeThread;
     
-    public DeviceManager(Ambiente amb, Time runtime) {
+    public DeviceManager(Ambiente amb) {
         initComponents();
         ambiente = amb;
-        timeThread = runtime;
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         setLocationRelativeTo(null);
         
@@ -1018,7 +1014,7 @@ public class DeviceManager extends javax.swing.JFrame {
     }
     
     private void cameraView(String campath, String title, boolean ison) {
-        CameraView camView = new CameraView(ambiente, timeThread, campath, ison) {
+        CameraView camView = new CameraView(ambiente, campath, ison) {
             @Override
             public void handleClose() {
                 super.handleClose();
@@ -1083,7 +1079,7 @@ public class DeviceManager extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DeviceManager(null, null).setVisible(true);
+                new DeviceManager(null).setVisible(true);
             }
         });
     }

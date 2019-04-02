@@ -23,8 +23,7 @@ public class CameraView extends javax.swing.JFrame {
      * Creates new form CameraView
      * @param timeThread Hilo de tiempo.
      */
-    
-    private Time currentTime;
+
     private Ambiente ambient;
     
     private Thread changeUI;
@@ -34,10 +33,10 @@ public class CameraView extends javax.swing.JFrame {
     private String cameraPath;
     private int cameraID;
     
-    public CameraView(Ambiente ambiente, Time timeThread, String campath, boolean ison) {
+    public CameraView(Ambiente ambiente, String campath, boolean ison) {
         initComponents();
         ambient = ambiente;
-        currentTime = timeThread;
+        
         cameraPath = campath;
         
         cameraID = Character.getNumericValue(campath.charAt(campath.length() - 1)) - 1;
@@ -215,7 +214,7 @@ public class CameraView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CameraView(null, null, null, false).setVisible(true);
+                new CameraView(null, null, false).setVisible(true);
             }
         });
     }

@@ -1,5 +1,7 @@
 package techdomotica.objs;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import techdomotica.objs.comps.Televisor;
 import techdomotica.objs.comps.Sensor;
 import techdomotica.objs.comps.Luz;
@@ -9,12 +11,16 @@ import techdomotica.objs.comps.ACondicionado;
 public class Ambiente {
     
     private Thread ambienteThread;
+    private Time runTime;
+    private Thread personaThread;
+    
     private boolean continueThread = true;
     
     private String perfilActual = "";
     private Admin adminEncargado = null;
     
     private int personasEnAmbiente = 0;//Cada persona debería de generar una temperatura de 1°C
+    private int personasDetectadas = 0;
     
     private double temperaturaSala = 0.0,//La temperatura de la sala se modifica dentro de este archivo.
             temperaturaAmbiente = 0.0;//La temperatura ambiente se modifica dentro del Main, debido a que no hay acceso al hilo de tiempo.
@@ -29,7 +35,9 @@ public class Ambiente {
         adminEncargado = encargado;
         loadComponentes();
         
+        startTimeThread();
         startAmbienteThread();
+        startPersonaThread();
     }
 
     public void loadComponentes() {
@@ -53,10 +61,8 @@ public class Ambiente {
     }
     
     public void loadSensores() {
-        sensores[0] = new Sensor("Security Products", "Mangal");
+        //sensores[0] = new Sensor("Security Products", "Mangal");
         sensores[1] = new Sensor("Alarms", "Mangal");
-        
-        sensores[0].toggleComponenteEncendido(true);
     }
     
     public void loadProyector() {
@@ -112,8 +118,120 @@ public class Ambiente {
         temperaturaAmbiente = temp;
     }
     
+    public int getPersonasInAmbiente() {
+        return personasEnAmbiente;
+    }
+    
+    public int getPersonasDetectadas() {
+        return personasDetectadas;
+    }
+    
+    public Thread getPersonaThread() {
+        return personaThread;
+    }
+    
     public Thread getAmbienteThread() {
         return ambienteThread;
+    }
+    
+    public Time getTimeThread() {
+        return runTime;
+    }
+    
+    public void startTimeThread() {
+        runTime = new Time();
+        runTime.start();
+    }
+    
+    public void startPersonaThread() {
+        personaThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(continueThread) {
+                    try {
+                        Thread.sleep(1000);
+                        if(runTime.getHours() == 7 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        for(int i = 1 ; i <= 21 ; i++) {
+                                            Thread.sleep(2000);
+                                            personasEnAmbiente++;
+                                            if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas++;
+                                        }
+                                    } catch (InterruptedException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            });
+                            t.start();
+                        }
+                        else if(runTime.getHours() == 9 && runTime.getMinutes() == 30 && runTime.getSeconds() == 0) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        for(int i = 1 ; i <= 21 ; i++) {
+                                            Thread.sleep(2000);
+                                            personasEnAmbiente--;
+                                        }
+                                    } catch (InterruptedException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            });
+                            t.start();
+                        }
+                        else if(runTime.getHours() == 10 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        for(int i = 1 ; i <= 21 ; i++) {
+                                            Thread.sleep(2000);
+                                            personasEnAmbiente++;
+                                        }
+                                    } catch (InterruptedException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            });
+                            t.start();
+                        }
+                        else if(runTime.getHours() == 12 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        for(int i = 1 ; i <= 21 ; i++) {
+                                            Thread.sleep(2000);
+                                            personasEnAmbiente--;
+                                        }
+                                    } catch (InterruptedException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            });
+                            t.start();
+                        }
+                        else if(runTime.getHours() == 15 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
+                            personasEnAmbiente = 1;
+                        }
+                        else if(runTime.getHours() == 15 && runTime.getMinutes() == 10 && runTime.getSeconds() == 0) {
+                            personasEnAmbiente = 0;
+                        }
+                        else if(runTime.getHours() == 23 && runTime.getMinutes() == 59 && runTime.getSeconds() == 59) {
+                            if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas = 0;
+                        }
+                    }
+                    catch(InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+        personaThread.start();
     }
     
     public void startAmbienteThread() {
@@ -195,6 +313,17 @@ public class Ambiente {
     
     public void toggleAmbienteThread() {
         continueThread = !continueThread;
+        ambienteThread.interrupt();
+    }
+    
+    public void toggleAmbienteThread(boolean togg) {
+        continueThread = togg;
+        ambienteThread.interrupt();
+    }
+    
+    public void toggleTimeThread(boolean togg) {
+        runTime.disableTimeThread();
+        runTime.interrupt();
     }
     
 }

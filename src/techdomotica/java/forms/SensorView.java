@@ -14,9 +14,31 @@ public class SensorView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         checkDoorState();
+        checkSensorState();
         if(ambiente.getSensor(0) != null) labelDeviceName.setText("Estado de " + ambiente.getSensor(0).getComponenteFullName());
+        if(ambiente.getSensor(1) != null) labelDeviceName1.setText("Estado de" + ambiente.getSensor(1).getComponenteFullName());
     }
 
+    public void checkSensorState() {
+        if(ambiente.getSensor(1) != null) {
+            if(ambiente.getSensor(1).getComponenteEncendidoState()) {
+                sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensoron.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                activestate1.setSelected(true);
+            }
+            else {
+                sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensoroff.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                inactivestate1.setSelected(true);
+            }
+        }
+        else {
+            labelDeviceName1.setText("No hay dispositivo.");
+            activestate1.setEnabled(false);
+            activestate1.setToolTipText("No se detectó dispositivo. Registra uno en el gestor de dispositivos.");
+            inactivestate1.setEnabled(false);
+            inactivestate1.setToolTipText("No se detectó dispositivo. Registra uno en el gestor de dispositivos.");
+        }
+    }
+    
     public void checkDoorState() {
         if(ambiente.getSensor(0) != null) {
             if(ambiente.getSensor(0).getComponenteEncendidoState()) {
@@ -29,6 +51,7 @@ public class SensorView extends javax.swing.JFrame {
             }
         }
         else {
+            labelDeviceName.setText("No hay dispositivo.");
             activestate.setEnabled(false);
             activestate.setToolTipText("No se detectó dispositivo. Registra uno en el gestor de dispositivos.");
             inactivestate.setEnabled(false);
@@ -45,15 +68,24 @@ public class SensorView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnactive = new javax.swing.ButtonGroup();
+        btnactivedevice1 = new javax.swing.ButtonGroup();
+        btnactivedevice2 = new javax.swing.ButtonGroup();
         dooricon = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         activestate = new javax.swing.JRadioButton();
         inactivestate = new javax.swing.JRadioButton();
         labelDeviceName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        tDetectedHoy = new javax.swing.JLabel();
+        tDetectedLifetime = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        labelDeviceName1 = new javax.swing.JLabel();
+        activestate1 = new javax.swing.JRadioButton();
+        inactivestate1 = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        tDetectedHoy1 = new javax.swing.JLabel();
+        tDetectedLifetime1 = new javax.swing.JLabel();
+        sensoricon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sensor de puerta - Tech Domótica");
@@ -63,7 +95,7 @@ public class SensorView extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sensor de puerta");
 
-        btnactive.add(activestate);
+        btnactivedevice1.add(activestate);
         activestate.setText("Activo");
         activestate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,7 +103,7 @@ public class SensorView extends javax.swing.JFrame {
             }
         });
 
-        btnactive.add(inactivestate);
+        btnactivedevice1.add(inactivestate);
         inactivestate.setText("Inactivo");
         inactivestate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,22 +114,56 @@ public class SensorView extends javax.swing.JFrame {
         labelDeviceName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelDeviceName.setText("Estado de");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Estadísticas");
 
-        jLabel4.setText("Cantidad de personas detectadas (hoy): ");
+        tDetectedHoy.setText("Cantidad de personas detectadas (hoy): ");
 
-        jLabel5.setText("Cantidad de personas detectadas (total):");
+        tDetectedLifetime.setText("Cantidad de personas detectadas (total):");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Sensor de movimiento");
+
+        labelDeviceName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelDeviceName1.setText("Estado de");
+
+        btnactivedevice2.add(activestate1);
+        activestate1.setText("Activo");
+        activestate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activestate1ActionPerformed(evt);
+            }
+        });
+
+        btnactivedevice2.add(inactivestate1);
+        inactivestate1.setText("Inactivo");
+        inactivestate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inactivestate1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Estadísticas");
+
+        tDetectedHoy1.setText("Cantidad de personas detectadas (hoy): ");
+
+        tDetectedLifetime1.setText("Cantidad de personas detectadas (total):");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(dooricon, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(dooricon, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sensoricon, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelDeviceName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -106,32 +172,63 @@ public class SensorView extends javax.swing.JFrame {
                         .addComponent(inactivestate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelDeviceName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(activestate1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(inactivestate1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(tDetectedHoy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tDetectedLifetime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tDetectedHoy1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tDetectedLifetime1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dooricon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelDeviceName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelDeviceName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(activestate)
+                            .addComponent(inactivestate))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tDetectedHoy)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tDetectedLifetime))
+                    .addComponent(dooricon, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(activestate)
-                    .addComponent(inactivestate))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sensoricon, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelDeviceName1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(activestate1)
+                            .addComponent(inactivestate1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tDetectedHoy1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tDetectedLifetime1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -162,6 +259,34 @@ public class SensorView extends javax.swing.JFrame {
         dialog.textVar.setText("Apagando el sensor de la puerta. Por favor, espere...");
         dialog.setVisible(true);
     }//GEN-LAST:event_inactivestateActionPerformed
+
+    private void activestate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activestate1ActionPerformed
+        // TODO add your handling code here:
+        progressDialog dialog = new progressDialog(this, true, 3) {
+            @Override
+            public void progressBarFilled() {
+                ambiente.getSensor(1).toggleComponenteEncendido(true);
+                checkSensorState();
+            }
+        };
+        dialog.setTitle("Apagando sendor de movimiento");
+        dialog.textVar.setText("Apagando el sensor de movimiento. Por favor, espere...");
+        dialog.setVisible(true);
+    }//GEN-LAST:event_activestate1ActionPerformed
+
+    private void inactivestate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivestate1ActionPerformed
+        // TODO add your handling code here:
+        progressDialog dialog = new progressDialog(this, true, 3) {
+            @Override
+            public void progressBarFilled() {
+                ambiente.getSensor(1).toggleComponenteEncendido(false);
+                checkSensorState();
+            }
+        };
+        dialog.setTitle("Apagando sendor de movimiento");
+        dialog.textVar.setText("Apagando el sensor de movimiento. Por favor, espere...");
+        dialog.setVisible(true);
+    }//GEN-LAST:event_inactivestate1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,13 +325,22 @@ public class SensorView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton activestate;
-    private javax.swing.ButtonGroup btnactive;
+    private javax.swing.JRadioButton activestate1;
+    private javax.swing.ButtonGroup btnactivedevice1;
+    private javax.swing.ButtonGroup btnactivedevice2;
     private javax.swing.JLabel dooricon;
     private javax.swing.JRadioButton inactivestate;
+    private javax.swing.JRadioButton inactivestate1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel labelDeviceName;
+    private javax.swing.JLabel labelDeviceName1;
+    private javax.swing.JLabel sensoricon;
+    private javax.swing.JLabel tDetectedHoy;
+    private javax.swing.JLabel tDetectedHoy1;
+    private javax.swing.JLabel tDetectedLifetime;
+    private javax.swing.JLabel tDetectedLifetime1;
     // End of variables declaration//GEN-END:variables
 }
