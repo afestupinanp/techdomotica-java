@@ -45,6 +45,9 @@ public class Configuration extends javax.swing.JDialog {
         }
         txtHostname.setText(cfg.getConfigKey("hostname"));
         tHostPort.setText(cfg.getConfigKey("port"));
+        int deteriorprogress = Integer.parseInt(cfg.getConfigKey("deteriorationprogress"));
+        sliderValue.setValue(deteriorprogress);
+        progressValue.setText(String.format("Valor actual: %d%%", deteriorprogress));
     }
 
     /**
@@ -56,23 +59,69 @@ public class Configuration extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        tEjecucion2do = new javax.swing.JToggleButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        tEjecucion2do = new javax.swing.JToggleButton();
+        sliderValue = new javax.swing.JSlider();
         jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txtHostname = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         tHostPort = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        progressValue = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuración - Tech Domotica");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Configuración de Tech Domótica");
+
+        jLabel3.setText("<html>Ejecución en segundo plano: La ejecución en segundo plano permitirá que la aplicación se siga ejecutando sin estar en tu barra de tareas.</html>");
+
+        tEjecucion2do.setSelected(true);
+        tEjecucion2do.setText("Desactivar");
+        tEjecucion2do.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tEjecucion2doActionPerformed(evt);
+            }
+        });
+
+        sliderValue.setMajorTickSpacing(10);
+        sliderValue.setMinorTickSpacing(10);
+        sliderValue.setPaintLabels(true);
+        sliderValue.setPaintTicks(true);
+        sliderValue.setToolTipText("");
+        sliderValue.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                sliderValuePropertyChange(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Configuración avanzada");
+
+        jLabel1.setText("Dirección/Nombre del host:");
+
+        jLabel5.setText("Puerto de escucha del host:");
+
+        jButton2.setText("Guardar configuración");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -83,27 +132,6 @@ public class Configuration extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("Dirección/Nombre del host:");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Configuración de Tech Domotica");
-
-        tEjecucion2do.setSelected(true);
-        tEjecucion2do.setText("Desactivar");
-        tEjecucion2do.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tEjecucion2doActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Guardar configuración");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jButton3.setText("Restablecer predeterminados");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,83 +139,116 @@ public class Configuration extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("<html>Ejecución en segundo plano: La ejecución en segundo plano permitirá que la aplicación se siga ejecutando sin estar en tu barra de tareas.</html>");
+        progressValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        progressValue.setText("Valor actual: 50%");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Configuración avanzada");
+        jCheckBox1.setText("Valores precisos del slider");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
-        jLabel5.setText("Puerto de escucha del host:");
+        jLabel7.setText("<html>Velocidad de degradación de componentes: Los componenes se degradarán a medida que pase el tiempo, usa el slider para configurar la velocidad a que necesitarán reparación.</html>");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tEjecucion2do, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(progressValue, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addComponent(sliderValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(19, 19, 19))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtHostname, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(tHostPort))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGap(213, 213, 213)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(tEjecucion2do)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(sliderValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(progressValue))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jCheckBox1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtHostname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(tHostPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(113, 113, 113)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(158, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tEjecucion2do, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtHostname))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(89, 89, 89)
-                                .addComponent(tHostPort)))))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tEjecucion2do)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHostname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(tHostPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tEjecucion2doActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tEjecucion2doActionPerformed
         // TODO add your handling code here:
@@ -202,6 +263,48 @@ public class Configuration extends javax.swing.JDialog {
         
     }//GEN-LAST:event_tEjecucion2doActionPerformed
 
+    private void saveConfig() {
+        if(!Util.stringsVacios(tHostPort.getText(), txtHostname.getText())) {
+            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas guardar esta configuración?", "Guardar configuración", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirm == JOptionPane.YES_OPTION) {
+                cfg.cambiarConfigKey("daemon", (tEjecucion2do.isSelected()) ? "true" : "false");
+                cfg.cambiarConfigKey("port", tHostPort.getText());
+                cfg.cambiarConfigKey("hostname", txtHostname.getText());
+                cfg.cambiarConfigKey("deteriorationprogress", String.valueOf(sliderValue.getValue()));
+                cfg.closeConfigFile();
+                JOptionPane.showMessageDialog(null, "Configuración guardada.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                confirm = JOptionPane.showConfirmDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios.\n¿Deseas hacerlo ahora?\n\nSi has cambiado la configuración avanzada, es muy aconsejable reiniciar la aplicación", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                
+                if(confirm == JOptionPane.YES_OPTION) System.exit(0);
+                else this.dispose();
+            }
+        }
+        else JOptionPane.showMessageDialog(null, "Uno de los campos de configuración está vacío.", "No se puede guardar", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        String daemonOG = cfg.getConfigKey("daemon");
+        String portOG = cfg.getConfigKey("port");
+        String hostnameOG = cfg.getConfigKey("hostname");
+        
+        String currentDaemon = (tEjecucion2do.isSelected()) ? "true" : "false";
+        if(!txtHostname.getText().equalsIgnoreCase(hostnameOG) || !tHostPort.getText().equalsIgnoreCase(portOG) || !currentDaemon.equalsIgnoreCase(daemonOG)) {
+            int confirm = JOptionPane.showConfirmDialog(null, "Hay cambios pendientes para guardar. ¿Deseas guardarlos ahora?", "Configuración no guardada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirm == JOptionPane.YES_OPTION) saveConfig();
+            else this.dispose();
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        saveConfig();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas reestablecer la configuración predeterminada?", "Reestablecer configuración", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -209,6 +312,7 @@ public class Configuration extends javax.swing.JDialog {
             cfg.cambiarConfigKey("daemon", "true");
             cfg.cambiarConfigKey("hostname", "localhost");
             cfg.cambiarConfigKey("port", "3306");
+            cfg.cambiarConfigKey("deteriorationprogress", "50");
             cfg.closeConfigFile();
             JOptionPane.showMessageDialog(null, "Configuración reestablecida.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
             confirm = JOptionPane.showConfirmDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios.\n¿Deseas hacerlo ahora?\n\nSi has cambiado la configuración avanzada, es muy aconsejable reiniciar la aplicación", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -221,48 +325,13 @@ public class Configuration extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void saveConfig() {
-        if(!Util.stringsVacios(tHostPort.getText(), txtHostname.getText())) {
-            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas guardar esta configuración?", "Guardar configuración", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(confirm == JOptionPane.YES_OPTION) {
-                cfg.cambiarConfigKey("daemon", (tEjecucion2do.isSelected()) ? "true" : "false");
-                cfg.cambiarConfigKey("port", tHostPort.getText());
-                cfg.cambiarConfigKey("hostname", txtHostname.getText());
-                cfg.closeConfigFile();
-                JOptionPane.showMessageDialog(null, "Configuración guardada.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
-                this.setVisible(false);
-                confirm = JOptionPane.showConfirmDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios.\n¿Deseas hacerlo ahora?\n\nSi has cambiado la configuración avanzada, es muy aconsejable reiniciar la aplicación", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(confirm == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-                else {
-                    this.dispose();
-                }
-            }
-        }
-        else JOptionPane.showMessageDialog(null, "Uno de los campos de configuración está vacío.", "No se puede guardar", JOptionPane.ERROR_MESSAGE);
-    }
-    
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        saveConfig();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void sliderValuePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_sliderValuePropertyChange
+        progressValue.setText(String.format("Valor actual: %d%%", sliderValue.getValue()));
+    }//GEN-LAST:event_sliderValuePropertyChange
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        String daemonOG = cfg.getConfigKey("daemon");
-        String portOG = cfg.getConfigKey("port");
-        String hostnameOG = cfg.getConfigKey("hostname");
-        
-        String currentDaemon = (tEjecucion2do.isSelected()) ? "true" : "false";
-        if(!txtHostname.getText().equalsIgnoreCase(hostnameOG) || !tHostPort.getText().equalsIgnoreCase(portOG) || !currentDaemon.equalsIgnoreCase(daemonOG)) {
-            int confirm = JOptionPane.showConfirmDialog(null, "Hay cambios pendientes para guardar. ¿Deseas guardarlos ahora?", "Configuración no guardada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(confirm == JOptionPane.YES_OPTION) {
-                saveConfig();
-            }
-            else this.dispose();
-        }
-    }//GEN-LAST:event_formWindowClosing
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        sliderValue.setSnapToTicks(jCheckBox1.isSelected());
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,11 +375,16 @@ public class Configuration extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel progressValue;
+    private javax.swing.JSlider sliderValue;
     private javax.swing.JToggleButton tEjecucion2do;
     private javax.swing.JTextField tHostPort;
     private javax.swing.JTextField txtHostname;

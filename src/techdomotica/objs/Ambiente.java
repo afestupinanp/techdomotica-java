@@ -23,7 +23,8 @@ public class Ambiente {
     private int personasDetectadas = 0;
     
     private double temperaturaSala = 0.0,//La temperatura de la sala se modifica dentro de este archivo.
-            temperaturaAmbiente = 0.0;//La temperatura ambiente se modifica dentro del Main, debido a que no hay acceso al hilo de tiempo.
+            temperaturaAmbiente = 0.0,//La temperatura ambiente se modifica dentro del Main, debido a que no hay acceso al hilo de tiempo.
+            temperaturaPersonas = 0.0;
 
     private ACondicionado[] acondicionado = new ACondicionado[2];
     private Camara[] camaras = new Camara[4];
@@ -191,6 +192,7 @@ public class Ambiente {
                                         for(int i = 1 ; i <= 21 ; i++) {
                                             Thread.sleep(2000);
                                             personasEnAmbiente++;
+                                            temperaturaAmbiente++;
                                         }
                                     } catch (InterruptedException ex) {
                                         ex.printStackTrace();
@@ -207,6 +209,7 @@ public class Ambiente {
                                         for(int i = 1 ; i <= 21 ; i++) {
                                             Thread.sleep(2000);
                                             personasEnAmbiente--;
+                                            temperaturaAmbiente--;
                                         }
                                     } catch (InterruptedException ex) {
                                         ex.printStackTrace();
@@ -224,6 +227,7 @@ public class Ambiente {
                         else if(runTime.getHours() == 23 && runTime.getMinutes() == 59 && runTime.getSeconds() == 59) {
                             if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas = 0;
                         }
+                        temperaturaPersonas = personasEnAmbiente * 1;
                     }
                     catch(InterruptedException ex) {
                         ex.printStackTrace();
@@ -304,7 +308,7 @@ public class Ambiente {
                     }
                 }
                 else {
-                    
+                    temperaturaSala = 0;
                 }
             }
         });

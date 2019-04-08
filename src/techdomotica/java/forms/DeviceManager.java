@@ -872,13 +872,9 @@ public class DeviceManager extends javax.swing.JFrame {
     private void btndeleteac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteac1ActionPerformed
         if(ambiente.getACondicionado(0) != null) {
             int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getACondicionado(0).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
-            if(conf == JOptionPane.YES_OPTION) {
-                ambiente.destroyACondicionado(0);
-            }
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroyACondicionado(0);
         }
-        else {
-            JOptionPane.showMessageDialog(null, "TBA", "TBA", JOptionPane.INFORMATION_MESSAGE);
-        }
+        else JOptionPane.showMessageDialog(null, "TBA", "TBA", JOptionPane.INFORMATION_MESSAGE);
         checkComponentUse();
     }//GEN-LAST:event_btndeleteac1ActionPerformed
 

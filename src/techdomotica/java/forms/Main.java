@@ -47,6 +47,8 @@ public class Main extends javax.swing.JFrame {
     
     private TrayIcon appSystemTray = null;
     
+    private boolean[] warningDisplayed = new boolean[3];
+    
     private Config cfg = new Config();
     
     public Main() {
@@ -85,7 +87,18 @@ public class Main extends javax.swing.JFrame {
                 else if(runTime.getHours() >= 13 && runTime.getHours() <= 17) ambiente.setTemperaturaAmbiente(26);
                 else if(runTime.getHours() >= 18 && runTime.getHours() <= 20) ambiente.setTemperaturaAmbiente(25);
                 else if(runTime.getHours() >= 21 && runTime.getHours() <= 23) ambiente.setTemperaturaAmbiente(24);
-                ambiente.setTemperaturaAmbiente((ambiente.getTemperaturaAmbiente() + ambiente.getTemperaturaSala()) / 2);
+                if((ambiente.getACondicionado(0) == null || ambiente.getACondicionado(0).getUsoComponente() <= 30.0) && (ambiente.getACondicionado(1) == null || ambiente.getACondicionado(1).getUsoComponente() <= 30.0)) {
+                    ambiente.setTemperaturaAmbiente(ambiente.getTemperaturaAmbiente());
+                    if(!warningDisplayed[0]) {
+                        JOptionPane.showMessageDialog(null, "Atención. no se dispone de uno o más aires acondicionados en el ambiente debido a que no\nhan sido asignados o presentan problemas y requieren mantenimiento. La temperatura\npodría incrementar y ocasionar daños en los equipos.", "Advertencia de temperatura", JOptionPane.WARNING_MESSAGE);
+                        warningDisplayed[0] = true;
+                    }
+                    if(!warningDisplayed[1] && ambiente.getTemperaturaAmbiente() >= 28.0) {
+                        JOptionPane.showMessageDialog(null, "ATENCIÓN: La temperatura ambiental está sobre 28°C. Esta temperatura, con los equipos encendidos,\npodría ocasionar daños graves en los equipos que generen calor.", "Alerta crítica de temperatura", JOptionPane.WARNING_MESSAGE);
+                        warningDisplayed[1] = true;
+                    }
+                }
+                else ambiente.setTemperaturaAmbiente((ambiente.getTemperaturaAmbiente() + ambiente.getTemperaturaSala()) / 2);
             }
         });
         mainChanger.start();
