@@ -874,7 +874,44 @@ public class DeviceManager extends javax.swing.JFrame {
             int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getACondicionado(0).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
             if(conf == JOptionPane.YES_OPTION) ambiente.destroyACondicionado(0);
         }
-        else JOptionPane.showMessageDialog(null, "TBA", "TBA", JOptionPane.INFORMATION_MESSAGE);
+        else {
+            String marca = JOptionPane.showInputDialog(null, "Inserta la marca del dispositivo.", "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
+            if(!marca.isEmpty()) {
+                String modelo = JOptionPane.showInputDialog(null, "Inserta el modelo del dispositivo.", "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
+                if(!modelo.isEmpty()) {
+                    String[] disponibilidad = new String[2];
+                    if(ambiente.getACondicionado(0) == null) disponibilidad[0] = "1 - Disponible.";
+                    else disponibilidad[0] = "1 - No disponible.";
+                    if(ambiente.getACondicionado(1) == null) disponibilidad[1] = "2 - Disponible.";    
+                    else disponibilidad[1] = "2 - No disponible.";
+                    String posicion = JOptionPane.showInputDialog(null, "Escribe la ubicación en el dispositivo:\n\nPosiciones disponibles:\n\n" + disponibilidad[0] + "\n" + disponibilidad[1], "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
+                    if(!posicion.isEmpty()) {
+                        if(Util.esNumerico(posicion)) {
+                            switch(Integer.parseInt(posicion)) {
+                                case 1: {
+                                    ambiente.getACondicionado(0).setMarcaComponente(marca);
+                                    ambiente.getACondicionado(0).setNombreComponente(modelo);
+                                    JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                    break;
+                                }
+                                case 2: {
+                                    ambiente.getACondicionado(1).setMarcaComponente(marca);
+                                    ambiente.getACondicionado(1).setNombreComponente(modelo);
+                                    JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                    break;
+                                }
+                                default: {
+                                    JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                        }
+                        else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else JOptionPane.showMessageDialog(null, "El modelo del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         checkComponentUse();
     }//GEN-LAST:event_btndeleteac1ActionPerformed
 

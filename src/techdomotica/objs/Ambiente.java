@@ -159,6 +159,7 @@ public class Ambiente {
                                         for(int i = 1 ; i <= 21 ; i++) {
                                             Thread.sleep(2000);
                                             personasEnAmbiente++;
+                                            temperaturaAmbiente++;
                                             if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas++;
                                         }
                                     } catch (InterruptedException ex) {
@@ -176,6 +177,7 @@ public class Ambiente {
                                         for(int i = 1 ; i <= 21 ; i++) {
                                             Thread.sleep(2000);
                                             personasEnAmbiente--;
+                                            temperaturaAmbiente--;
                                         }
                                     } catch (InterruptedException ex) {
                                         ex.printStackTrace();
