@@ -10,7 +10,7 @@ public class Usuario {
                    documento = "",
                    Contraseña = "";
     
-    public Usuario(String name1, String name2, String ape1, String ape2, String corre, String doc,String contra) {
+    public Usuario(String name1, String name2, String ape1, String ape2, String corre, String doc, String contra) {
         nombre1 = name1;
         nombre2 = name2;
         apellido1 = ape1;

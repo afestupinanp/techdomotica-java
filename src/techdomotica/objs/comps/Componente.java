@@ -46,6 +46,10 @@ public class Componente {
         this.usoComponente = usoComponente;
     }
     
+    public void decrementarUsoComponente() {
+        if(usoComponente > 0) usoComponente--;
+    }
+    
     public void setGastoEnergetico(double gastoEnergetico) {
         this.gastoEnergetico = gastoEnergetico;
     }

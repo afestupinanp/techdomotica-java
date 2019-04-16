@@ -6,21 +6,29 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-
-//import technomotica.java.forms.About;
+import techdomotica.objs.Conectar;
 
 public class LoginPage extends javax.swing.JFrame {
 
+    private final Conectar conx;
+    
     public LoginPage() {
-        initComponents();
+        conx = new Conectar();
+        if(!conx.ping()) {
+            JOptionPane.showMessageDialog(null, "No se ha podido conectar a la base de datos de Tech Domótica.\nAsegurate de que todos los campos en la configuración sean correctos.", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
+        else {
+            initComponents();
 
-        ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L1.png")).getImage().getScaledInstance(240, 140, Image.SCALE_DEFAULT));
-        //Solución por Tirz - StackOverflow: https://stackoverflow.com/a/32885963
-        imagePlace.setIcon(img);
+            ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L1.png")).getImage().getScaledInstance(240, 140, Image.SCALE_DEFAULT));
+            //Solución por Tirz - StackOverflow: https://stackoverflow.com/a/32885963
+            imagePlace.setIcon(img);
 
-        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
+            setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
 
-        setLocationRelativeTo(null);
+            setLocationRelativeTo(null);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -214,8 +222,7 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUserActionPerformed
 
     private void txtPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyTyped
-     ;
-            
+     
     }//GEN-LAST:event_txtPassKeyTyped
 
     private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyTyped
@@ -225,7 +232,28 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUserKeyTyped
    
     public void logIn() {
-        String user = txtUser.getText().trim();
+        String email = txtUser.getText().trim();
+        char[] pswd = txtPass.getPassword();
+        if(!email.isEmpty() && pswd.length != 0) {
+            if(conx.executeRSOne("SELECT correo, password, nom1, id_rol FROM usuario WHERE correo = '"+ email +"';")) {
+                String realEmail = String.valueOf(conx.getResultSetRow("correo"));
+                char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
+                if(Arrays.equals(pswd, realPswd)) {
+                    conx.closeConnection();
+                    JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
+                    int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
+                    if(role == 1) {
+                        Main main = new Main();
+                        main.setVisible(true);
+                        this.dispose();
+                    }
+                }
+                else JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea. Intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
+            }
+            else JOptionPane.showMessageDialog(null, "El usuario ingresado no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacío. Rellenos e intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+        /*String user = txtUser.getText().trim();
         char[] pswd = txtPass.getPassword();
         if (!user.isEmpty() && (pswd.length != 0)) {
             char[] realPass = "admin".toCharArray();
@@ -243,7 +271,7 @@ public class LoginPage extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        }*/
     }
 
     public void exit() {

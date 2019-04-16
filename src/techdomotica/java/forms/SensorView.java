@@ -22,6 +22,7 @@ public class SensorView extends javax.swing.JFrame {
     public void checkSensorState() {
         if(ambiente.getSensor(1) != null) {
             devicetwo.setVisible(false);
+            tDetectedHoy1.setText(tDetectedHoy1.getText() + ambiente.getPersonasDetectadasP());
             if(ambiente.getSensor(1).getComponenteEncendidoState()) {
                 sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensoron.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
                 activestate1.setSelected(true);
@@ -47,6 +48,7 @@ public class SensorView extends javax.swing.JFrame {
     public void checkDoorState() {
         if(ambiente.getSensor(0) != null) {
             deviceone.setVisible(false);
+            tDetectedHoy.setText(tDetectedHoy.getText() + ambiente.getPersonasDetectadasP());
             if(ambiente.getSensor(0).getComponenteEncendidoState()) {
                 dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooron.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
                 activestate.setSelected(true);
@@ -284,7 +286,7 @@ public class SensorView extends javax.swing.JFrame {
                 checkDoorState();
             }
         };
-        dialog.setTitle("Encendiendo sendor de puerta");
+        dialog.setTitle("Encendiendo sensor de puerta");
         dialog.textVar.setText("Encendiendo el sensor de la puerta. Por favor, espere...");
         dialog.setVisible(true);
     }//GEN-LAST:event_activestateActionPerformed
@@ -297,7 +299,7 @@ public class SensorView extends javax.swing.JFrame {
                 checkDoorState();
             }
         };
-        dialog.setTitle("Apagando sendor de puerta");
+        dialog.setTitle("Apagando sensor de puerta");
         dialog.textVar.setText("Apagando el sensor de la puerta. Por favor, espere...");
         dialog.setVisible(true);
     }//GEN-LAST:event_inactivestateActionPerformed
@@ -311,7 +313,7 @@ public class SensorView extends javax.swing.JFrame {
                 checkSensorState();
             }
         };
-        dialog.setTitle("Apagando sendor de movimiento");
+        dialog.setTitle("Apagando sensor de movimiento");
         dialog.textVar.setText("Apagando el sensor de movimiento. Por favor, espere...");
         dialog.setVisible(true);
     }//GEN-LAST:event_activestate1ActionPerformed
@@ -325,7 +327,7 @@ public class SensorView extends javax.swing.JFrame {
                 checkSensorState();
             }
         };
-        dialog.setTitle("Apagando sendor de movimiento");
+        dialog.setTitle("Apagando sensor de movimiento");
         dialog.textVar.setText("Apagando el sensor de movimiento. Por favor, espere...");
         dialog.setVisible(true);
     }//GEN-LAST:event_inactivestate1ActionPerformed

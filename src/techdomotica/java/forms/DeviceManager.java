@@ -8,8 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import techdomotica.objs.Ambiente;
+import techdomotica.objs.Config;
 import techdomotica.objs.Util;
 import techdomotica.objs.comps.Componente;
 
@@ -20,6 +22,9 @@ import techdomotica.objs.comps.Componente;
 public class DeviceManager extends javax.swing.JFrame {
 
     public Ambiente ambiente;
+   
+    private Thread changeUI;
+    private boolean continueOnThread = true;
     
     public DeviceManager(Ambiente amb) {
         initComponents();
@@ -29,6 +34,49 @@ public class DeviceManager extends javax.swing.JFrame {
         
         checkComponentUse();
         
+        changeUI = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int rate = Integer.parseInt(new Config().getConfigKey("deteriorationprogress"));
+                if(rate == 0) rate = 1;
+                while(continueOnThread) {
+                    try {
+                        Thread.sleep(600000 / rate);
+                        JProgressBar progressDevices[][] = {{deviceprogressac1, deviceprogressac2}, {deviceprogresscam1, deviceprogresscam2, deviceprogresscam3, deviceprogresscam4}, {deviceprogresssensor1, deviceprogresssensor2}, {deviceprogressprojector}};
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(int i = 0 ; i < 2 ; i++) {
+                                    if(ambiente.getACondicionado(i) != null) {
+                                        if(ambiente.getACondicionado(i).getComponenteEncendidoState()) progressDevices[0][i].setValue((int)ambiente.getACondicionado(i).getUsoComponente());
+                                    }
+                                }
+
+                                for(int i = 0 ; i < 4 ; i++) {
+                                    if(ambiente.getCamara(i) != null) {
+                                        if(ambiente.getCamara(i).getComponenteEncendidoState()) progressDevices[1][i].setValue((int)ambiente.getCamara(i).getUsoComponente());
+                                    }
+                                }
+
+                                for(int i = 0 ; i < 2 ; i++) {
+                                    if(ambiente.getSensor(i) != null) {
+                                        if(ambiente.getSensor(i).getComponenteEncendidoState()) progressDevices[2][i].setValue((int)ambiente.getSensor(i).getUsoComponente());
+                                    }
+                                }
+
+                                if(ambiente.getTelevisor() != null) {
+                                    if(ambiente.getTelevisor().getComponenteEncendidoState()) progressDevices[3][0].setValue((int)ambiente.getTelevisor().getUsoComponente());
+                                }
+                            }
+                        });
+                    }    
+                    catch(InterruptedException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        });
+        changeUI.start();
     }
 
     /**
@@ -1149,12 +1197,6 @@ public class DeviceManager extends javax.swing.JFrame {
     }
     
     public void checkProjector() {
-        /*JButton btnRep[] = {btnrepairprojector};
-        JButton btnDel[] = {btndeleteprojector};
-        JLabel deviceLabel[] = {displayprojector};
-        JProgressBar progressDevice[] = {deviceprogressprojector};
-        JRadioButton radiosDevice[][] = {{rdbtnprojectoron, rdbtnprojectoroff}};*/
-        
         btnrepairprojector.setToolTipText(null);
         rdbtnprojectoron.setToolTipText(null);
         rdbtnprojectoroff.setToolTipText(null);
@@ -1221,6 +1263,8 @@ public class DeviceManager extends javax.swing.JFrame {
     }//GEN-LAST:event_btntemperaturaac2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        continueOnThread = false;
+        changeUI.interrupt();
         saveChangesToMain();
     }//GEN-LAST:event_formWindowClosing
 
@@ -1668,9 +1712,7 @@ public class DeviceManager extends javax.swing.JFrame {
             if(conf == JOptionPane.YES_OPTION) ambiente.destroyTelevisor();
             checkComponentUse();
         }
-        else {
-            registerNewProjector();
-        }
+        else registerNewProjector();
     }//GEN-LAST:event_btndeleteprojectorActionPerformed
 
     private void rdbtnprojectoronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnprojectoronActionPerformed

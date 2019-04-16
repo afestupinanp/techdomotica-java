@@ -9,16 +9,21 @@ import techdomotica.objs.comps.ACondicionado;
 public class Ambiente {
     
     private Thread ambienteThread;
-    private Time runTime;
     private Thread personaThread;
+    private Thread deviceThread;
     
-    private boolean continueThread = true;
+    private Time runTime;
+    
+    private boolean continueAmbienteThread = true;
+    private boolean continuePersonaThread = true;
+    private boolean continueDeviceThread = true;
     
     private String perfilActual = "";
     private Admin adminEncargado = null;
     
     private int personasEnAmbiente = 0;//Cada persona debería de generar una temperatura de 1°C
     private int personasDetectadas = 0;
+    private int personasDetectadasP = 0;
     
     private double temperaturaSala = 0.0,//La temperatura de la sala se modifica dentro de este archivo.
             temperaturaAmbiente = 0.0,//La temperatura ambiente se modifica dentro del Main, debido a que no hay acceso al hilo de tiempo.
@@ -37,6 +42,7 @@ public class Ambiente {
         startTimeThread();
         startAmbienteThread();
         startPersonaThread();
+        startDeviceThread();
     }
 
     public void loadComponentes() {
@@ -120,12 +126,20 @@ public class Ambiente {
         return (acondicionado[index] != null) ? acondicionado[index] : null;
     }
     
+    public ACondicionado[] getACondicionadoAsArray() {
+        return acondicionado;
+    }
+    
     public void destroyACondicionado(int index) {
         acondicionado[index] = null;
     }
     
     public Camara getCamara(int index) {
         return (camaras[index] != null) ? camaras[index] : null;
+    }
+    
+    public Camara[] getCamaraAsArray() {
+        return camaras;
     }
     
     public void destroyCamara(int index) {
@@ -138,6 +152,10 @@ public class Ambiente {
     
     public Sensor getSensor(int index) {
         return (sensores[index] != null) ? sensores[index] : null;
+    }
+    
+    public Sensor[] getSensorAsArray() {
+        return sensores;
     }
     
     public void destroySensor(int index) {
@@ -172,12 +190,20 @@ public class Ambiente {
         return personasDetectadas;
     }
     
+    public int getPersonasDetectadasP() {
+        return personasDetectadasP;
+    }
+    
     public Thread getPersonaThread() {
         return personaThread;
     }
     
     public Thread getAmbienteThread() {
         return ambienteThread;
+    }
+    
+    public Thread getDeviceThread() {
+        return deviceThread;
     }
     
     public Time getTimeThread() {
@@ -193,7 +219,7 @@ public class Ambiente {
         personaThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(continueThread) {
+                while(continuePersonaThread) {
                     try {//temperaturaPersonas = personasEnAmbiente * 0.5;
                         Thread.sleep(1000);
                         if(runTime.getHours() == 7 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
@@ -205,6 +231,7 @@ public class Ambiente {
                                             Thread.sleep(2000);
                                             personasEnAmbiente++;
                                             temperaturaAmbiente++;
+                                            personasDetectadasP++;
                                             if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas++;
                                         }
                                     } catch (InterruptedException ex) {
@@ -223,6 +250,7 @@ public class Ambiente {
                                             Thread.sleep(2000);
                                             personasEnAmbiente--;
                                             temperaturaAmbiente--;
+                                            personasDetectadasP++;
                                         }
                                     } catch (InterruptedException ex) {
                                         ex.printStackTrace();
@@ -257,6 +285,7 @@ public class Ambiente {
                                             Thread.sleep(2000);
                                             personasEnAmbiente--;
                                             temperaturaAmbiente--;
+                                            personasDetectadasP++;
                                         }
                                     } catch (InterruptedException ex) {
                                         ex.printStackTrace();
@@ -267,12 +296,17 @@ public class Ambiente {
                         }
                         else if(runTime.getHours() == 15 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
                             personasEnAmbiente = 1;
+                            personasDetectadasP++;
                         }
                         else if(runTime.getHours() == 15 && runTime.getMinutes() == 10 && runTime.getSeconds() == 0) {
                             personasEnAmbiente = 0;
+                            personasDetectadasP++;
                         }
                         else if(runTime.getHours() == 23 && runTime.getMinutes() == 59 && runTime.getSeconds() == 59) {
-                            if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas = 0;
+                            if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) {
+                                personasDetectadas = 0;
+                                personasDetectadasP = 0;
+                            }
                         }
                     }
                     catch(InterruptedException ex) {
@@ -284,6 +318,7 @@ public class Ambiente {
         personaThread.start();
     }
     
+    //TODO: Fix this damn logic below lmao.
     public void startAmbienteThread() {
         //System.out.println("I've been caleld!");
         ambienteThread = new Thread(new Runnable() {
@@ -292,10 +327,10 @@ public class Ambiente {
             
             @Override
             public void run() {
-                //System.out.println("ContinueThread es " + ((continueThread) ? "true" : "false"));
+                //System.out.println("ContinueThread es " + ((continueAmbienteThread) ? "true" : "false"));
                 //Temperatura de la sala:
                 if((acondicionado[0] != null && acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] != null && !acondicionado[1].getComponenteEncendidoState())) {
-                    while(continueThread) {
+                    while(continueAmbienteThread) {
                         increment = acondicionado[0].getTemperatura();
                         increment2 = acondicionado[1].getTemperatura();
                         System.out.println("Temp 1: " + increment + " | Temp 2: " + increment2);
@@ -331,7 +366,7 @@ public class Ambiente {
                     }
                 }
                 else if((acondicionado[0] != null && acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] == null || !acondicionado[1].getComponenteEncendidoState())) {
-                    while(continueThread) {
+                    while(continueAmbienteThread) {
                         increment = acondicionado[0].getTemperatura();
                         System.out.println("Temp 1: " + increment);
                         try {
@@ -354,7 +389,7 @@ public class Ambiente {
                     }
                 }
                 else if((acondicionado[0] == null || acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] != null && !acondicionado[1].getComponenteEncendidoState())) {
-                    while(continueThread) {
+                    while(continueAmbienteThread) {
                         increment = acondicionado[1].getTemperatura();
                         System.out.println("Temp 1: " + increment);
                         try {
@@ -384,19 +419,68 @@ public class Ambiente {
         ambienteThread.start();
     }
     
+    public void startDeviceThread() {
+        deviceThread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                int rate = Integer.parseInt(new Config().getConfigKey("deteriorationprogress"));
+                if(rate == 0) rate = 1;
+                while(continueDeviceThread) {
+                    try {
+                        Thread.sleep(600000 / rate);
+                        System.out.println("How fast boi?");
+                        for(ACondicionado ac : acondicionado) {
+                            if(ac != null) {
+                                if(ac.getComponenteEncendidoState()) ac.decrementarUsoComponente();
+                            }
+                        }
+                        
+                        for(Sensor sen : sensores) {
+                            if(sen != null) {
+                                if(sen.getComponenteEncendidoState()) sen.decrementarUsoComponente();
+                            }
+                        }
+                        
+                        for(Camara cam : camaras) {
+                            if(cam != null) {
+                                if(cam.getComponenteEncendidoState()) cam.decrementarUsoComponente();
+                            }
+                        }
+                        if(proyector != null){
+                            if(proyector.getComponenteEncendidoState()) proyector.decrementarUsoComponente();
+                        }
+                    }
+                    catch(InterruptedException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        });
+        deviceThread.start();
+    }
+    
     public void toggleAmbienteThread() {
-        continueThread = !continueThread;
+        continueAmbienteThread = !continueAmbienteThread;
         ambienteThread.interrupt();
     }
     
     public void toggleAmbienteThread(boolean togg) {
-        continueThread = togg;
-        ambienteThread.interrupt();
+        continueAmbienteThread = togg;
+        if(togg == false) ambienteThread.interrupt();
     }
     
     public void toggleTimeThread(boolean togg) {
-        runTime.disableTimeThread();
-        runTime.interrupt();
+        continuePersonaThread = togg;
+        if(togg == false) {
+            runTime.disableTimeThread();
+            runTime.interrupt();
+        }
     }
     
+    public void toggleDeviceThread(boolean togg) {
+        continueDeviceThread = togg;
+        if(togg == false) {
+            deviceThread.interrupt();
+        }
+    }
 }

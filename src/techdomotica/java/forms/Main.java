@@ -232,8 +232,7 @@ public class Main extends javax.swing.JFrame {
         jMenu8 = new javax.swing.JMenu();
         sensorItem = new javax.swing.JMenuItem();
         doorItem = new javax.swing.JMenuItem();
-        jMenu9 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
@@ -478,12 +477,14 @@ public class Main extends javax.swing.JFrame {
 
         jMenu4.add(jMenu8);
 
-        jMenu9.setText("Aires acondicionados");
-
-        jMenuItem7.setText("Gestionar");
-        jMenu9.add(jMenuItem7);
-
-        jMenu4.add(jMenu9);
+        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem9.setText("Aires acondicionados");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem9);
 
         jMenuBar1.add(jMenu4);
 
@@ -606,15 +607,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_itemCam4ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        ambiente.toggleAmbienteThread();
-        ambiente.getAmbienteThread().interrupt();
+        ambiente.toggleAmbienteThread(false);
+        //ambiente.toggleDeviceThread(false);
         DeviceManager dmanager = new DeviceManager(ambiente) {
             @Override
             public void saveChangesToMain() {
                 super.saveChangesToMain();
                 //System.out.println("We're out of here!");
+                ambiente.toggleAmbienteThread(true);
+                ambiente.toggleDeviceThread(true);
+                
                 ambiente.startAmbienteThread();
-                ambiente.toggleAmbienteThread();
+                //ambiente.startDeviceThread();
                 checkDeviceAvailability();
                 
             }
@@ -641,6 +645,11 @@ public class Main extends javax.swing.JFrame {
             view.setVisible(true);
         }
     }//GEN-LAST:event_sensor2MouseClicked
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        ACView ac = new ACView(ambiente);
+        ac.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void cameraView(String campath, String title, boolean ison) {
         CameraView camView = new CameraView(ambiente, campath, ison) {
@@ -841,7 +850,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem13;
@@ -855,8 +863,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mapaSala;
     private javax.swing.JLabel sensor1;
