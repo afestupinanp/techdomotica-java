@@ -16,21 +16,26 @@ public class SensorView extends javax.swing.JFrame {
         checkDoorState();
         checkSensorState();
         if(ambiente.getSensor(0) != null) labelDeviceName.setText("Estado de " + ambiente.getSensor(0).getComponenteFullName());
-        if(ambiente.getSensor(1) != null) labelDeviceName1.setText("Estado de" + ambiente.getSensor(1).getComponenteFullName());
+        if(ambiente.getSensor(1) != null) labelDeviceName1.setText("Estado de " + ambiente.getSensor(1).getComponenteFullName());
     }
 
     public void checkSensorState() {
         if(ambiente.getSensor(1) != null) {
+            devicetwo.setVisible(false);
             if(ambiente.getSensor(1).getComponenteEncendidoState()) {
-                sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensoron.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensoron.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
                 activestate1.setSelected(true);
             }
             else {
-                sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensoroff.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensoroff.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
                 inactivestate1.setSelected(true);
             }
         }
         else {
+            tDetectedHoy1.setText(tDetectedHoy1.getText() + " N/A");
+            tDetectedLifetime1.setText(tDetectedLifetime1.getText() + " N/A");
+            devicetwo.setVisible(true);
+            sensoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal2.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
             labelDeviceName1.setText("No hay dispositivo.");
             activestate1.setEnabled(false);
             activestate1.setToolTipText("No se detectó dispositivo. Registra uno en el gestor de dispositivos.");
@@ -41,16 +46,21 @@ public class SensorView extends javax.swing.JFrame {
     
     public void checkDoorState() {
         if(ambiente.getSensor(0) != null) {
+            deviceone.setVisible(false);
             if(ambiente.getSensor(0).getComponenteEncendidoState()) {
-                dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooron.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooron.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
                 activestate.setSelected(true);
             }
             else {
-                dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooroff.png")).getImage().getScaledInstance(313, 345, Image.SCALE_SMOOTH)));
+                dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/dooroff.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
                 inactivestate.setSelected(true);
             }
         }
         else {
+            tDetectedHoy.setText(tDetectedHoy.getText() + " N/A");
+            tDetectedLifetime.setText(tDetectedLifetime.getText() + " N/A");
+            deviceone.setVisible(true);
+            dooricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal2.png")).getImage().getScaledInstance(313, 204, Image.SCALE_SMOOTH)));
             labelDeviceName.setText("No hay dispositivo.");
             activestate.setEnabled(false);
             activestate.setToolTipText("No se detectó dispositivo. Registra uno en el gestor de dispositivos.");
@@ -86,9 +96,11 @@ public class SensorView extends javax.swing.JFrame {
         tDetectedHoy1 = new javax.swing.JLabel();
         tDetectedLifetime1 = new javax.swing.JLabel();
         sensoricon = new javax.swing.JLabel();
+        deviceone = new javax.swing.JButton();
+        devicetwo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Sensor de puerta - Tech Domótica");
+        setTitle("Estadísticas de los sensores - Tech Domótica");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -153,6 +165,20 @@ public class SensorView extends javax.swing.JFrame {
 
         tDetectedLifetime1.setText("Cantidad de personas detectadas (total):");
 
+        deviceone.setText("Registrar dispositivo");
+        deviceone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deviceoneActionPerformed(evt);
+            }
+        });
+
+        devicetwo.setText("Registrar dispositivo");
+        devicetwo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                devicetwoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,34 +187,46 @@ public class SensorView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(dooricon, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sensoricon, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelDeviceName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(activestate, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(inactivestate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelDeviceName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(activestate1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(inactivestate1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tDetectedHoy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tDetectedLifetime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tDetectedHoy1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tDetectedLifetime1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(labelDeviceName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(activestate, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(inactivestate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(17, 17, 17))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(labelDeviceName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(42, 42, 42)
+                                        .addComponent(activestate1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(inactivestate1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(19, 19, 19))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tDetectedHoy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tDetectedLifetime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tDetectedHoy1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(tDetectedLifetime1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(93, 93, 93)
+                                .addComponent(deviceone)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(devicetwo)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,11 +246,13 @@ public class SensorView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tDetectedHoy)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tDetectedLifetime))
+                        .addComponent(tDetectedLifetime)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deviceone))
                     .addComponent(dooricon, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sensoricon, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                    .addComponent(sensoricon, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,6 +267,8 @@ public class SensorView extends javax.swing.JFrame {
                         .addComponent(tDetectedHoy1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tDetectedLifetime1)
+                        .addGap(18, 18, 18)
+                        .addComponent(devicetwo)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -288,6 +330,41 @@ public class SensorView extends javax.swing.JFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_inactivestate1ActionPerformed
 
+    private void deviceoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deviceoneActionPerformed
+        // TODO add your handling code here:
+        ambiente.toggleAmbienteThread();
+        ambiente.getAmbienteThread().interrupt();
+        DeviceManager dmanager = new DeviceManager(ambiente) {
+            @Override
+            public void saveChangesToMain() {
+                super.saveChangesToMain();
+                //System.out.println("We're out of here!");
+                ambiente.startAmbienteThread();
+                ambiente.toggleAmbienteThread();
+                
+            }
+        };
+        dmanager.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_deviceoneActionPerformed
+
+    private void devicetwoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devicetwoActionPerformed
+        ambiente.toggleAmbienteThread();
+        ambiente.getAmbienteThread().interrupt();
+        DeviceManager dmanager = new DeviceManager(ambiente) {
+            @Override
+            public void saveChangesToMain() {
+                super.saveChangesToMain();
+                //System.out.println("We're out of here!");
+                ambiente.startAmbienteThread();
+                ambiente.toggleAmbienteThread();
+                
+            }
+        };
+        dmanager.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_devicetwoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -328,6 +405,8 @@ public class SensorView extends javax.swing.JFrame {
     private javax.swing.JRadioButton activestate1;
     private javax.swing.ButtonGroup btnactivedevice1;
     private javax.swing.ButtonGroup btnactivedevice2;
+    private javax.swing.JButton deviceone;
+    private javax.swing.JButton devicetwo;
     private javax.swing.JLabel dooricon;
     private javax.swing.JRadioButton inactivestate;
     private javax.swing.JRadioButton inactivestate1;

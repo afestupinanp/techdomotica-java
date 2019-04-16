@@ -47,7 +47,7 @@ public class Main extends javax.swing.JFrame {
     
     private TrayIcon appSystemTray = null;
     
-    private boolean[] warningDisplayed = new boolean[3];
+    private boolean[] warningDisplayed = new boolean[4];
     
     private Config cfg = new Config();
     
@@ -87,7 +87,35 @@ public class Main extends javax.swing.JFrame {
                 else if(runTime.getHours() >= 13 && runTime.getHours() <= 17) ambiente.setTemperaturaAmbiente(26);
                 else if(runTime.getHours() >= 18 && runTime.getHours() <= 20) ambiente.setTemperaturaAmbiente(25);
                 else if(runTime.getHours() >= 21 && runTime.getHours() <= 23) ambiente.setTemperaturaAmbiente(24);
-                if((ambiente.getACondicionado(0) == null || ambiente.getACondicionado(0).getUsoComponente() <= 30.0) && (ambiente.getACondicionado(1) == null || ambiente.getACondicionado(1).getUsoComponente() <= 30.0)) {
+                
+                if(ambiente.getACondicionado(0) != null && ambiente.getACondicionado(1) != null) {
+                    if(!ambiente.getACondicionado(0).getComponenteEncendidoState() || !ambiente.getACondicionado(1).getComponenteEncendidoState()) {
+                        if(!warningDisplayed[0]) {
+                            JOptionPane.showMessageDialog(null, "Atención: uno de los aires acondicionados del ambiente está apagado. Puede provocar problemas en la temperatura\nde la sala y provocar daños.", "Advertencia de temperatura", JOptionPane.WARNING_MESSAGE);
+                            warningDisplayed[0] = true;
+                        }
+                    }
+                    else if(ambiente.getACondicionado(0).getUsoComponente() <= 30.0 || ambiente.getACondicionado(1).getUsoComponente() <= 30.0) {
+                        if(!warningDisplayed[1]) {
+                            JOptionPane.showMessageDialog(null, "Atención: uno de los aires acondicionado del ambiente necesita mantenimiento. Si se daña, puede provocar problemas de temperatura y causar daños.", "Advertencia de temperatura", JOptionPane.WARNING_MESSAGE);
+                            warningDisplayed[1] = true;
+                        }
+                    }
+                }
+                else {
+                    if(!warningDisplayed[2]) {
+                        JOptionPane.showMessageDialog(null, "Atención: falta la instalación de al menos un aire acondicionado de la sala. Entra en el gestor de dispositivos\npara agregar un dispositivo rápidamente.", "Advertencia por falta de aires acondicionados", JOptionPane.WARNING_MESSAGE);
+                        warningDisplayed[2] = true;
+                    }
+                }
+                if(ambiente.getTemperaturaAmbiente() >= 28.0) {
+                    if(!warningDisplayed[3]) {
+                        JOptionPane.showMessageDialog(null, "ATENCIÓN: La temperatura ambiental está sobre 28°C. Esta temperatura, con los equipos encendidos,\npodría ocasionar daños graves en los equipos que generen calor.", "Alerta crítica de temperatura", JOptionPane.WARNING_MESSAGE);
+                        warningDisplayed[3] = true;
+                    }
+                }
+                
+                /*if((ambiente.getACondicionado(0) == null || ambiente.getACondicionado(0).getUsoComponente() <= 10.0) || ambiente.getACondicionado(1) == null) {
                     ambiente.setTemperaturaAmbiente(ambiente.getTemperaturaAmbiente());
                     if(!warningDisplayed[0]) {
                         JOptionPane.showMessageDialog(null, "Atención. no se dispone de uno o más aires acondicionados en el ambiente debido a que no\nhan sido asignados o presentan problemas y requieren mantenimiento. La temperatura\npodría incrementar y ocasionar daños en los equipos.", "Advertencia de temperatura", JOptionPane.WARNING_MESSAGE);
@@ -98,7 +126,10 @@ public class Main extends javax.swing.JFrame {
                         warningDisplayed[1] = true;
                     }
                 }
-                else ambiente.setTemperaturaAmbiente((ambiente.getTemperaturaAmbiente() + ambiente.getTemperaturaSala()) / 2);
+                else {
+                    if(ambiente.getACondicionado(0).)
+                }
+                else ambiente.setTemperaturaAmbiente((ambiente.getTemperaturaAmbiente() + ambiente.getTemperaturaSala()) / 2);*/
             }
         });
         mainChanger.start();
@@ -130,6 +161,7 @@ public class Main extends javax.swing.JFrame {
                 else cameras[i].setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             }
             else {
+                cameras[i].setIcon(null);
                 items[i].setEnabled(false);
                 items[i].setToolTipText("Cámara no disponible. No está instalada.");
             }
@@ -142,6 +174,7 @@ public class Main extends javax.swing.JFrame {
             doorItem.setEnabled(true);
         }
         else {
+            sensor1.setIcon(null);
             doorItem.setEnabled(false);
             doorItem.setToolTipText("Sensor no disponible: no está instalado.");
         }
@@ -150,6 +183,7 @@ public class Main extends javax.swing.JFrame {
             sensorItem.setEnabled(true);
         }
         else {
+            sensor2.setIcon(null);
             sensorItem.setEnabled(false);
             sensorItem.setToolTipText("Sensor no disponible: no está instalado.");
         }
@@ -531,7 +565,6 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        // TODO add your handling code here:
         
     }//GEN-LAST:event_formComponentResized
 
@@ -582,6 +615,7 @@ public class Main extends javax.swing.JFrame {
                 //System.out.println("We're out of here!");
                 ambiente.startAmbienteThread();
                 ambiente.toggleAmbienteThread();
+                checkDeviceAvailability();
                 
             }
         };

@@ -51,8 +51,9 @@ public class CameraViewTodas extends javax.swing.JFrame {
         });
         changeUI.start();
         
-        loadCamaraRadioButtons();
         loadCameraFeed();
+        loadCamaraRadioButtons();
+        
         setLocationRelativeTo(null);
     }
 
@@ -218,8 +219,10 @@ public class CameraViewTodas extends javax.swing.JFrame {
     }
     
     public void loadCamaraRadioButtons() {
-        if(ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteEncendidoState()) cameraon.setSelected(true);
-        else cameraoff.setSelected(true);
+        if(ambiente.getCamara(comboCamara.getSelectedIndex()) != null) {
+            if(ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteEncendidoState()) cameraon.setSelected(true);
+            else cameraoff.setSelected(true);
+        }
     }
     
     /**

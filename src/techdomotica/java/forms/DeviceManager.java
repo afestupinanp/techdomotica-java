@@ -1,6 +1,7 @@
 package techdomotica.java.forms;
 
 import java.awt.Color;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -45,6 +46,9 @@ public class DeviceManager extends javax.swing.JFrame {
         btndevicecamera2 = new javax.swing.ButtonGroup();
         btndevicecamera3 = new javax.swing.ButtonGroup();
         btndevicecamera4 = new javax.swing.ButtonGroup();
+        btnsensor1 = new javax.swing.ButtonGroup();
+        btnsensor2 = new javax.swing.ButtonGroup();
+        btnprojector = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -103,8 +107,32 @@ public class DeviceManager extends javax.swing.JFrame {
         rdbtnoffcam4 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        displaysensor1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        btndeletesensor1 = new javax.swing.JButton();
+        rdbtnonsensor1 = new javax.swing.JRadioButton();
+        rdbtnoffsensor1 = new javax.swing.JRadioButton();
+        deviceprogresssensor1 = new javax.swing.JProgressBar();
+        btnrepairsensor1 = new javax.swing.JButton();
+        sensorstats1 = new javax.swing.JButton();
+        displaysensor2 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        btndeletesensor2 = new javax.swing.JButton();
+        rdbtnonsensor2 = new javax.swing.JRadioButton();
+        rdbtnoffsensor2 = new javax.swing.JRadioButton();
+        deviceprogresssensor2 = new javax.swing.JProgressBar();
+        btnrepairsensor2 = new javax.swing.JButton();
+        sensorstats2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        displayprojector = new javax.swing.JLabel();
+        displayprojectoricon = new javax.swing.JLabel();
+        rdbtnprojectoron = new javax.swing.JRadioButton();
+        rdbtnprojectoroff = new javax.swing.JRadioButton();
+        jLabel15 = new javax.swing.JLabel();
+        deviceprogressprojector = new javax.swing.JProgressBar();
+        btnrepairprojector = new javax.swing.JButton();
+        btndeleteprojector = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de dispositivos - Tech Domótica");
@@ -675,16 +703,177 @@ public class DeviceManager extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Dispositivos que requieran mantenimiento aparecerán señalados en rojo.");
 
+        displaysensor1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        displaysensor1.setText("DISPLAY_DEVICE");
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Estado");
+
+        btndeletesensor1.setText("Eliminar");
+        btndeletesensor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeletesensor1ActionPerformed(evt);
+            }
+        });
+
+        btnsensor1.add(rdbtnonsensor1);
+        rdbtnonsensor1.setText("Encendido");
+        rdbtnonsensor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnonsensor1ActionPerformed(evt);
+            }
+        });
+
+        btnsensor1.add(rdbtnoffsensor1);
+        rdbtnoffsensor1.setText("Apagado");
+        rdbtnoffsensor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffsensor1ActionPerformed(evt);
+            }
+        });
+
+        deviceprogresssensor1.setForeground(new java.awt.Color(0, 153, 0));
+        deviceprogresssensor1.setToolTipText("");
+        deviceprogresssensor1.setValue(100);
+        deviceprogresssensor1.setStringPainted(true);
+
+        btnrepairsensor1.setText("Reparar");
+        btnrepairsensor1.setEnabled(false);
+        btnrepairsensor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepairsensor1ActionPerformed(evt);
+            }
+        });
+
+        sensorstats1.setText("Estadísticas del dispositivo");
+        sensorstats1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sensorstats1ActionPerformed(evt);
+            }
+        });
+
+        displaysensor2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        displaysensor2.setText("DISPLAY_DEVICE");
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Estado");
+
+        btndeletesensor2.setText("Eliminar");
+        btndeletesensor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeletesensor2ActionPerformed(evt);
+            }
+        });
+
+        btnsensor2.add(rdbtnonsensor2);
+        rdbtnonsensor2.setText("Encendido");
+        rdbtnonsensor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnonsensor2ActionPerformed(evt);
+            }
+        });
+
+        btnsensor2.add(rdbtnoffsensor2);
+        rdbtnoffsensor2.setText("Apagado");
+        rdbtnoffsensor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnoffsensor2ActionPerformed(evt);
+            }
+        });
+
+        deviceprogresssensor2.setForeground(new java.awt.Color(0, 153, 0));
+        deviceprogresssensor2.setToolTipText("");
+        deviceprogresssensor2.setValue(100);
+        deviceprogresssensor2.setStringPainted(true);
+
+        btnrepairsensor2.setText("Reparar");
+        btnrepairsensor2.setEnabled(false);
+        btnrepairsensor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepairsensor2ActionPerformed(evt);
+            }
+        });
+
+        sensorstats2.setText("Estadísticas del dispositivo");
+        sensorstats2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sensorstats2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(displaysensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sensorstats1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(rdbtnonsensor1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rdbtnoffsensor1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deviceprogresssensor1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btndeletesensor1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnrepairsensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(displaysensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sensorstats2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(rdbtnonsensor2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rdbtnoffsensor2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deviceprogresssensor2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btndeletesensor2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnrepairsensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 213, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displaysensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(btndeletesensor1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbtnonsensor1)
+                    .addComponent(rdbtnoffsensor1)
+                    .addComponent(deviceprogresssensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnrepairsensor1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sensorstats1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displaysensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(btndeletesensor2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbtnonsensor2)
+                    .addComponent(rdbtnoffsensor2)
+                    .addComponent(deviceprogresssensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnrepairsensor2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sensorstats2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -693,16 +882,94 @@ public class DeviceManager extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Dispositivos que requieran mantenimiento aparecerán señalados en rojo.");
 
+        displayprojector.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        displayprojector.setText("DISPLAY_DEVICE");
+
+        btnprojector.add(rdbtnprojectoron);
+        rdbtnprojectoron.setText("Activado");
+        rdbtnprojectoron.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnprojectoronActionPerformed(evt);
+            }
+        });
+
+        btnprojector.add(rdbtnprojectoroff);
+        rdbtnprojectoroff.setText("Desactivado");
+        rdbtnprojectoroff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbtnprojectoroffActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Estado");
+
+        deviceprogressprojector.setForeground(new java.awt.Color(0, 153, 0));
+        deviceprogressprojector.setToolTipText("");
+        deviceprogressprojector.setValue(100);
+        deviceprogressprojector.setStringPainted(true);
+
+        btnrepairprojector.setText("Reparar");
+        btnrepairprojector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrepairprojectorActionPerformed(evt);
+            }
+        });
+
+        btndeleteprojector.setText("Eliminar");
+        btndeleteprojector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btndeleteprojectorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(displayprojector, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                    .addComponent(displayprojectoricon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(rdbtnprojectoron, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rdbtnprojectoroff))
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(deviceprogressprojector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnrepairprojector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btndeleteprojector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbtnprojectoron)
+                    .addComponent(rdbtnprojectoroff)
+                    .addComponent(displayprojector, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deviceprogressprojector, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnrepairprojector)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btndeleteprojector))
+                    .addComponent(displayprojectoricon, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -720,7 +987,7 @@ public class DeviceManager extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1))
         );
 
         pack();
@@ -729,6 +996,8 @@ public class DeviceManager extends javax.swing.JFrame {
     private void checkComponentUse() {
         checkACUse();
         checkCamUse();
+        checkSensorUse();
+        checkProjector();
     }
     
     private void checkACUse() {
@@ -745,6 +1014,7 @@ public class DeviceManager extends javax.swing.JFrame {
             radiosDevice[i][1].setToolTipText(null);
             btnAiresSet[i].setToolTipText(null);
             if(ambiente.getACondicionado(i) != null) {
+                btnDel[i].setText("Eliminar");
                 deviceLabel[i].setText(ambiente.getACondicionado(i).getComponenteFullName());
                 progressDevice[i].setValue((int)ambiente.getACondicionado(i).getUsoComponente());
                 if(ambiente.getACondicionado(i).getComponenteEncendidoState()) radiosDevice[i][0].setSelected(true);
@@ -829,6 +1099,104 @@ public class DeviceManager extends javax.swing.JFrame {
         }
     }
     
+    private void checkSensorUse() {
+        JButton btnRep[] = {btnrepairsensor1, btnrepairsensor2};
+        JButton btnDel[] = {btndeletesensor1, btndeletesensor2};
+        JButton btnSensorCheck[] = {sensorstats1, sensorstats2};
+        JLabel deviceLabel[] = {displaysensor1, displaysensor2};
+        JProgressBar progressDevice[] = {deviceprogresssensor1, deviceprogresssensor2};
+        JRadioButton radiosDevice[][] = {{rdbtnonsensor1, rdbtnoffsensor1}, {rdbtnonsensor2, rdbtnoffsensor2}};
+        
+        for(int i = 0 ; i < 2 ; i++) {
+            btnRep[i].setToolTipText(null);
+            radiosDevice[i][0].setToolTipText(null);
+            radiosDevice[i][1].setToolTipText(null);
+            btnSensorCheck[i].setToolTipText(null);
+            if(ambiente.getSensor(i) != null) {
+                deviceLabel[i].setText(ambiente.getSensor(i).getComponenteFullName());
+                progressDevice[i].setValue((int)ambiente.getSensor(i).getUsoComponente());
+                if(ambiente.getSensor(i).getComponenteEncendidoState()) radiosDevice[i][0].setSelected(true);
+                else radiosDevice[i][1].setSelected(true);
+                
+                if(ambiente.getSensor(i).getUsoComponente() >= 80 && ambiente.getSensor(i).getUsoComponente() <= 100) {
+                    btnRep[i].setEnabled(false);
+                    btnRep[i].setToolTipText("Este sensor está en condiciones óptimas de uso.");
+                    deviceLabel[i].setForeground(Color.black);
+                }
+                if(ambiente.getSensor(i).getUsoComponente() <= 60) btnRep[i].setEnabled(true);
+                if(ambiente.getSensor(i).getUsoComponente() <= 40) deviceLabel[i].setForeground(Color.red);
+                if(ambiente.getSensor(i).getUsoComponente() == 0) {
+                    btnRep[i].setEnabled(false);
+                    btnRep[i].setToolTipText("Este sensor ya está demasiado dañado para ser reparado.\nEliminalo y reemplazalo por una nuevo.");
+                }
+            }
+            else {
+                String no = "Agrega un dispositivo para interactuar con el.";
+                btnDel[i].setText("Agregar");
+                deviceLabel[i].setText("Dispositivo no agregado.");
+                progressDevice[i].setValue(0);
+                btnRep[i].setEnabled(false);
+                radiosDevice[i][0].setEnabled(false);
+                radiosDevice[i][1].setEnabled(false);
+                btnSensorCheck[i].setEnabled(false);
+                
+                btnRep[i].setToolTipText(no);
+                radiosDevice[i][0].setToolTipText(no);
+                radiosDevice[i][1].setToolTipText(no);
+                btnSensorCheck[i].setToolTipText(no);
+            }
+        }
+    }
+    
+    public void checkProjector() {
+        /*JButton btnRep[] = {btnrepairprojector};
+        JButton btnDel[] = {btndeleteprojector};
+        JLabel deviceLabel[] = {displayprojector};
+        JProgressBar progressDevice[] = {deviceprogressprojector};
+        JRadioButton radiosDevice[][] = {{rdbtnprojectoron, rdbtnprojectoroff}};*/
+        
+        btnrepairprojector.setToolTipText(null);
+        rdbtnprojectoron.setToolTipText(null);
+        rdbtnprojectoroff.setToolTipText(null);
+        if(ambiente.getTelevisor() != null) {
+            if(ambiente.getTelevisor().getComponenteEncendidoState()) displayprojectoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/projectoron.png")).getImage().getScaledInstance(206, 166, Image.SCALE_SMOOTH)));
+            else displayprojectoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/projectoroff.png")).getImage().getScaledInstance(206, 166, Image.SCALE_SMOOTH)));
+            
+            
+            displayprojector.setText(ambiente.getTelevisor().getComponenteFullName());
+            deviceprogressprojector.setValue((int)ambiente.getTelevisor().getUsoComponente());
+            if(ambiente.getTelevisor().getComponenteEncendidoState()) rdbtnprojectoron.setSelected(true);
+            else rdbtnprojectoroff.setSelected(true);
+            
+            if(ambiente.getTelevisor().getUsoComponente() >= 80 && ambiente.getTelevisor().getUsoComponente() <= 100) {
+                btnrepairprojector.setEnabled(false);
+                btnrepairprojector.setToolTipText("El proyector está en condiciones óptimas de uso.");
+                displayprojector.setForeground(Color.black);
+            }
+            if(ambiente.getTelevisor().getUsoComponente() <= 60) btnrepairprojector.setEnabled(true);
+            if(ambiente.getTelevisor().getUsoComponente() <= 40) displayprojector.setForeground(Color.red);
+            if(ambiente.getTelevisor().getUsoComponente() == 0) {
+                btnrepairprojector.setEnabled(false);
+                btnrepairprojector.setToolTipText("Este proyector ya está demasiado dañado para ser reparado.\nEliminalo y reemplazalo por uno nuevo.");
+            }
+        }
+        else {
+            displayprojectoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal2.png")).getImage().getScaledInstance(206, 166, Image.SCALE_SMOOTH)));
+            
+            btndeleteprojector.setText("Agregar");
+            displayprojector.setText("Dispositivo no agregado");
+            deviceprogressprojector.setValue(0);
+            btnrepairprojector.setEnabled(false);
+            rdbtnprojectoron.setEnabled(false);
+            rdbtnprojectoroff.setEnabled(false);
+            
+            String no = "Agrega un dispositivo para interactuar con el.";
+            btnrepairprojector.setToolTipText(no);
+            rdbtnprojectoron.setToolTipText(no);
+            rdbtnprojectoroff.setToolTipText(no);
+        }
+    }
+    
     private void btnrepairac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairac1ActionPerformed
         // TODO add your handling code here:
         makeMaintance(ambiente.getACondicionado(0), new progressDialog(this, true) {
@@ -873,48 +1241,51 @@ public class DeviceManager extends javax.swing.JFrame {
         if(ambiente.getACondicionado(0) != null) {
             int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getACondicionado(0).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
             if(conf == JOptionPane.YES_OPTION) ambiente.destroyACondicionado(0);
+            checkComponentUse();
         }
         else {
-            String marca = JOptionPane.showInputDialog(null, "Inserta la marca del dispositivo.", "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
-            if(!marca.isEmpty()) {
-                String modelo = JOptionPane.showInputDialog(null, "Inserta el modelo del dispositivo.", "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
-                if(!modelo.isEmpty()) {
-                    String[] disponibilidad = new String[2];
-                    if(ambiente.getACondicionado(0) == null) disponibilidad[0] = "1 - Disponible.";
-                    else disponibilidad[0] = "1 - No disponible.";
-                    if(ambiente.getACondicionado(1) == null) disponibilidad[1] = "2 - Disponible.";    
-                    else disponibilidad[1] = "2 - No disponible.";
-                    String posicion = JOptionPane.showInputDialog(null, "Escribe la ubicación en el dispositivo:\n\nPosiciones disponibles:\n\n" + disponibilidad[0] + "\n" + disponibilidad[1], "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
-                    if(!posicion.isEmpty()) {
-                        if(Util.esNumerico(posicion)) {
-                            switch(Integer.parseInt(posicion)) {
-                                case 1: {
-                                    ambiente.getACondicionado(0).setMarcaComponente(marca);
-                                    ambiente.getACondicionado(0).setNombreComponente(modelo);
-                                    JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                                    break;
-                                }
-                                case 2: {
-                                    ambiente.getACondicionado(1).setMarcaComponente(marca);
-                                    ambiente.getACondicionado(1).setNombreComponente(modelo);
-                                    JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                                    break;
-                                }
-                                default: {
-                                    JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-                                }
-                            }
-                        }
-                        else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-                else JOptionPane.showMessageDialog(null, "El modelo del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            registerNewAC();
         }
-        checkComponentUse();
     }//GEN-LAST:event_btndeleteac1ActionPerformed
 
+    private void registerNewAC() {
+        String marca = JOptionPane.showInputDialog(null, "Inserta la marca del dispositivo.", "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
+        if(!marca.isEmpty()) {
+            String modelo = JOptionPane.showInputDialog(null, "Inserta el modelo del dispositivo.", "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
+            if(!modelo.isEmpty()) {
+                String[] disponibilidad = new String[2];
+                if(ambiente.getACondicionado(0) == null) disponibilidad[0] = "1 - Disponible.";
+                else disponibilidad[0] = "1 - No disponible.";
+                if(ambiente.getACondicionado(1) == null) disponibilidad[1] = "2 - Disponible.";    
+                else disponibilidad[1] = "2 - No disponible.";
+                String posicion = JOptionPane.showInputDialog(null, "Escribe la ubicación en el dispositivo:\n\nPosiciones disponibles:\n\n" + disponibilidad[0] + "\n" + disponibilidad[1], "Agregando nuevo aire acondicionado", JOptionPane.INFORMATION_MESSAGE);
+                if(!posicion.isEmpty()) {
+                    if(Util.esNumerico(posicion)) {
+                        switch(Integer.parseInt(posicion)) {
+                            case 1: {
+                                ambiente.createACondicionado(0, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                            case 2: {
+                                ambiente.createACondicionado(1, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                            default: {
+                                JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        checkComponentUse();
+                    }
+                    else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else JOptionPane.showMessageDialog(null, "El modelo del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
     private void rdbtnonac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnonac1ActionPerformed
         ambiente.getACondicionado(0).toggleComponenteEncendido(true);
     }//GEN-LAST:event_rdbtnonac1ActionPerformed
@@ -934,20 +1305,79 @@ public class DeviceManager extends javax.swing.JFrame {
     private void btndeleteac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteac2ActionPerformed
         if(ambiente.getACondicionado(1) != null) {
             int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getACondicionado(1).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
-            if(conf == JOptionPane.YES_OPTION) {
-                ambiente.destroyACondicionado(1);
-            }
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroyACondicionado(1);
+            checkComponentUse();
         }
         else {
-            JOptionPane.showMessageDialog(null, "TBA", "TBA", JOptionPane.INFORMATION_MESSAGE);
+            registerNewAC();
         }
-        checkComponentUse();
     }//GEN-LAST:event_btndeleteac2ActionPerformed
 
     private void btndeletecam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam1ActionPerformed
-        // TODO add your handling code here:
+        if(ambiente.getCamara(0) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getCamara(0).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroyCamara(0);
+            checkComponentUse();
+        }
+        else {
+            registerNewCam();
+        }
     }//GEN-LAST:event_btndeletecam1ActionPerformed
 
+    private void registerNewCam() {
+        String marca = JOptionPane.showInputDialog(null, "Inserta la marca del dispositivo.", "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
+        if(!marca.isEmpty()) {
+            String modelo = JOptionPane.showInputDialog(null, "Inserta el modelo del dispositivo.", "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
+            if(!modelo.isEmpty()) {
+                String[] disponibilidad = new String[4];
+                if(ambiente.getCamara(0) == null) disponibilidad[0] = "1 - Disponible.";
+                else disponibilidad[0] = "1 - No disponible.";
+                if(ambiente.getCamara(1) == null) disponibilidad[1] = "2 - Disponible.";    
+                else disponibilidad[1] = "2 - No disponible.";
+                if(ambiente.getCamara(2) == null) disponibilidad[2] = "3 - Disponible.";
+                else disponibilidad[2] = "3 - No disponible.";
+                if(ambiente.getCamara(3) == null) disponibilidad[3] = "4 - Disponible.";    
+                else disponibilidad[3] = "4 - No disponible.";
+                String posicion = JOptionPane.showInputDialog(null, "Escribe la ubicación en el dispositivo:\n\nPosiciones disponibles:\n\n" + disponibilidad[0] + "\n" + disponibilidad[1] + "\n" + disponibilidad[2] + "\n" + disponibilidad[3], "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
+                if(!posicion.isEmpty()) {
+                    if(Util.esNumerico(posicion)) {
+                        switch(Integer.parseInt(posicion)) {
+                            case 1: {
+                                ambiente.createCamara(0, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                            case 2: {
+                                ambiente.createCamara(1, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                            case 3: {
+                                ambiente.createCamara(2, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                            case 4: {
+                                ambiente.createCamara(3, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                            default: {
+                                JOptionPane.showMessageDialog(null, "Posición definida erronea. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                                break;
+                            }
+                        }
+                        checkComponentUse();
+                    }
+                    else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else JOptionPane.showMessageDialog(null, "El modelo del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
     private void rdbtnoncam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoncam1ActionPerformed
         // TODO add your handling code here:
         toggleCamera(0, true);
@@ -959,7 +1389,16 @@ public class DeviceManager extends javax.swing.JFrame {
     }//GEN-LAST:event_rdbtnoffcam1ActionPerformed
 
     private void btnrepaircam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam1ActionPerformed
-        // TODO add your handling code here:
+        makeMaintance(ambiente.getCamara(0), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getCamara(0).setUsoComponente(100.0);
+                deviceprogresscam1.setValue(100);
+                btnrepaircam1.setEnabled(false);
+                checkComponentUse();
+            }
+        });
     }//GEN-LAST:event_btnrepaircam1ActionPerformed
 
     private void btnvideofeedcam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvideofeedcam1ActionPerformed
@@ -982,15 +1421,38 @@ public class DeviceManager extends javax.swing.JFrame {
     }//GEN-LAST:event_rdbtnoffcam2ActionPerformed
 
     private void btnrepaircam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam2ActionPerformed
-        // TODO add your handling code here:
+        makeMaintance(ambiente.getCamara(1), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getCamara(1).setUsoComponente(100.0);
+                deviceprogresscam2.setValue(100);
+                btnrepaircam2.setEnabled(false);
+                checkComponentUse();
+            }
+        });
     }//GEN-LAST:event_btnrepaircam2ActionPerformed
 
     private void btndeletecam2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam2ActionPerformed
-        // TODO add your handling code here:
+        if(ambiente.getCamara(1) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getCamara(1).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroyCamara(1);
+            checkComponentUse();
+        }
+        else {
+            registerNewCam();
+        }
     }//GEN-LAST:event_btndeletecam2ActionPerformed
 
     private void btndeletecam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam3ActionPerformed
-        // TODO add your handling code here:
+        if(ambiente.getCamara(2) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getCamara(2).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroyCamara(2);
+            checkComponentUse();
+        }
+        else {
+            registerNewCam();
+        }
     }//GEN-LAST:event_btndeletecam3ActionPerformed
 
     private void rdbtnoncam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoncam3ActionPerformed
@@ -1004,7 +1466,16 @@ public class DeviceManager extends javax.swing.JFrame {
     }//GEN-LAST:event_rdbtnoffcam3ActionPerformed
 
     private void btnrepaircam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam3ActionPerformed
-        // TODO add your handling code here:
+        makeMaintance(ambiente.getCamara(2), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getCamara(2).setUsoComponente(100.0);
+                deviceprogresscam3.setValue(100);
+                btnrepaircam3.setEnabled(false);
+                checkComponentUse();
+            }
+        });
     }//GEN-LAST:event_btnrepaircam3ActionPerformed
 
     private void btnvideofeedcam3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvideofeedcam3ActionPerformed
@@ -1012,11 +1483,27 @@ public class DeviceManager extends javax.swing.JFrame {
     }//GEN-LAST:event_btnvideofeedcam3ActionPerformed
 
     private void btndeletecam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletecam4ActionPerformed
-        // TODO add your handling code here:
+        if(ambiente.getCamara(3) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getCamara(3).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroyCamara(3);
+        }
+        else {
+            registerNewCam();
+        }
+        checkComponentUse();
     }//GEN-LAST:event_btndeletecam4ActionPerformed
 
     private void btnrepaircam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepaircam4ActionPerformed
-        // TODO add your handling code here:
+        makeMaintance(ambiente.getCamara(3), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getCamara(3).setUsoComponente(100.0);
+                deviceprogresscam4.setValue(100);
+                btnrepaircam4.setEnabled(false);
+                checkComponentUse();
+            }
+        });
     }//GEN-LAST:event_btnrepaircam4ActionPerformed
 
     private void rdbtnoncam4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoncam4ActionPerformed
@@ -1033,9 +1520,188 @@ public class DeviceManager extends javax.swing.JFrame {
         toggleCamera(3, false);
     }//GEN-LAST:event_rdbtnoffcam4ActionPerformed
 
-    public void saveChangesToMain() {
-        
+    private void btndeletesensor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletesensor1ActionPerformed
+        if(ambiente.getSensor(0) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getSensor(0).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroySensor(0);
+            checkComponentUse();
+        }
+        else {
+            registerNewSensor();
+        }
+    }//GEN-LAST:event_btndeletesensor1ActionPerformed
+
+    private void registerNewSensor() {
+        String marca = JOptionPane.showInputDialog(null, "Inserta la marca del dispositivo.", "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
+        if(!marca.isEmpty()) {
+            String modelo = JOptionPane.showInputDialog(null, "Inserta el modelo del dispositivo.", "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
+            if(!modelo.isEmpty()) {
+                String[] disponibilidad = new String[2];
+                if(ambiente.getSensor(0) == null) disponibilidad[0] = "1 - Disponible. (sensor de puerta)";
+                else disponibilidad[0] = "1 - No disponible. (sensor de puerta)";
+                if(ambiente.getSensor(1) == null) disponibilidad[1] = "2 - Disponible. (sensor de movimiento)";    
+                else disponibilidad[1] = "2 - No disponible. (sensor de movimiento)";
+                String posicion = JOptionPane.showInputDialog(null, "Escribe la ubicación en el dispositivo:\n\nPosiciones disponibles:\n\n" + disponibilidad[0] + "\n" + disponibilidad[1], "Agregando nuevo sensor", JOptionPane.INFORMATION_MESSAGE);
+                if(!posicion.isEmpty()) {
+                    if(Util.esNumerico(posicion)) {
+                        switch(Integer.parseInt(posicion)) {
+                            case 1: {
+                                ambiente.createSensor(0, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                            case 2: {
+                                ambiente.createSensor(1, modelo, marca);
+                                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                                break;
+                            }
+                        }
+                        checkComponentUse();
+                    }
+                    else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else JOptionPane.showMessageDialog(null, "El modelo del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+    private void rdbtnonsensor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnonsensor1ActionPerformed
+        toggleDevice(ambiente.getSensor(0), 3, true);
+        rdbtnonsensor1.setSelected(true);
+    }//GEN-LAST:event_rdbtnonsensor1ActionPerformed
+
+    private void rdbtnoffsensor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffsensor1ActionPerformed
+        toggleDevice(ambiente.getSensor(0), 3, false);
+        rdbtnoffsensor2.setSelected(true);
+    }//GEN-LAST:event_rdbtnoffsensor1ActionPerformed
+
+    private void btnrepairsensor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairsensor1ActionPerformed
+        makeMaintance(ambiente.getSensor(0), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getSensor(0).setUsoComponente(100.0);
+                deviceprogresssensor1.setValue(100);
+                btnrepairsensor1.setEnabled(false);
+                checkComponentUse();
+            }
+        });
+    }//GEN-LAST:event_btnrepairsensor1ActionPerformed
+
+    private void sensorstats1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sensorstats1ActionPerformed
+        SensorView sensor = new SensorView(ambiente);
+        sensor.setVisible(true);
+    }//GEN-LAST:event_sensorstats1ActionPerformed
+
+    private void btndeletesensor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeletesensor2ActionPerformed
+        if(ambiente.getSensor(1) != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getSensor(1).getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroySensor(1);
+            checkComponentUse();
+        }
+        else {
+            registerNewSensor();
+        }
+    }//GEN-LAST:event_btndeletesensor2ActionPerformed
+
+    private void rdbtnonsensor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnonsensor2ActionPerformed
+        toggleDevice(ambiente.getSensor(1), 3, true);
+        rdbtnonsensor2.setSelected(true);
+    }//GEN-LAST:event_rdbtnonsensor2ActionPerformed
+
+    private void rdbtnoffsensor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffsensor2ActionPerformed
+        // TODO add your handling code here:
+        toggleDevice(ambiente.getSensor(1), 3, false);
+        rdbtnoffsensor2.setSelected(true);
+    }//GEN-LAST:event_rdbtnoffsensor2ActionPerformed
+
+    private void btnrepairsensor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairsensor2ActionPerformed
+        // TODO add your handling code here:
+        makeMaintance(ambiente.getSensor(1), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getSensor(1).setUsoComponente(100.0);
+                deviceprogresssensor2.setValue(100);
+                btnrepairsensor2.setEnabled(false);
+                checkComponentUse();
+            }
+        });
+    }//GEN-LAST:event_btnrepairsensor2ActionPerformed
+
+    private void sensorstats2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sensorstats2ActionPerformed
+        SensorView sensor = new SensorView(ambiente);
+        sensor.setVisible(true);
+    }//GEN-LAST:event_sensorstats2ActionPerformed
+
+    private void btnrepairprojectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairprojectorActionPerformed
+        makeMaintance(ambiente.getTelevisor(), new progressDialog(this, true) {
+            @Override
+            public void progressBarFilled() {
+                super.progressBarFilled();
+                ambiente.getTelevisor().setUsoComponente(100.0);
+                deviceprogressprojector.setValue(100);
+                btnrepairprojector.setEnabled(false);
+                checkComponentUse();
+            }
+        });
+    }//GEN-LAST:event_btnrepairprojectorActionPerformed
+
+    private void registerNewProjector() {
+        String marca = JOptionPane.showInputDialog(null, "Inserta la marca del dispositivo.", "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
+        if(!marca.isEmpty()) {
+            String modelo = JOptionPane.showInputDialog(null, "Inserta el modelo del dispositivo.", "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
+            if(!modelo.isEmpty()) {
+                ambiente.createTelevisor(modelo, marca);
+                JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                checkComponentUse();
+            }
+            else JOptionPane.showMessageDialog(null, "El modelo del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void btndeleteprojectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteprojectorActionPerformed
+        if(ambiente.getTelevisor() != null) {
+            int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar el dispositivo " + ambiente.getTelevisor().getComponenteFullName() + "?\nEsta acción no podrá deshacerse.");
+            if(conf == JOptionPane.YES_OPTION) ambiente.destroyTelevisor();
+            checkComponentUse();
+        }
+        else {
+            registerNewProjector();
+        }
+    }//GEN-LAST:event_btndeleteprojectorActionPerformed
+
+    private void rdbtnprojectoronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnprojectoronActionPerformed
+        progressDialog dialogo = new progressDialog(this, true, 25) {
+            @Override
+            public void progressBarFilled() {
+                ambiente.getTelevisor().toggleComponenteEncendido(true);
+                rdbtnprojectoron.setSelected(true);
+                checkComponentUse();
+            }
+        };
+        dialogo.setTitle("Encendiendo dispositivo");
+        dialogo.textVar.setText("<html>Modificando valores del dispositivo " + ambiente.getTelevisor().getComponenteFullName() + ", puede tardar unos segundos...</html>");
+        dialogo.setVisible(true);
+    }//GEN-LAST:event_rdbtnprojectoronActionPerformed
+
+    private void rdbtnprojectoroffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnprojectoroffActionPerformed
+        progressDialog dialogo = new progressDialog(this, true, 25) {
+            @Override
+            public void progressBarFilled() {
+                ambiente.getTelevisor().toggleComponenteEncendido(false);
+                rdbtnprojectoroff.setSelected(true);
+                checkComponentUse();
+            }
+        };
+        dialogo.setTitle("Apagando dispositivo");
+        dialogo.textVar.setText("<html>Modificando valores del dispositivo " + ambiente.getTelevisor().getComponenteFullName() + ", puede tardar unos segundos...</html>");
+        dialogo.setVisible(true);
+    }//GEN-LAST:event_rdbtnprojectoroffActionPerformed
+
+    public void saveChangesToMain() {}
     
     private void toggleCamera(int id, boolean onoff) {
         onoffCamera(ambiente.getCamara(id), new progressDialog(this, true, 10) {
@@ -1044,6 +1710,19 @@ public class DeviceManager extends javax.swing.JFrame {
                 ambiente.getCamara(id).toggleComponenteEncendido(onoff);
             }
         }, "Encendiendo componente", "Modificando valores de la cámara " + ambiente.getCamara(id).getComponenteFullName() + ", puede tardar unos segundos.");
+    }
+    
+    private void toggleDevice(Componente comp, int timevalue, boolean onoff) {
+        progressDialog dialogo = new progressDialog(this, true, timevalue) {
+            @Override
+            public void progressBarFilled() {
+                comp.toggleComponenteEncendido(onoff);
+            }
+        };
+        if(onoff) dialogo.setTitle("Encendiendo dispositivo");
+        else dialogo.setTitle("Apagando dispositivo");
+        dialogo.textVar.setText("<html>Modificando valores del dispositivo " + comp.getComponenteFullName() + ", puede tardar unos segundos...</html>");
+        dialogo.setVisible(true);
     }
     
     private void cameraView(String campath, String title, boolean ison) {
@@ -1124,18 +1803,27 @@ public class DeviceManager extends javax.swing.JFrame {
     private javax.swing.JButton btndeletecam2;
     private javax.swing.JButton btndeletecam3;
     private javax.swing.JButton btndeletecam4;
+    private javax.swing.JButton btndeleteprojector;
+    private javax.swing.JButton btndeletesensor1;
+    private javax.swing.JButton btndeletesensor2;
     private javax.swing.ButtonGroup btndeviceac1;
     private javax.swing.ButtonGroup btndeviceac2;
     private javax.swing.ButtonGroup btndevicecamera1;
     private javax.swing.ButtonGroup btndevicecamera2;
     private javax.swing.ButtonGroup btndevicecamera3;
     private javax.swing.ButtonGroup btndevicecamera4;
+    private javax.swing.ButtonGroup btnprojector;
     private javax.swing.JButton btnrepairac1;
     private javax.swing.JButton btnrepairac2;
     private javax.swing.JButton btnrepaircam1;
     private javax.swing.JButton btnrepaircam2;
     private javax.swing.JButton btnrepaircam3;
     private javax.swing.JButton btnrepaircam4;
+    private javax.swing.JButton btnrepairprojector;
+    private javax.swing.JButton btnrepairsensor1;
+    private javax.swing.JButton btnrepairsensor2;
+    private javax.swing.ButtonGroup btnsensor1;
+    private javax.swing.ButtonGroup btnsensor2;
     private javax.swing.JButton btntemperaturaac1;
     private javax.swing.JButton btntemperaturaac2;
     private javax.swing.JButton btnvideofeedcam1;
@@ -1148,16 +1836,26 @@ public class DeviceManager extends javax.swing.JFrame {
     private javax.swing.JProgressBar deviceprogresscam2;
     private javax.swing.JProgressBar deviceprogresscam3;
     private javax.swing.JProgressBar deviceprogresscam4;
+    private javax.swing.JProgressBar deviceprogressprojector;
+    private javax.swing.JProgressBar deviceprogresssensor1;
+    private javax.swing.JProgressBar deviceprogresssensor2;
     private javax.swing.JLabel displaydeviceac1;
     private javax.swing.JLabel displaydeviceac2;
     private javax.swing.JLabel displaydevicecam1;
     private javax.swing.JLabel displaydevicecam2;
     private javax.swing.JLabel displaydevicecam3;
     private javax.swing.JLabel displaydevicecam4;
+    private javax.swing.JLabel displayprojector;
+    private javax.swing.JLabel displayprojectoricon;
+    private javax.swing.JLabel displaysensor1;
+    private javax.swing.JLabel displaysensor2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1178,11 +1876,19 @@ public class DeviceManager extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdbtnoffcam2;
     private javax.swing.JRadioButton rdbtnoffcam3;
     private javax.swing.JRadioButton rdbtnoffcam4;
+    private javax.swing.JRadioButton rdbtnoffsensor1;
+    private javax.swing.JRadioButton rdbtnoffsensor2;
     private javax.swing.JRadioButton rdbtnonac1;
     private javax.swing.JRadioButton rdbtnonac2;
     private javax.swing.JRadioButton rdbtnoncam1;
     private javax.swing.JRadioButton rdbtnoncam2;
     private javax.swing.JRadioButton rdbtnoncam3;
     private javax.swing.JRadioButton rdbtnoncam4;
+    private javax.swing.JRadioButton rdbtnonsensor1;
+    private javax.swing.JRadioButton rdbtnonsensor2;
+    private javax.swing.JRadioButton rdbtnprojectoroff;
+    private javax.swing.JRadioButton rdbtnprojectoron;
+    private javax.swing.JButton sensorstats1;
+    private javax.swing.JButton sensorstats2;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,5 @@
 package techdomotica.objs;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import techdomotica.objs.comps.Televisor;
 import techdomotica.objs.comps.Sensor;
 import techdomotica.objs.comps.Luz;
@@ -50,30 +48,65 @@ public class Ambiente {
         loadPerfil();
     }
     
-    public void loadACondicionados() {
-       acondicionado[0] = new ACondicionado("9000btu", "LG", 45.0);
-        
+    public void createACondicionado(int index, String model, String mark) {
+        acondicionado[index] = new ACondicionado(model, mark);
+        acondicionado[index].toggleComponenteEncendido(true);
     }
     
+    public void createACondicionado(int index, String model, String mark, double value) {
+        acondicionado[index] = new ACondicionado(model, mark, value);
+        acondicionado[index].toggleComponenteEncendido(true);
+    }
+    
+    public void loadACondicionados() {
+        createACondicionado(0, "9000btu", "LG", 45.0);
+    }
+
     public void loadLuces() {
         for(int i = 0 ; i < 12 ; i++) {
             luces[i] = new Luz("Wattmax 200", "OSRAM");
         }
     }
     
+    public void createSensor(int index, String model, String mark) {
+        sensores[index] = new Sensor(model, mark);
+        sensores[index].toggleComponenteEncendido(true);
+    }
+    
+    public void createSensor(int index, String model, String mark, double value) {
+        sensores[index] = new Sensor(model, mark, value);
+        sensores[index].toggleComponenteEncendido(true);
+    }
+    
     public void loadSensores() {
-        //sensores[0] = new Sensor("Security Products", "Mangal");
-        sensores[1] = new Sensor("Alarms", "Mangal");
+        createSensor(1, "Alarms", "Mangal Security");
     }
     
     public void loadProyector() {
-        proyector = new Televisor("Samsung", "Projector");
+        proyector = new Televisor("Samsung", "Projector", 50.0);
+    }
+    
+    public void createCamara(int index, String model, String mark) {
+        camaras[index] = new Camara(model, mark);
+        camaras[index].toggleComponenteEncendido(true);
+    }
+    
+    public void createCamara(int index, String model, String mark, double value) {
+        camaras[index] = new Camara(model, mark, value);
+        camaras[index].toggleComponenteEncendido(true);
+    }
+    
+    public void createTelevisor(String model, String mark) {
+        proyector = new Televisor(model, mark);
+    }
+    
+    public void createTelevisor(String model, String mark, double value) {
+        proyector = new Televisor(model, mark, value);
     }
     
     public void loadCamaras() {
         for(int i = 0; i < 4 ; i++) {
-            camaras[i] = new Camara("Mini DVR", "HIKVISION");
-            camaras[i].toggleComponenteEncendido(true);
+            createCamara(i, "Mini DVR", "HIKVISION", 25.0);
         }
     }
     
@@ -95,6 +128,10 @@ public class Ambiente {
         return (camaras[index] != null) ? camaras[index] : null;
     }
     
+    public void destroyCamara(int index) {
+        camaras[index] = null;
+    }
+    
     public Luz getLuz(int index) {
         return luces[index];
     }
@@ -103,8 +140,16 @@ public class Ambiente {
         return (sensores[index] != null) ? sensores[index] : null;
     }
     
+    public void destroySensor(int index) {
+        sensores[index] = null;
+    }
+    
     public Televisor getTelevisor() {
         return (proyector != null) ? proyector : null;
+    }
+    
+    public void destroyTelevisor() {
+        proyector = null;
     }
     
     public double getTemperaturaSala() {
@@ -149,7 +194,7 @@ public class Ambiente {
             @Override
             public void run() {
                 while(continueThread) {
-                    try {
+                    try {//temperaturaPersonas = personasEnAmbiente * 0.5;
                         Thread.sleep(1000);
                         if(runTime.getHours() == 7 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
                             Thread t = new Thread(new Runnable() {
@@ -229,7 +274,6 @@ public class Ambiente {
                         else if(runTime.getHours() == 23 && runTime.getMinutes() == 59 && runTime.getSeconds() == 59) {
                             if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas = 0;
                         }
-                        temperaturaPersonas = personasEnAmbiente * 1;
                     }
                     catch(InterruptedException ex) {
                         ex.printStackTrace();
@@ -250,7 +294,7 @@ public class Ambiente {
             public void run() {
                 //System.out.println("ContinueThread es " + ((continueThread) ? "true" : "false"));
                 //Temperatura de la sala:
-                if(acondicionado[0] != null && acondicionado[1] != null) {
+                if((acondicionado[0] != null && acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] != null && !acondicionado[1].getComponenteEncendidoState())) {
                     while(continueThread) {
                         increment = acondicionado[0].getTemperatura();
                         increment2 = acondicionado[1].getTemperatura();
@@ -286,7 +330,7 @@ public class Ambiente {
                         }
                     }
                 }
-                else if(acondicionado[0] != null && acondicionado[1] == null) {
+                else if((acondicionado[0] != null && acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] == null || !acondicionado[1].getComponenteEncendidoState())) {
                     while(continueThread) {
                         increment = acondicionado[0].getTemperatura();
                         System.out.println("Temp 1: " + increment);
@@ -302,6 +346,29 @@ public class Ambiente {
                             }
                             
                             acondicionado[0].changeTemperatura(increment);
+                            temperaturaSala = increment;
+                        } 
+                        catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+                else if((acondicionado[0] == null || acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] != null && !acondicionado[1].getComponenteEncendidoState())) {
+                    while(continueThread) {
+                        increment = acondicionado[1].getTemperatura();
+                        System.out.println("Temp 1: " + increment);
+                        try {
+                            Thread.sleep(2500);
+                            if(Math.round(Math.random()) == 1) {
+                                if(temperaturaAmbiente > temperaturaSala) increment += 0.02;
+                                else increment += 0.06;
+                            }
+                            else {
+                                if(temperaturaAmbiente > temperaturaSala) increment -= 0.06;
+                                else increment -= 0.02;
+                            }
+                            
+                            acondicionado[1].changeTemperatura(increment);
                             temperaturaSala = increment;
                         } 
                         catch (InterruptedException ex) {
