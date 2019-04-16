@@ -51,9 +51,10 @@ public class Main extends javax.swing.JFrame {
     
     private Config cfg = new Config();
     
-    public Main() {
-        initComponents();
+    public Main(Admin admin) {
+        adminEncargado = admin;
         ambiente = new Ambiente(adminEncargado);
+        initComponents();
         
         mainChanger = new Thread(new Runnable() {
             @Override
@@ -218,9 +219,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu10 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -386,17 +385,14 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem6);
 
-        jMenu10.setText("Modificar usuario");
-
-        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jMenuItem13.setText("Modificar");
-        jMenu10.add(jMenuItem13);
-
-        jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-        jMenuItem14.setText("Eliminar");
-        jMenu10.add(jMenuItem14);
-
-        jMenu3.add(jMenu10);
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItem7.setText("Menú de usuarios");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem7);
 
         jMenuBar1.add(jMenu3);
 
@@ -651,6 +647,10 @@ public class Main extends javax.swing.JFrame {
         ac.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     private void cameraView(String campath, String title, boolean ison) {
         CameraView camView = new CameraView(ambiente, campath, ison) {
             @Override
@@ -666,7 +666,7 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        Registrar res = new Registrar();
+        Registrar res = new Registrar(ambiente);
         res.setVisible(true);
     }
     
@@ -793,6 +793,7 @@ public class Main extends javax.swing.JFrame {
     private void logOut() {
         LoginPage login = new LoginPage();
         login.setVisible(true);
+        adminEncargado = null;
         mainChanger.interrupt();
         ambiente.toggleTimeThread(false);
         ambiente.toggleAmbienteThread(false);
@@ -826,7 +827,7 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new Main(null).setVisible(true);
             }
         });
     }
@@ -842,7 +843,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemCam3;
     private javax.swing.JMenuItem itemCam4;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -852,8 +852,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
@@ -863,6 +861,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;

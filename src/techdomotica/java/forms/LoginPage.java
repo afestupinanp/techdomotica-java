@@ -6,6 +6,7 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import techdomotica.objs.Admin;
 import techdomotica.objs.Conectar;
 
 public class LoginPage extends javax.swing.JFrame {
@@ -239,11 +240,12 @@ public class LoginPage extends javax.swing.JFrame {
                 String realEmail = String.valueOf(conx.getResultSetRow("correo"));
                 char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
                 if(Arrays.equals(pswd, realPswd)) {
-                    conx.closeConnection();
                     JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
                     int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
                     if(role == 1) {
-                        Main main = new Main();
+                        conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + email +"';");
+                        Admin admin = new Admin(String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
+                        Main main = new Main(admin);
                         main.setVisible(true);
                         this.dispose();
                     }

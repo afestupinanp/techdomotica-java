@@ -8,6 +8,8 @@ import techdomotica.objs.comps.ACondicionado;
 
 public class Ambiente {
     
+    private Conectar connection;
+    
     private Thread ambienteThread;
     private Thread personaThread;
     private Thread deviceThread;
@@ -36,6 +38,7 @@ public class Ambiente {
     private Televisor proyector = null;
     
     public Ambiente(Admin encargado) {
+        connection = new Conectar();
         adminEncargado = encargado;
         loadComponentes();
         
@@ -316,6 +319,10 @@ public class Ambiente {
             }
         });
         personaThread.start();
+    }
+    
+    public Conectar getConnection() {
+        return connection;
     }
     
     //TODO: Fix this damn logic below lmao.
