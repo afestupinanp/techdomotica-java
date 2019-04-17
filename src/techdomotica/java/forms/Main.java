@@ -49,11 +49,12 @@ public class Main extends javax.swing.JFrame {
     
     private boolean[] warningDisplayed = new boolean[4];
     
-    private Config cfg = new Config();
+    private Config cfg;
     
     public Main(Admin admin) {
         adminEncargado = admin;
         ambiente = new Ambiente(adminEncargado);
+        cfg = ambiente.getConfig();
         initComponents();
         
         mainChanger = new Thread(new Runnable() {

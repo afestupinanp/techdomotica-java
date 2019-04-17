@@ -279,10 +279,8 @@ public class Configuration extends javax.swing.JDialog {
                 cfg.closeConfigFile();
                 JOptionPane.showMessageDialog(null, "Configuración guardada.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
-                confirm = JOptionPane.showConfirmDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios.\n¿Deseas hacerlo ahora?\n\nSi has cambiado la configuración avanzada, es muy aconsejable reiniciar la aplicación", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                
-                if(confirm == JOptionPane.YES_OPTION) System.exit(0);
-                else this.dispose();
+                JOptionPane.showMessageDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios guardados. Los cambios solamente tendrán efecto al reiniciarse.", "Reinicio requerido", JOptionPane.INFORMATION_MESSAGE);
+                System.exit(0);
             }
         }
         else JOptionPane.showMessageDialog(null, "Uno de los campos de configuración está vacío.", "No se puede guardar", JOptionPane.ERROR_MESSAGE);
