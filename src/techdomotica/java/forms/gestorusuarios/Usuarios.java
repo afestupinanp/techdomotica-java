@@ -1,6 +1,8 @@
 package techdomotica.java.forms.gestorusuarios;
 
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
@@ -20,9 +22,11 @@ public class Usuarios extends javax.swing.JFrame {
     private Ambiente ambiente;
     private int selectedRow = -1;
     private ArrayList<Usuario> users = new ArrayList<Usuario>();
+    private Conectar conx;
     
     public Usuarios(Ambiente amb) {
         ambiente = amb;
+        conx = ambiente.getConnection();
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
 
@@ -35,7 +39,6 @@ public class Usuarios extends javax.swing.JFrame {
     }
 
     private void loadTable() {
-        Conectar conx = ambiente.getConnection();
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Nombre 1");
         model.addColumn("Nombre 2");
@@ -59,6 +62,8 @@ public class Usuarios extends javax.swing.JFrame {
             Object[] lol = {"No hay datos"};
             model.addRow(lol);
         }
+        tableUsers.setRowSelectionInterval(0, 0);
+        selectedRow = 0;
         tableUsers.setModel(model);
 //        if(conx.executeRS("SELECT * FROM rol WHERE 1;")) {
 //            DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -88,6 +93,10 @@ public class Usuarios extends javax.swing.JFrame {
                 return false;
             }
         };
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Registrar usuario - Tech Domotica");
@@ -120,37 +129,75 @@ public class Usuarios extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableUsers);
 
+        jButton1.setText("Borrar seleccionado");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Enviar correo electrónico");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Opciones de seleccionado:");
+
+        jLabel3.setText("Haz doble click a un usuario para modificar.");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Imageplace, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(216, 216, 216))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(0, 8, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Imageplace, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -183,10 +230,41 @@ public class Usuarios extends javax.swing.JFrame {
             modify.setModifiedID(Integer.parseInt(users.get(selectedRow).getID()));
             modify.setVisible(true);
         }
-        else {
+        else if(evt.getClickCount() == 1) {
             selectedRow = tableUsers.getSelectedRow();
         }
     }//GEN-LAST:event_tableUsersMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar al usuario " + users.get(selectedRow).getFullName() + "?\nEsta acción es irreversible.", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(conf == JOptionPane.YES_OPTION) {
+            if(conx.execute("DELETE FROM usuario WHERE id_usuario = " + Integer.parseInt(users.get(selectedRow).getID()) +";") == 1) { 
+                loadTable();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(java.awt.Desktop.isDesktopSupported()) {
+            try {
+                String subject = JOptionPane.showInputDialog(null, "Para enviar un correo electrónico, escribe el asunto del correo electrónico.\nTen en cuenta que esto abrirá la aplicación de correo de tu sistema operativo.", "Envío de correo electrónico", JOptionPane.QUESTION_MESSAGE);
+                if(!subject.isEmpty()) {
+                    java.awt.Desktop.getDesktop().mail(new java.net.URI(String.format("mailto:%s?subject=%s", users.get(selectedRow).getCorreo(), subject)));
+                }
+                else JOptionPane.showMessageDialog(null, "No deberías de enviar un correo electrónico sin asunto.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            catch(Exception e) {
+                System.out.println(e);
+            }
+        }
+        else {
+            int conf = JOptionPane.showConfirmDialog(null, "Tu sistema operativo no soporta esta funcionalidad, ¿te gustaría copiar el correo electrónico de " + users.get(selectedRow).getFullName() + "?", "Función no soportada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(conf == JOptionPane.YES_OPTION) {
+                Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clip.setContents(new java.awt.datatransfer.StringSelection(users.get(selectedRow).getCorreo()), null);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
     //<editor-fold>
     /**
      * @param args the command line arguments
@@ -221,7 +299,11 @@ public class Usuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imageplace;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableUsers;
