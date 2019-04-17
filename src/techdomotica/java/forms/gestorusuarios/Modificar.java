@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package techdomotica.java.forms.gestorusuarios;
 
 import java.awt.Image;
@@ -20,13 +15,15 @@ import techdomotica.objs.Util;
  *
  * @author SENA
  */
-public class Registrar extends javax.swing.JFrame {
+public class Modificar extends javax.swing.JFrame {
 
+    private int modifiedID = 0;
     private Ambiente ambiente;
     
-    public Registrar(Ambiente amb) {
+    public Modificar(Ambiente amb) {
         ambiente = amb;
         initComponents();
+        onLoad();
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
 
         ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L1.png")).getImage().getScaledInstance(122, 66, Image.SCALE_SMOOTH));
@@ -68,7 +65,6 @@ public class Registrar extends javax.swing.JFrame {
         tfd_correo = new javax.swing.JTextField();
         tfd_documento = new javax.swing.JTextField();
         btn_registrar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         tfd_Nombre1 = new javax.swing.JTextField();
         tfd_Nombre2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -80,7 +76,7 @@ public class Registrar extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Registrar usuario - Tech Domotica");
+        setTitle("Modificación de usuario - Tech Domótica");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -92,7 +88,7 @@ public class Registrar extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Registrar usuario");
+        jLabel4.setText("<html>Modificación de usuario</html>");
 
         jLabel2.setText("Contraseña");
 
@@ -104,7 +100,7 @@ public class Registrar extends javax.swing.JFrame {
 
         jLabel8.setText("2do Nombre");
 
-        btn_registrar.setText("Registrar");
+        btn_registrar.setText("Modificar");
         btn_registrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_registrarMouseClicked(evt);
@@ -113,13 +109,6 @@ public class Registrar extends javax.swing.JFrame {
         btn_registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_registrarActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Ir a principal");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
             }
         });
 
@@ -139,7 +128,6 @@ public class Registrar extends javax.swing.JFrame {
         jDesktopPane1.setLayer(tfd_correo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(tfd_documento, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btn_registrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(tfd_Nombre1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(tfd_Nombre2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -154,50 +142,49 @@ public class Registrar extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Imageplace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
-                .addComponent(btn_registrar)
-                .addGap(33, 33, 33)
-                .addComponent(jButton1)
-                .addGap(80, 80, 80))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                    .addGap(2, 2, 2)
-                                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel8))))
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel9)
-                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel7))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfd_Nombre2)
-                    .addComponent(tfd_documento)
-                    .addComponent(tfd_Apellido2)
-                    .addComponent(tfd_correo)
-                    .addComponent(tfd_Nombre1)
-                    .addComponent(tfd_Apellido1)
-                    .addComponent(tfd_contraseña))
+                        .addComponent(Imageplace, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                            .addGap(2, 2, 2)
+                                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel5)
+                                                .addComponent(jLabel8))))
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel9)
+                                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jLabel7))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfd_Nombre2)
+                            .addComponent(tfd_documento)
+                            .addComponent(tfd_Apellido2)
+                            .addComponent(tfd_correo)
+                            .addComponent(tfd_Nombre1)
+                            .addComponent(tfd_Apellido1)
+                            .addComponent(tfd_contraseña))))
                 .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(129, 129, 129))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,8 +195,8 @@ public class Registrar extends javax.swing.JFrame {
                         .addComponent(Imageplace, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(jLabel4)))
-                .addGap(25, 25, 25)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfd_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
@@ -242,9 +229,7 @@ public class Registrar extends javax.swing.JFrame {
                     .addComponent(comboRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_registrar)
-                    .addComponent(jButton1))
+                .addComponent(btn_registrar)
                 .addContainerGap())
         );
 
@@ -261,24 +246,12 @@ public class Registrar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
     
     public void redirigir() {
         dispose();
+        windowCloseCall();
     }
-    
-    public void limpiar() {
-        tfd_Nombre1.setText("");
-        tfd_Nombre2.setText("");
-        tfd_Apellido1.setText("");
-        tfd_Apellido2.setText("");
-        tfd_contraseña.setText("");
-        tfd_correo.setText("");
-        tfd_documento.setText("");
-    }
+
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         guardar();
     }//GEN-LAST:event_btn_registrarActionPerformed
@@ -302,12 +275,8 @@ public class Registrar extends javax.swing.JFrame {
                     int confirm = JOptionPane.showConfirmDialog(null, str, "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirm == JOptionPane.YES_OPTION) {
                         Conectar conx = ambiente.getConnection();
-                        if(conx.execute(String.format("INSERT INTO `usuario` VALUES (null, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s');", (comboRoles.getSelectedIndex() + 1), correo, contra, nombre1, nombre2, apellido1, apellido2, documento)) == 1) {
-                            confirm = JOptionPane.showConfirmDialog(null, "¿Deseas seguir agregando usuarios?", "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                            if(confirm == JOptionPane.YES_OPTION) {
-                                limpiar();
-                            }
-                            else redirigir();
+                        if(conx.execute(String.format("UPDATE usuario SET id_rol = %d, correo = '%s', password = '%s', nom1 = '%s', nom2 = '%s', apellido1 = '%s', apellido2 = '%s', dni = '%s' WHERE id_usuario = %d;", (comboRoles.getSelectedIndex() + 1), correo, contra, nombre1, nombre2, apellido1, apellido2, documento, modifiedID)) == 1) {
+                            redirigir();
                         }
                     }
                 }
@@ -323,27 +292,21 @@ public class Registrar extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_registrarMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        String nombre1 = tfd_Nombre1.getText();
-        String nombre2 = tfd_Nombre2.getText();
-        String apellido1 = tfd_Apellido1.getText();
-        String apellido2 = tfd_Apellido2.getText();
-        String correo = tfd_correo.getText();
-        String documento = tfd_documento.getText();
-        String contra = tfd_contraseña.getText();
-        if(!Util.stringsVacios(nombre1, nombre2, apellido1, apellido2, correo, documento, contra)) {
-            int confirm = JOptionPane.showConfirmDialog(null, "Uno o más campos de texto poseen datos que no han sido guardados.\n¿Deseas cerrar esta ventana?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(confirm == JOptionPane.YES_OPTION) {
-                guardar();
-                redirigir();
-            }
-        }
-        else {
-            int confirm = JOptionPane.showConfirmDialog(null, "¿Quieres cerrar esta ventana de todas maneras?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(confirm == JOptionPane.YES_OPTION) redirigir();
-        }
-        
+        windowCloseCall();
     }//GEN-LAST:event_formWindowClosing
+    
+    public void setModifiedID(int id) {
+        modifiedID = id;
+    }
+    
+    public void windowCloseCall() {
+        
+    }
+    
+    public void onLoad() {
+        
+    }
+        
     //<editor-fold>
     /**
      * @param args the command line arguments
@@ -357,20 +320,21 @@ public class Registrar extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modificar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registrar(null).setVisible(true);
+                new Modificar(null).setVisible(true);
             }
         });
     }
@@ -378,8 +342,7 @@ public class Registrar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imageplace;
     private javax.swing.JButton btn_registrar;
-    private javax.swing.JComboBox<String> comboRoles;
-    private javax.swing.JButton jButton1;
+    public javax.swing.JComboBox<String> comboRoles;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -390,12 +353,12 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField tfd_Apellido1;
-    private javax.swing.JTextField tfd_Apellido2;
-    private javax.swing.JTextField tfd_Nombre1;
-    private javax.swing.JTextField tfd_Nombre2;
-    private javax.swing.JTextField tfd_contraseña;
-    private javax.swing.JTextField tfd_correo;
-    private javax.swing.JTextField tfd_documento;
+    public javax.swing.JTextField tfd_Apellido1;
+    public javax.swing.JTextField tfd_Apellido2;
+    public javax.swing.JTextField tfd_Nombre1;
+    public javax.swing.JTextField tfd_Nombre2;
+    public javax.swing.JTextField tfd_contraseña;
+    public javax.swing.JTextField tfd_correo;
+    public javax.swing.JTextField tfd_documento;
     // End of variables declaration//GEN-END:variables
 }

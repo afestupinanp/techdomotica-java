@@ -386,6 +386,7 @@ public class Ambiente {
                         }
                         if(increment1 != 0.0 && increment2 != 0.0) temperaturaSala = (increment1 + increment2) / 2;
                         else if(increment1 == 0.0 && increment2 != 0.0) temperaturaSala = increment2;
+                        else if(increment1 != 0.0 && increment2 == 0.0) temperaturaSala = increment1;
                         else temperaturaSala = temperaturaAmbiente;
                     }
                     catch(InterruptedException e) {
@@ -396,111 +397,6 @@ public class Ambiente {
         });
         ambienteThread.start();
     }
-    
-//    //TODO: Fix this damn logic below lmao.
-//    public void startAmbienteThread() {
-//        //System.out.println("I've been caleld!");
-//        ambienteThread = new Thread(new Runnable() {
-//            double increment = 0.0;
-//            double increment2 = 0.0;
-//            
-//            @Override
-//            public void run() {
-//                //System.out.println("ContinueThread es " + ((continueAmbienteThread) ? "true" : "false"));
-//                //Temperatura de la sala:
-//                if((acondicionado[0] != null && acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] != null && !acondicionado[1].getComponenteEncendidoState())) {
-//                    System.out.println("Hecck yeah 1");
-//                    while(continueAmbienteThread) {
-//                        increment = acondicionado[0].getTemperatura();
-//                        increment2 = acondicionado[1].getTemperatura();
-//                        System.out.println("Temp 1: " + increment + " | Temp 2: " + increment2);
-//                        try {
-//                            Thread.sleep(2500);
-//                            if(Math.round(Math.random()) == 1) {
-//                                if(temperaturaAmbiente > temperaturaSala) {
-//                                    increment += 0.06;
-//                                    increment2 += 0.06;
-//                                }
-//                                else {
-//                                    increment += 0.02;
-//                                    increment2 += 0.02;
-//                                }
-//                            }
-//                            else {
-//                                if(temperaturaAmbiente > temperaturaSala) {
-//                                    increment -= 0.06;
-//                                    increment2 -= 0.06;
-//                                }
-//                                else {
-//                                    increment -= 0.02;
-//                                    increment2 -= 0.02;
-//                                }
-//                            }
-//                            acondicionado[0].changeTemperatura(increment);
-//                            acondicionado[1].changeTemperatura(increment2);
-//                            temperaturaSala = (increment + increment2) / 2;
-//                        } 
-//                        catch (InterruptedException ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    }
-//                }
-//                else if((acondicionado[0] != null && acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] == null || !acondicionado[1].getComponenteEncendidoState())) {
-//                    System.out.println("Hecck yeah 2");
-//                    while(continueAmbienteThread) {
-//                        increment = acondicionado[0].getTemperatura();
-//                        System.out.println("Temp 1: " + increment);
-//                        try {
-//                            Thread.sleep(2500);
-//                            if(Math.round(Math.random()) == 1) {
-//                                if(temperaturaAmbiente > temperaturaSala) increment += 0.02;
-//                                else increment += 0.06;
-//                            }
-//                            else {
-//                                if(temperaturaAmbiente > temperaturaSala) increment -= 0.06;
-//                                else increment -= 0.02;
-//                            }
-//                            
-//                            acondicionado[0].changeTemperatura(increment);
-//                            temperaturaSala = increment;
-//                        } 
-//                        catch (InterruptedException ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    }
-//                }
-//                else if((acondicionado[0] == null || acondicionado[0].getComponenteEncendidoState()) && (acondicionado[1] != null && !acondicionado[1].getComponenteEncendidoState())) {
-//                    while(continueAmbienteThread) {
-//                        System.out.println("Hecck yeah 3");
-//                        increment = acondicionado[1].getTemperatura();
-//                        System.out.println("Temp 1: " + increment);
-//                        try {
-//                            Thread.sleep(2500);
-//                            if(Math.round(Math.random()) == 1) {
-//                                if(temperaturaAmbiente > temperaturaSala) increment += 0.02;
-//                                else increment += 0.06;
-//                            }
-//                            else {
-//                                if(temperaturaAmbiente > temperaturaSala) increment -= 0.06;
-//                                else increment -= 0.02;
-//                            }
-//                            
-//                            acondicionado[1].changeTemperatura(increment);
-//                            temperaturaSala = increment;
-//                        } 
-//                        catch (InterruptedException ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    }
-//                }
-//                else {
-//                    System.out.println("Hecck yeah 4");
-//                    temperaturaSala = 0;
-//                }
-//            }
-//        });
-//        ambienteThread.start();
-//    }
     
     public void startDeviceThread() {
         deviceThread = new Thread(new Runnable(){
@@ -513,25 +409,17 @@ public class Ambiente {
                         Thread.sleep(600000 / rate);
                         System.out.println("How fast boi?");
                         for(ACondicionado ac : acondicionado) {
-                            if(ac != null) {
-                                if(ac.getComponenteEncendidoState()) ac.decrementarUsoComponente();
-                            }
+                            if(ac != null && ac.getComponenteEncendidoState()) ac.decrementarUsoComponente();
                         }
                         
                         for(Sensor sen : sensores) {
-                            if(sen != null) {
-                                if(sen.getComponenteEncendidoState()) sen.decrementarUsoComponente();
-                            }
+                            if(sen != null && sen.getComponenteEncendidoState()) sen.decrementarUsoComponente();
                         }
                         
                         for(Camara cam : camaras) {
-                            if(cam != null) {
-                                if(cam.getComponenteEncendidoState()) cam.decrementarUsoComponente();
-                            }
+                            if(cam != null && cam.getComponenteEncendidoState()) cam.decrementarUsoComponente();
                         }
-                        if(proyector != null){
-                            if(proyector.getComponenteEncendidoState()) proyector.decrementarUsoComponente();
-                        }
+                        if(proyector != null && proyector.getComponenteEncendidoState())  proyector.decrementarUsoComponente();
                     }
                     catch(InterruptedException e) {
                         System.out.println(e);

@@ -8,9 +8,10 @@ public class Usuario {
                    apellido2 = "",
                    correo = "",
                    documento = "",
-                   Contraseña = "";
+                   Contraseña = "",
+                   id = "";
     
-    public Usuario(String name1, String name2, String ape1, String ape2, String corre, String doc, String contra) {
+    public Usuario(String id_usu, String name1, String name2, String ape1, String ape2, String corre, String doc, String contra) {
         nombre1 = name1;
         nombre2 = name2;
         apellido1 = ape1;
@@ -18,6 +19,7 @@ public class Usuario {
         correo = corre;
         documento = doc;
         Contraseña = contra;
+        id = id_usu;
     }
 
     public String getNombre2() {
@@ -80,5 +82,8 @@ public class Usuario {
         this.Contraseña = Contraseña;
     }
     
+    public String getID() {
+        return id;
+    }
     
 }

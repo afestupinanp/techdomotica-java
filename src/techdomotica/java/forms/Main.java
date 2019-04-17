@@ -28,6 +28,7 @@ import techdomotica.objs.Config;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Time;
 import techdomotica.java.forms.gestorusuarios.Registrar;
+import techdomotica.java.forms.gestorusuarios.Usuarios;
 
 /**
  * @author Andres
@@ -93,25 +94,26 @@ public class Main extends javax.swing.JFrame {
                 if(ambiente.getACondicionado(0) != null && ambiente.getACondicionado(1) != null) {
                     if(!ambiente.getACondicionado(0).getComponenteEncendidoState() || !ambiente.getACondicionado(1).getComponenteEncendidoState()) {
                         if(!warningDisplayed[0]) {
-                            JOptionPane.showMessageDialog(null, "Atención: uno de los aires acondicionados del ambiente está apagado. Puede provocar problemas en la temperatura\nde la sala y provocar daños.", "Advertencia de temperatura", JOptionPane.WARNING_MESSAGE);
+                            appSystemTray.displayMessage("Alerta de temperatura", "Atención: uno de los aires acondicionados del ambiente está apagado. Puede provocar problemas en la temperatura\nde la sala y provocar daños.", TrayIcon.MessageType.WARNING);
                             warningDisplayed[0] = true;
                         }
                     }
                     else if(ambiente.getACondicionado(0).getUsoComponente() <= 30.0 || ambiente.getACondicionado(1).getUsoComponente() <= 30.0) {
                         if(!warningDisplayed[1]) {
-                            JOptionPane.showMessageDialog(null, "Atención: uno de los aires acondicionado del ambiente necesita mantenimiento. Si se daña, puede provocar problemas de temperatura y causar daños.", "Advertencia de temperatura", JOptionPane.WARNING_MESSAGE);
+                            appSystemTray.displayMessage("Aires acondicionados en mal estado", "Atención: uno de los aires acondicionado del ambiente necesita mantenimiento. Si se daña, puede provocar problemas de temperatura y causar daños.", TrayIcon.MessageType.WARNING);
                             warningDisplayed[1] = true;
                         }
                     }
                 }
                 else {
                     if(!warningDisplayed[2]) {
-                        JOptionPane.showMessageDialog(null, "Atención: falta la instalación de al menos un aire acondicionado de la sala. Entra en el gestor de dispositivos\npara agregar un dispositivo rápidamente.", "Advertencia por falta de aires acondicionados", JOptionPane.WARNING_MESSAGE);
+                        appSystemTray.displayMessage("Falta de aires acondicionados", "Atención: falta la instalación de al menos un aire acondicionado de la sala. Entra en el gestor de dispositivos para agregar un dispositivo rápidamente.", TrayIcon.MessageType.WARNING);
                         warningDisplayed[2] = true;
                     }
                 }
                 if(ambiente.getTemperaturaAmbiente() >= 28.0) {
                     if(!warningDisplayed[3]) {
+                        appSystemTray.displayMessage("¡Alerta crítica de temperatura!", "ATENCIÓN: La temperatura ambiental está sobre 28°C. Esta temperatura, con los equipos encendidos,\npodría ocasionar daños graves en los equipos que generen calor.", TrayIcon.MessageType.WARNING);
                         JOptionPane.showMessageDialog(null, "ATENCIÓN: La temperatura ambiental está sobre 28°C. Esta temperatura, con los equipos encendidos,\npodría ocasionar daños graves en los equipos que generen calor.", "Alerta crítica de temperatura", JOptionPane.WARNING_MESSAGE);
                         warningDisplayed[3] = true;
                     }
@@ -139,6 +141,7 @@ public class Main extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         
         checkDeviceAvailability();
+        addAppToSystemTray();
         /*camera1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera-r.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         camera2.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
         camera3.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera-r.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
@@ -387,7 +390,7 @@ public class Main extends javax.swing.JFrame {
         jMenu3.add(jMenuItem6);
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jMenuItem7.setText("Menú de usuarios");
+        jMenuItem7.setText("Lista de usuarios");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -542,8 +545,8 @@ public class Main extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        if(cfg.getConfigKey("daemon").equalsIgnoreCase("true")) {
-            addAppToSystemTray();
+        if(cfg.getConfigKey("daemon").equalsIgnoreCase("true")) {            
+            appSystemTray.displayMessage("Tech Domótica se ha minimizado", "Tech Domótica se seguirá ejecutando en segundo plano. Usa este icono para abrir de nuevo la aplicación.", TrayIcon.MessageType.INFO);
             this.setVisible(false);
         }
         else exit();
@@ -649,7 +652,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
+        Usuarios usuario = new Usuarios(ambiente);
+        usuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void cameraView(String campath, String title, boolean ison) {
@@ -775,7 +779,7 @@ public class Main extends javax.swing.JFrame {
             onSystemTray = true;
             try {
                 tray.add(appSystemTray);
-                appSystemTray.displayMessage("Tech Dómotica ha quedado en segundo plano.", "Tech Domótica se seguirá ejecutando en segundo plano. Puedes cerrarlo haciendo click en el icono de la barra de estado, en la barra de tareas.", TrayIcon.MessageType.INFO);
+                appSystemTray.displayMessage("¡Tech Domótica está aquí también!", "Cuando sea necesario, Tech Domótica usará este icono para mostrarte mensajes que necesites.", TrayIcon.MessageType.INFO);
             }
             catch(AWTException e) {
                 System.out.println("Error: " + e);
