@@ -139,6 +139,13 @@ public class Ambiente {
         camaras[index].toggleComponenteEncendido(true);
     }
     
+    /*
+    public void addCameraToDB(String model, String mark, String resolution, int index, int use) {
+        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, %d, 0);", model, mark, use));
+        connection.execute(String.format(""));
+    }
+    */
+    
     public void createTelevisor(String model, String mark) {
         proyector = new Televisor(model, mark);
     }
