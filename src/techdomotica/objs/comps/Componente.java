@@ -2,6 +2,8 @@ package techdomotica.objs.comps;
 
 public class Componente {
     
+    private int deviceID = 0;
+    
     private String nombreComponente = "";
     private String marcaComponente = "";
     
@@ -72,5 +74,13 @@ public class Componente {
     
     public boolean getComponenteEncendidoState() {
         return componenteEncendido;
+    }
+    
+    public void setDeviceID(int id) {
+        deviceID = id;
+    }
+    
+    public int getDeviceID() {
+        return deviceID;
     }
 }

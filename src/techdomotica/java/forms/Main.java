@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 import techdomotica.objs.Admin;
@@ -52,10 +53,22 @@ public class Main extends javax.swing.JFrame {
     
     private Config cfg;
     
+    private Timer autosaveTimer;
+    
     public Main(Admin admin) {
         adminEncargado = admin;
         ambiente = new Ambiente(adminEncargado);
         cfg = ambiente.getConfig();
+        System.out.println(String.format("Timer starting with the following: %d s (%d ms)", (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60), (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60) * (1000)));
+        autosaveTimer = new Timer( (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60) * (1000), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("I suck pee pee");
+                saveAllDevices();
+            }
+        });
+        autosaveTimer.setRepeats(true);
+        autosaveTimer.start();
         initComponents();
         
         mainChanger = new Thread(new Runnable() {
@@ -225,7 +238,9 @@ public class Main extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         itemCam1 = new javax.swing.JMenuItem();
@@ -402,14 +417,22 @@ public class Main extends javax.swing.JFrame {
 
         jMenu4.setText("Gestión de dispositivos");
 
-        jMenuItem16.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem16.setText("Mostrar todos los dispositivos");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        jMenu9.setText("Todos los dispositivos");
+
+        jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem10.setText("Gestionar dispositivos");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                jMenuItem10ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem16);
+        jMenu9.add(jMenuItem10);
+
+        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem11.setText("Ver historial de dispositivos");
+        jMenu9.add(jMenuItem11);
+
+        jMenu4.add(jMenu9);
 
         jMenu7.setText("Cámaras");
 
@@ -554,8 +577,9 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar sesión?\nSerás retornado al menú de inicio.", "¿Cerrar sesión?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar sesión?\nSerás retornado al menú de inicio. Los estados de los dispositivos se guardarán automáticamente.", "¿Cerrar sesión?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirm == JOptionPane.YES_OPTION) {
+            ambiente.saveAllDevicesFromQuit();
             logOut();
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -606,26 +630,6 @@ public class Main extends javax.swing.JFrame {
         cameraView("camara4", "Vista de cámara 4", ambiente.getCamara(3).getComponenteEncendidoState());
     }//GEN-LAST:event_itemCam4ActionPerformed
 
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        ambiente.toggleAmbienteThread(false);
-        //ambiente.toggleDeviceThread(false);
-        DeviceManager dmanager = new DeviceManager(ambiente) {
-            @Override
-            public void saveChangesToMain() {
-                super.saveChangesToMain();
-                //System.out.println("We're out of here!");
-                ambiente.toggleAmbienteThread(true);
-                ambiente.toggleDeviceThread(true);
-                
-                ambiente.startAmbienteThread();
-                //ambiente.startDeviceThread();
-                checkDeviceAvailability();
-                
-            }
-        };
-        dmanager.setVisible(true);
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
-
     private void doorItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorItemActionPerformed
         SensorView view = new SensorView(ambiente);
         view.setVisible(true);
@@ -656,6 +660,29 @@ public class Main extends javax.swing.JFrame {
         usuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        DeviceManager manager = new DeviceManager(ambiente){
+            @Override
+            public void saveChangesToMain() {
+                super.saveChangesToMain();
+                saveAllDevices();
+                //System.out.println("We're out of here!");
+                ambiente.toggleAmbienteThread(true);
+                ambiente.toggleDeviceThread(true);
+                
+                ambiente.startAmbienteThread();
+                //ambiente.startDeviceThread();
+                checkDeviceAvailability();
+                
+            }
+        };
+        manager.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void saveAllDevices() {
+        
+    }
+    
     private void cameraView(String campath, String title, boolean ison) {
         CameraView camView = new CameraView(ambiente, campath, ison) {
             @Override
@@ -698,8 +725,9 @@ public class Main extends javax.swing.JFrame {
     }
     
     public void exit() {
-        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Tech Domotica?", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Tech Domotica? Los estados de los dispositivos se guardarán automáticamente.", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirm == JOptionPane.YES_OPTION) {
+            ambiente.saveAllDevicesFromQuit();
             System.exit(0);
         }
     }
@@ -802,6 +830,8 @@ public class Main extends javax.swing.JFrame {
         mainChanger.interrupt();
         ambiente.toggleTimeThread(false);
         ambiente.toggleAmbienteThread(false);
+        ambiente.toggleDeviceThread(false);
+        autosaveTimer.stop();
         ambiente = null;
         this.dispose();
     }
@@ -855,10 +885,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;

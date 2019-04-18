@@ -48,6 +48,7 @@ public class Configuration extends javax.swing.JDialog {
         int deteriorprogress = Integer.parseInt(cfg.getConfigKey("deteriorationprogress"));
         sliderValue.setValue(deteriorprogress);
         progressValue.setText(String.format("Valor actual: %d%%", deteriorprogress));
+        autosaveSlider.setValue(Integer.parseInt(cfg.getConfigKey("autosavetimer")));
     }
 
     /**
@@ -75,6 +76,8 @@ public class Configuration extends javax.swing.JDialog {
         progressValue = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        autosaveSlider = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuración - Tech Domotica");
@@ -151,6 +154,16 @@ public class Configuration extends javax.swing.JDialog {
 
         jLabel7.setText("<html>Velocidad de degradación de componentes: Los componenes se degradarán a medida que pase el tiempo, usa el slider para configurar la velocidad a que necesitarán reparación. Ajusta a valores más altos para que los dispositivos reduzcan su estado más rápido.</html>");
 
+        jLabel6.setText("Autoguardado cada (min):");
+
+        autosaveSlider.setMajorTickSpacing(1);
+        autosaveSlider.setMaximum(10);
+        autosaveSlider.setMinimum(1);
+        autosaveSlider.setMinorTickSpacing(1);
+        autosaveSlider.setPaintLabels(true);
+        autosaveSlider.setSnapToTicks(true);
+        autosaveSlider.setValue(3);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,21 +199,25 @@ public class Configuration extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtHostname, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(23, 23, 23)
+                                .addComponent(txtHostname)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tHostPort, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(autosaveSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(tHostPort, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,7 +252,11 @@ public class Configuration extends javax.swing.JDialog {
                     .addComponent(tHostPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jLabel6))
+                    .addComponent(autosaveSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -249,7 +270,7 @@ public class Configuration extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -276,6 +297,7 @@ public class Configuration extends javax.swing.JDialog {
                 cfg.cambiarConfigKey("port", tHostPort.getText());
                 cfg.cambiarConfigKey("hostname", txtHostname.getText());
                 cfg.cambiarConfigKey("deteriorationprogress", String.valueOf(sliderValue.getValue()));
+                cfg.cambiarConfigKey("autosavetimer", String.valueOf(autosaveSlider.getValue()));
                 cfg.closeConfigFile();
                 JOptionPane.showMessageDialog(null, "Configuración guardada.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
@@ -293,7 +315,7 @@ public class Configuration extends javax.swing.JDialog {
         String hostnameOG = cfg.getConfigKey("hostname");
         
         String currentDaemon = (tEjecucion2do.isSelected()) ? "true" : "false";
-        if(!txtHostname.getText().equalsIgnoreCase(hostnameOG) || !tHostPort.getText().equalsIgnoreCase(portOG) || !currentDaemon.equalsIgnoreCase(daemonOG)) {
+        if(!txtHostname.getText().equalsIgnoreCase(hostnameOG) || !tHostPort.getText().equalsIgnoreCase(portOG) || !currentDaemon.equalsIgnoreCase(daemonOG) || sliderValue.getValue() != Integer.parseInt(cfg.getConfigKey("deteriorationprogress")) || autosaveSlider.getValue() != Integer.parseInt(cfg.getConfigKey("autosavetimer"))) {
             int confirm = JOptionPane.showConfirmDialog(null, "Hay cambios pendientes para guardar. ¿Deseas guardarlos ahora?", "Configuración no guardada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.YES_OPTION) saveConfig();
             else this.dispose();
@@ -316,6 +338,7 @@ public class Configuration extends javax.swing.JDialog {
             cfg.cambiarConfigKey("hostname", "localhost");
             cfg.cambiarConfigKey("port", "3306");
             cfg.cambiarConfigKey("deteriorationprogress", "50");
+            cfg.cambiarConfigKey("autosavetimer", "3");
             cfg.closeConfigFile();
             JOptionPane.showMessageDialog(null, "Configuración reestablecida.", "¡Éxito en la operación!", JOptionPane.INFORMATION_MESSAGE);
             confirm = JOptionPane.showConfirmDialog(null, "Tech Domótica necesita reiniciarse para aplicar los cambios.\n¿Deseas hacerlo ahora?\n\nSi has cambiado la configuración avanzada, es muy aconsejable reiniciar la aplicación", "Reinicio requerido", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -375,6 +398,7 @@ public class Configuration extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSlider autosaveSlider;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -384,6 +408,7 @@ public class Configuration extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel progressValue;

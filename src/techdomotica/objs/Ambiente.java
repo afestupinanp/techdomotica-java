@@ -80,6 +80,7 @@ public class Ambiente {
             acondicionado[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
             acondicionado[i].changeTemperatura(Double.parseDouble(String.valueOf(connection.getResultSetRow("temperatura"))));
             System.out.println(acondicionado[i].getTemperatura());
+            acondicionado[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
             if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) acondicionado[i].toggleComponenteEncendido(true);
             else acondicionado[i].toggleComponenteEncendido(false);
             i++;
@@ -113,6 +114,7 @@ public class Ambiente {
             createSensor(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
             sensores[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
             sensores[i].setTipoSensor(String.valueOf(connection.getResultSetRow("tiposensor")));
+            sensores[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
             if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) sensores[i].toggleComponenteEncendido(true);
             else sensores[i].toggleComponenteEncendido(false);
         }
@@ -122,6 +124,7 @@ public class Ambiente {
         connection.executeRSOne("SELECT * FROM tv INNER JOIN componente ON tv.id_componente = componente.id_componente WHERE 1 LIMIT 1;");
         
         proyector = new Televisor(String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+        proyector.setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
         proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
         proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
     }
@@ -152,6 +155,7 @@ public class Ambiente {
             createCamara(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
             camaras[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
             camaras[i].setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+            camaras[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
             if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) camaras[i].toggleComponenteEncendido(true);
             else camaras[i].toggleComponenteEncendido(false);
         }
@@ -234,6 +238,30 @@ public class Ambiente {
     public int getPersonasDetectadasP() {
         return personasDetectadasP;
     }
+    
+    public void saveAllDevicesFromQuit() {
+        for(Camara cam : camaras) {
+            if(cam != null) {
+                connection.execute(String.format("UPDATE `componente` SET `uso`= %d, `componente_on`= %d WHERE id_componente = %d;", Math.round(cam.getUsoComponente()), (cam.getComponenteEncendidoState() ? 1 : 0), cam.getDeviceID()));
+            }
+        }
+        for(Sensor sens : sensores) {
+            if(sens != null) {
+                connection.execute(String.format("UPDATE `componente` SET `uso`= %d, `componente_on`= %d WHERE id_componente = %d;", Math.round(sens.getUsoComponente()), (sens.getComponenteEncendidoState() ? 1 : 0), sens.getDeviceID()));
+            }
+        }
+        for(ACondicionado ac : acondicionado) {
+            if(ac != null) {
+                connection.execute(String.format("UPDATE `componente` SET `uso`= %d, `componente_on`= %d WHERE id_componente = %d;", Math.round(ac.getUsoComponente()), (ac.getComponenteEncendidoState() ? 1 : 0), ac.getDeviceID()));
+                connection.execute(String.format("UPDATE `acondicionado` SET `temperatura`= %d WHERE id_componente = %d;", Math.round(ac.getTemperatura()), ac.getDeviceID()));
+            }
+        }
+        if(proyector != null) {
+            connection.execute(String.format("UPDATE `componente` SET `uso`= %d, `componente_on`= %d WHERE id_componente = %d;", Math.round(proyector.getUsoComponente()), (proyector.getComponenteEncendidoState() ? 1 : 0), proyector.getDeviceID()));
+        }
+    }
+    
+    
     
     public Thread getPersonaThread() {
         return personaThread;
