@@ -91,6 +91,15 @@ public class Conectar {
         }
     }
     
+    public void setBeforeFirst() {
+        try {
+            rs.beforeFirst();
+        }
+        catch(SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
     public Object getResultSetRow(String columnLabel) {
         try {
             return rs.getString(columnLabel);

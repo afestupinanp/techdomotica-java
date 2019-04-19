@@ -393,7 +393,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu6);
 
-        jMenu3.setText("Gestión de usuarios");
+        jMenu3.setText("Usuarios");
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem6.setText("Registro de usuario");
@@ -415,7 +415,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Gestión de dispositivos");
+        jMenu4.setText("Dispositivos");
 
         jMenu9.setText("Todos los dispositivos");
 

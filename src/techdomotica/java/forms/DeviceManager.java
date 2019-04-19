@@ -1307,12 +1307,14 @@ public class DeviceManager extends javax.swing.JFrame {
                     if(Util.esNumerico(posicion)) {
                         switch(Integer.parseInt(posicion)) {
                             case 1: {
-                                ambiente.createACondicionado(0, modelo, marca);
+                                ambiente.insertACIntoDB(modelo, marca);
+                                //ambiente.createACondicionado(0, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
                             case 2: {
-                                ambiente.createACondicionado(1, modelo, marca);
+                                ambiente.insertACIntoDB(modelo, marca);
+                                //ambiente.createACondicionado(1, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
@@ -1320,6 +1322,7 @@ public class DeviceManager extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "No se reconoce la posición especificada. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         }
+                        ambiente.loadACondicionados();
                         checkComponentUse();
                     }
                     else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1387,22 +1390,26 @@ public class DeviceManager extends javax.swing.JFrame {
                     if(Util.esNumerico(posicion)) {
                         switch(Integer.parseInt(posicion)) {
                             case 1: {
-                                ambiente.createCamara(0, modelo, marca);
+                                ambiente.insertCamaraIntoDB(0, modelo, marca);
+                                //ambiente.createCamara(0, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
                             case 2: {
-                                ambiente.createCamara(1, modelo, marca);
+                                ambiente.insertCamaraIntoDB(1, modelo, marca);
+                                //ambiente.createCamara(1, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
                             case 3: {
-                                ambiente.createCamara(2, modelo, marca);
+                                ambiente.insertCamaraIntoDB(2, modelo, marca);
+                                //ambiente.createCamara(2, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
                             case 4: {
-                                ambiente.createCamara(3, modelo, marca);
+                                ambiente.insertCamaraIntoDB(3, modelo, marca);
+                                //ambiente.createCamara(3, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
@@ -1411,6 +1418,7 @@ public class DeviceManager extends javax.swing.JFrame {
                                 break;
                             }
                         }
+                        ambiente.loadCamaras();
                         checkComponentUse();
                     }
                     else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1590,16 +1598,19 @@ public class DeviceManager extends javax.swing.JFrame {
                     if(Util.esNumerico(posicion)) {
                         switch(Integer.parseInt(posicion)) {
                             case 1: {
-                                ambiente.createSensor(0, modelo, marca);
+                                ambiente.insertSensorIntoDB("puerta", modelo, marca);
+                                //ambiente.createSensor(0, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
                             case 2: {
-                                ambiente.createSensor(1, modelo, marca);
+                                ambiente.insertSensorIntoDB("movimiento", modelo, marca);
+                                //ambiente.createSensor(1, modelo, marca);
                                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
                                 break;
                             }
                         }
+                        ambiente.loadSensores();
                         checkComponentUse();
                     }
                     else JOptionPane.showMessageDialog(null, "La posición especificada contiene caracteres no numéricos. Intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1697,8 +1708,10 @@ public class DeviceManager extends javax.swing.JFrame {
         if(!marca.isEmpty()) {
             String modelo = JOptionPane.showInputDialog(null, "Inserta el modelo del dispositivo.", "Agregando nueva cámara", JOptionPane.INFORMATION_MESSAGE);
             if(!modelo.isEmpty()) {
-                ambiente.createTelevisor(modelo, marca);
+                ambiente.insertTVIntoDB(modelo, marca);
+                //ambiente.createTelevisor(modelo, marca);
                 JOptionPane.showMessageDialog(null, "Dispositivo añadido correctamente. Refrescando lista de componentes.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                ambiente.loadProyector();
                 checkComponentUse();
             }
             else JOptionPane.showMessageDialog(null, "El modelo del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);

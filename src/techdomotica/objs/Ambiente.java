@@ -121,12 +121,12 @@ public class Ambiente {
     }
     
     public void loadProyector() {
-        connection.executeRSOne("SELECT * FROM tv INNER JOIN componente ON tv.id_componente = componente.id_componente WHERE 1 LIMIT 1;");
-        
-        proyector = new Televisor(String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
-        proyector.setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
-        proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
-        proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+        if(connection.executeRSOne("SELECT * FROM tv INNER JOIN componente ON tv.id_componente = componente.id_componente WHERE 1 LIMIT 1;")) {
+            proyector = new Televisor(String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+            proyector.setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+            proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
+            proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+        }
     }
     
     public void createCamara(int index, String model, String mark) {
@@ -139,12 +139,38 @@ public class Ambiente {
         camaras[index].toggleComponenteEncendido(true);
     }
     
-    /*
-    public void addCameraToDB(String model, String mark, String resolution, int index, int use) {
-        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, %d, 0);", model, mark, use));
-        connection.execute(String.format(""));
+    public void insertACIntoDB(String model, String mark) {
+        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 25, 0);", model, mark));
+        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+            connection.execute(String.format("INSERT INTO acondicionado VALUES (null, %d, 23);", id_componente));
+        }
     }
-    */
+    
+    public void insertCamaraIntoDB(int index, String model, String mark) {
+        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 5, 1);", model, mark));
+        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+            connection.execute(String.format("INSERT INTO camara VALUES (null, %d, '1080p', %d);", id_componente, (index + 1)));
+        }
+    }
+    
+    public void insertSensorIntoDB(String tipo, String model, String mark) {
+        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 5, 1);", model, mark));
+        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+            if(tipo.equalsIgnoreCase("puerta")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'puerta', 'puerta');", id_componente));
+            else if(tipo.equalsIgnoreCase("sala")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'movimiento', 'sala');", id_componente));
+        }
+    }
+    
+    public void insertTVIntoDB(String model, String mark) {
+        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 5, 1);", model, mark));
+        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+            connection.execute(String.format("INSERT INTO tv VALUES (null, %d, 'Full HD', '1080p');", id_componente));
+        }
+    }
     
     public void createTelevisor(String model, String mark) {
         proyector = new Televisor(model, mark);
@@ -183,6 +209,8 @@ public class Ambiente {
     }
     
     public void destroyACondicionado(int index) {
+        connection.execute(String.format("DELETE FROM componente WHERE id_componente = %d;", proyector.getDeviceID()));
+        connection.execute(String.format("DELETE FROM acondicionado WHERE id_componente = %d;", proyector.getDeviceID()));
         acondicionado[index] = null;
     }
     
@@ -195,6 +223,8 @@ public class Ambiente {
     }
     
     public void destroyCamara(int index) {
+        connection.execute(String.format("DELETE FROM componente WHERE id_componente = %d;", proyector.getDeviceID()));
+        connection.execute(String.format("DELETE FROM camara WHERE id_componente = %d;", proyector.getDeviceID()));
         camaras[index] = null;
     }
     
@@ -211,6 +241,8 @@ public class Ambiente {
     }
     
     public void destroySensor(int index) {
+        connection.execute(String.format("DELETE FROM componente WHERE id_componente = %d;", proyector.getDeviceID()));
+        connection.execute(String.format("DELETE FROM sensor WHERE id_componente = %d;", proyector.getDeviceID()));        
         sensores[index] = null;
     }
     
@@ -219,6 +251,8 @@ public class Ambiente {
     }
     
     public void destroyTelevisor() {
+        connection.execute(String.format("DELETE FROM componente WHERE id_componente = %d;", proyector.getDeviceID()));
+        connection.execute(String.format("DELETE FROM tv WHERE id_componente = %d;", proyector.getDeviceID()));
         proyector = null;
     }
     
