@@ -160,7 +160,7 @@ public class Ambiente {
         if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
             int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
             if(tipo.equalsIgnoreCase("puerta")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'puerta', 'puerta');", id_componente));
-            else if(tipo.equalsIgnoreCase("sala")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'movimiento', 'sala');", id_componente));
+            else if(tipo.equalsIgnoreCase("movimiento")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'movimiento', 'sala');", id_componente));
         }
     }
     
@@ -333,6 +333,7 @@ public class Ambiente {
                     try {//temperaturaPersonas = personasEnAmbiente * 0.5;
                         Thread.sleep(1000);
                         if(runTime.getHours() == 7 && runTime.getMinutes() == 0 && runTime.getSeconds() == 0) {
+                            if(sensores[1] != null && sensores[1].getComponenteEncendidoState()) sensores[1].toggleComponenteEncendido(false);
                             Thread t = new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -341,7 +342,6 @@ public class Ambiente {
                                             Thread.sleep(2000);
                                             personasEnAmbiente++;
                                             temperaturaAmbiente++;
-                                            personasDetectadasP++;
                                             if(sensores[0] != null && sensores[0].getComponenteEncendidoState()) personasDetectadas++;
                                         }
                                     } catch (InterruptedException ex) {

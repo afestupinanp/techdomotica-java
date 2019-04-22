@@ -67,7 +67,7 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel1.setText("Iniciar sesión en Tech Domotica");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Correo electrónico:");
+        jLabel3.setText("Correo o cédula:");
 
         txtUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,7 +255,25 @@ public class LoginPage extends javax.swing.JFrame {
                 }
                 else JOptionPane.showMessageDialog(null, "El usuario ingresado no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(null, "El texto ingresado en el campo de correo electrónico no corresponde a un correo electrónico\nválido. Revisalo e intentalo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
+            else if(Util.esNumerico(email)) {
+                if(conx.executeRSOne("SELECT password, nom1, id_rol FROM usuario WHERE dni = '"+ email +"';")) {
+                    char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
+                    if(Arrays.equals(pswd, realPswd)) {
+                        JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
+                        int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
+                        if(role == 1) {
+                            conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + email +"';");
+                            Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
+                            Main main = new Main(admin);
+                            main.setVisible(true);
+                            this.dispose();
+                        }
+                    }
+                    else JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea. Intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
+                }
+                else JOptionPane.showMessageDialog(null, "Este documento de identificación no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
+            }
+            else JOptionPane.showMessageDialog(null, "El texto ingresado en el campo de correo electrónico o cédula no corresponde a ninguno de los tipos requeridos.\nIntentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
         }
         else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacío. Rellenos e intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
     }

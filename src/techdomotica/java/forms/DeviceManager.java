@@ -1063,6 +1063,8 @@ public class DeviceManager extends javax.swing.JFrame {
             btnAiresSet[i].setToolTipText(null);
             if(ambiente.getACondicionado(i) != null) {
                 btnDel[i].setText("Eliminar");
+                radiosDevice[i][0].setEnabled(true);
+                radiosDevice[i][1].setEnabled(true);
                 deviceLabel[i].setText(ambiente.getACondicionado(i).getComponenteFullName());
                 progressDevice[i].setValue((int)ambiente.getACondicionado(i).getUsoComponente());
                 if(ambiente.getACondicionado(i).getComponenteEncendidoState()) radiosDevice[i][0].setSelected(true);
@@ -1112,6 +1114,8 @@ public class DeviceManager extends javax.swing.JFrame {
             radiosDevice[i][1].setToolTipText(null);
             btnCamCheck[i].setToolTipText(null);
             if(ambiente.getCamara(i) != null) {
+                radiosDevice[i][0].setEnabled(true);
+                radiosDevice[i][1].setEnabled(true);
                 deviceLabel[i].setText(ambiente.getCamara(i).getComponenteFullName());
                 progressDevice[i].setValue((int)ambiente.getCamara(i).getUsoComponente());
                 if(ambiente.getCamara(i).getComponenteEncendidoState()) radiosDevice[i][0].setSelected(true);
@@ -1161,6 +1165,8 @@ public class DeviceManager extends javax.swing.JFrame {
             radiosDevice[i][1].setToolTipText(null);
             btnSensorCheck[i].setToolTipText(null);
             if(ambiente.getSensor(i) != null) {
+                radiosDevice[i][0].setEnabled(true);
+                radiosDevice[i][1].setEnabled(true);
                 deviceLabel[i].setText(ambiente.getSensor(i).getComponenteFullName());
                 progressDevice[i].setValue((int)ambiente.getSensor(i).getUsoComponente());
                 if(ambiente.getSensor(i).getComponenteEncendidoState()) radiosDevice[i][0].setSelected(true);
@@ -1201,6 +1207,8 @@ public class DeviceManager extends javax.swing.JFrame {
         rdbtnprojectoron.setToolTipText(null);
         rdbtnprojectoroff.setToolTipText(null);
         if(ambiente.getTelevisor() != null) {
+            rdbtnprojectoron.setEnabled(true);
+            rdbtnprojectoroff.setEnabled(true);
             if(ambiente.getTelevisor().getComponenteEncendidoState()) displayprojectoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/projectoron.png")).getImage().getScaledInstance(206, 166, Image.SCALE_SMOOTH)));
             else displayprojectoricon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/projectoroff.png")).getImage().getScaledInstance(206, 166, Image.SCALE_SMOOTH)));
             
