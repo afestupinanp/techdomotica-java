@@ -86,4 +86,13 @@ public class Usuario {
         return id;
     }
     
+    public static int insertUser(int rol, String correo, String contra, String nombre1, String nombre2, String apellido1, String apellido2, String documento) {
+        Conectar conx = new Conectar();
+        return conx.execute(String.format("INSERT INTO `usuario` VALUES (null, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s');", rol, correo, contra, nombre1, nombre2, apellido1, apellido2, documento));
+    }
+    
+    public static int modifyUser(int rol, String correo, String contra, String nombre1, String nombre2, String apellido1, String apellido2, String documento, int modifiedID) {
+        Conectar conx = new Conectar();
+        return conx.execute(String.format("UPDATE usuario SET id_rol = %d, correo = '%s', password = '%s', nom1 = '%s', nom2 = '%s', apellido1 = '%s', apellido2 = '%s', dni = '%s' WHERE id_usuario = %d;", rol, correo, contra, nombre1, nombre2, apellido1, apellido2, documento, modifiedID));
+    }
 }

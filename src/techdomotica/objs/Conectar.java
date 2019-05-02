@@ -110,6 +110,15 @@ public class Conectar {
         }
     }
     
+    public void destroyResultSet() {
+        try {
+            rs.close();
+        }
+        catch(SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
     public void closeConnection() {
         try {
             if(ping()) conx.close();

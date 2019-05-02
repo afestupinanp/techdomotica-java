@@ -3,16 +3,21 @@ package techdomotica.java.forms;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import techdomotica.objs.Admin;
 import techdomotica.objs.Conectar;
+import techdomotica.objs.Reporte;
 import techdomotica.objs.Util;
 
 public class LoginPage extends javax.swing.JFrame {
 
     private final Conectar conx;
+    private int errors = 0;
+    private boolean loggeable = true;
     
     public LoginPage() {
         conx = new Conectar();
@@ -44,6 +49,7 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -102,6 +108,8 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Recuperar contraseña");
+
         jMenuBar1.setBackground(new java.awt.Color(197, 208, 230));
 
         jMenu1.setText("Archivo");
@@ -145,23 +153,30 @@ public class LoginPage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtUser)
-                        .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
-                .addComponent(imagePlace, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtUser)
+                                .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 40, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(imagePlace, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(96, 96, 96))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,6 +195,8 @@ public class LoginPage extends javax.swing.JFrame {
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -234,48 +251,103 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUserKeyTyped
    
     public void logIn() {
-        String email = txtUser.getText().trim();
-        char[] pswd = txtPass.getPassword();
-        if(!email.isEmpty() && pswd.length != 0) {
-            if(Util.esCorreo(email)) {
-                if(conx.executeRSOne("SELECT password, nom1, id_rol FROM usuario WHERE correo = '"+ email +"';")) {
-                    char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
-                    if(Arrays.equals(pswd, realPswd)) {
-                        JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
-                        int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
-                        if(role == 1) {
-                            conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + email +"';");
-                            Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
-                            Main main = new Main(admin);
-                            main.setVisible(true);
-                            this.dispose();
+        if(loggeable) {
+            String email = txtUser.getText().trim();
+            char[] pswd = txtPass.getPassword();
+            if(!email.isEmpty() && pswd.length != 0) {
+                if(Util.esCorreo(email)) {
+                    if(conx.executeRSOne("SELECT id_usuario, dni, password, nom1, id_rol FROM usuario WHERE correo = '"+ email +"';")) {
+                        char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
+                        if(Arrays.equals(pswd, realPswd)) {
+                            JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
+                            int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
+                            if(role == 1) {
+                                conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + email +"';");
+                                Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
+                                Reporte.insertReport(Integer.parseInt(admin.getID()), 1, "Este usuario ha iniciado sesión en la versión de Java desde " + System.getProperty("os.name"));
+                                Main main = new Main(admin);
+                                main.setVisible(true);
+                                this.dispose();
+                            }
                         }
+                        else {
+                            errors++;
+                            Reporte.insertReport(Integer.valueOf(String.valueOf(conx.getResultSetRow("id_usuario"))), 7, "Intento de inicio de sesión en la versión de Java en " + System.getProperty("os.name"));
+                            if(errors == 3) {
+                                loggeable = false;
+                                JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea.\nYa no tienes intentos disponibles. No podrás iniciar sesión por 1 minuto.", "Credencial incorrecta", JOptionPane.ERROR_MESSAGE);
+                                jButton1.setEnabled(false);
+                                Thread thread = new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Thread.sleep(60000);
+                                            jButton1.setEnabled(true);
+                                            loggeable = true;
+                                            errors = 0;
+                                        } catch (InterruptedException ex) {
+                                            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                });
+                                thread.start();
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea.\nIntentos disponibles: " + errors + "/3", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }               
                     }
-                    else JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea. Intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
+                    else JOptionPane.showMessageDialog(null, "El usuario ingresado no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog(null, "El usuario ingresado no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
-            }
-            else if(Util.esNumerico(email)) {
-                if(conx.executeRSOne("SELECT password, nom1, id_rol FROM usuario WHERE dni = '"+ email +"';")) {
-                    char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
-                    if(Arrays.equals(pswd, realPswd)) {
-                        JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
-                        int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
-                        if(role == 1) {
-                            conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + email +"';");
-                            Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
-                            Main main = new Main(admin);
-                            main.setVisible(true);
-                            this.dispose();
+                else if(Util.esNumerico(email)) {
+                    if(conx.executeRSOne("SELECT id_usuario, password, nom1, id_rol FROM usuario WHERE dni = '"+ email +"';")) {
+                        char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
+                        if(Arrays.equals(pswd, realPswd)) {
+                            JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
+                            int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
+                            if(role == 1) {
+                                conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + email +"';");
+                                Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
+                                Main main = new Main(admin);
+                                main.setVisible(true);
+                                this.dispose();
+                            }
                         }
+                        else {
+                            errors++;
+                            Reporte.insertReport(Integer.valueOf(String.valueOf(conx.getResultSetRow("id_usuario"))), 7, "Intento de inicio de sesión en la versión de Java en " + System.getProperty("os.name"));
+                            if(errors == 3) {
+                                loggeable = false;
+                                JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea.\nYa no tienes intentos disponibles. No podrás iniciar sesión por 1 minuto.", "Credencial incorrecta", JOptionPane.ERROR_MESSAGE);
+                                jButton1.setEnabled(false);
+                                Thread thread = new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Thread.sleep(60000);
+                                            jButton1.setEnabled(true);
+                                            loggeable = true;
+                                            errors = 0;
+                                        } catch (InterruptedException ex) {
+                                            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                });
+                                thread.start();
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea.\nIntentos disponibles: " + errors + "/3", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }               
                     }
-                    else JOptionPane.showMessageDialog(null, "La contraseña introducida es erronea. Intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
+                    else JOptionPane.showMessageDialog(null, "Este documento de identificación no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog(null, "Este documento de identificación no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
+                else JOptionPane.showMessageDialog(null, "El texto ingresado en el campo de correo electrónico o cédula no corresponde a ninguno de los tipos requeridos.\nIntentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
+                conx.destroyResultSet();
             }
-            else JOptionPane.showMessageDialog(null, "El texto ingresado en el campo de correo electrónico o cédula no corresponde a ninguno de los tipos requeridos.\nIntentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
+            else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacío. Rellenos e intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacío. Rellenos e intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+        else JOptionPane.showMessageDialog(null, "No puedes iniciar sesión. Has superado el número de intentos disponibles.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void exit() {
@@ -318,6 +390,7 @@ public class LoginPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel imagePlace;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 //import techdomotica.java.forms.Main;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
+import techdomotica.objs.Reporte;
 //import techdomotica.objs.Usuario;
 import techdomotica.objs.Util;
 
@@ -74,6 +75,7 @@ public class Modificar extends javax.swing.JFrame {
         Imageplace = new javax.swing.JLabel();
         comboRoles = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Modificación de usuario - Tech Domótica");
@@ -90,13 +92,13 @@ public class Modificar extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("<html>Modificación de usuario</html>");
 
-        jLabel2.setText("Contraseña");
+        jLabel2.setText("Contraseña*");
 
-        jLabel5.setText("1er Nombre");
+        jLabel5.setText("1er Nombre*");
 
-        jLabel6.setText("Correo electronico");
+        jLabel6.setText("Correo electronico*");
 
-        jLabel7.setText("Documento");
+        jLabel7.setText("Documento*");
 
         jLabel8.setText("2do Nombre");
 
@@ -112,11 +114,14 @@ public class Modificar extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("1er Apellido");
+        jLabel3.setText("1er Apellido*");
 
         jLabel9.setText("2do Apellido");
 
-        jLabel1.setText("Rol asignado:");
+        jLabel1.setText("Rol asignado*:");
+
+        jLabel10.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel10.setText("Los campos marcados con * son requeridos.");
 
         jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -137,6 +142,7 @@ public class Modificar extends javax.swing.JFrame {
         jDesktopPane1.setLayer(Imageplace, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(comboRoles, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -185,6 +191,10 @@ public class Modificar extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(129, 129, 129))
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +206,9 @@ public class Modificar extends javax.swing.JFrame {
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addGap(5, 5, 5)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfd_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
@@ -224,7 +236,7 @@ public class Modificar extends javax.swing.JFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfd_documento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -274,8 +286,8 @@ public class Modificar extends javax.swing.JFrame {
                 if(Util.esNumerico(documento)) {
                     int confirm = JOptionPane.showConfirmDialog(null, str, "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirm == JOptionPane.YES_OPTION) {
-                        Conectar conx = ambiente.getConnection();
-                        if(conx.execute(String.format("UPDATE usuario SET id_rol = %d, correo = '%s', password = '%s', nom1 = '%s', nom2 = '%s', apellido1 = '%s', apellido2 = '%s', dni = '%s' WHERE id_usuario = %d;", (comboRoles.getSelectedIndex() + 1), correo, contra, nombre1, nombre2, apellido1, apellido2, documento, modifiedID)) == 1) {
+                        if(techdomotica.objs.Usuario.modifyUser(comboRoles.getSelectedIndex() + 1, correo, contra, nombre1, nombre2, apellido1, apellido2, documento, modifiedID) == 1) {
+                            Reporte.insertReport(Integer.parseInt(ambiente.getAdminEncargado().getID()), 2, "Este usuario ha modificado al usuario con dni " + documento + " desde la versión de Java en " + System.getProperty("os.name") + ".");
                             redirigir();
                         }
                     }
@@ -345,6 +357,7 @@ public class Modificar extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> comboRoles;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

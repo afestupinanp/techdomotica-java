@@ -30,6 +30,7 @@ import techdomotica.objs.Ambiente;
 import techdomotica.objs.Time;
 import techdomotica.java.forms.gestorusuarios.Registrar;
 import techdomotica.java.forms.gestorusuarios.Usuarios;
+import techdomotica.objs.Reporte;
 
 /**
  * @author Andres
@@ -824,6 +825,10 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void logOut() {
+        Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 8, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
+        SystemTray tray = SystemTray.getSystemTray();
+        tray.remove(appSystemTray);
+        appSystemTray = null;
         LoginPage login = new LoginPage();
         login.setVisible(true);
         adminEncargado = null;

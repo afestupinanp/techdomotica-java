@@ -85,10 +85,14 @@ public class Ambiente {
             else acondicionado[i].toggleComponenteEncendido(false);
             i++;
         }
-        
+        connection.destroyResultSet();
         //createACondicionado(0, "9000btu", "LG", 45.0);
     }
 
+    public Admin getAdminEncargado() {
+        return adminEncargado;
+    }
+    
     public void loadLuces() {
         for(int i = 0 ; i < 12 ; i++) {
             luces[i] = new Luz("Wattmax 200", "OSRAM");
@@ -118,6 +122,7 @@ public class Ambiente {
             if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) sensores[i].toggleComponenteEncendido(true);
             else sensores[i].toggleComponenteEncendido(false);
         }
+        connection.destroyResultSet();
     }
     
     public void loadProyector() {
@@ -127,6 +132,7 @@ public class Ambiente {
             proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
             proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
         }
+        connection.destroyResultSet();
     }
     
     public void createCamara(int index, String model, String mark) {
@@ -144,7 +150,9 @@ public class Ambiente {
         if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
             int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
             connection.execute(String.format("INSERT INTO acondicionado VALUES (null, %d, 23);", id_componente));
+            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo aire acondicionado: " + mark + " " + model +".");
         }
+        connection.destroyResultSet();
     }
     
     public void insertCamaraIntoDB(int index, String model, String mark) {
@@ -152,7 +160,9 @@ public class Ambiente {
         if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
             int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
             connection.execute(String.format("INSERT INTO camara VALUES (null, %d, '1080p', %d);", id_componente, (index + 1)));
+            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó una nueva cámara: " + mark + " " + model +".");
         }
+        connection.destroyResultSet();
     }
     
     public void insertSensorIntoDB(String tipo, String model, String mark) {
@@ -161,7 +171,9 @@ public class Ambiente {
             int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
             if(tipo.equalsIgnoreCase("puerta")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'puerta', 'puerta');", id_componente));
             else if(tipo.equalsIgnoreCase("movimiento")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'movimiento', 'sala');", id_componente));
+            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo sensor: " + mark + " " + model +".");
         }
+        connection.destroyResultSet();
     }
     
     public void insertTVIntoDB(String model, String mark) {
@@ -169,7 +181,9 @@ public class Ambiente {
         if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
             int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
             connection.execute(String.format("INSERT INTO tv VALUES (null, %d, 'Full HD', '1080p');", id_componente));
+            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo proyector: " + mark + " " + model +".");
         }
+        connection.destroyResultSet();
     }
     
     public void createTelevisor(String model, String mark) {
@@ -192,6 +206,7 @@ public class Ambiente {
             if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) camaras[i].toggleComponenteEncendido(true);
             else camaras[i].toggleComponenteEncendido(false);
         }
+        connection.destroyResultSet();
     }
     
     public void loadPerfil() {
@@ -521,7 +536,7 @@ public class Ambiente {
         continueDeviceThread = togg;
         if(togg == false) {
             deviceThread.interrupt();
-        }
+        } 
     }
     
     public Config getConfig() {

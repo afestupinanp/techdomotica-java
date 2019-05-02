@@ -11,7 +11,6 @@ import javax.swing.UIManager;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Usuario;
-import techdomotica.objs.Util;
 
 /**
  *
@@ -21,7 +20,7 @@ public class Usuarios extends javax.swing.JFrame {
 
     private Ambiente ambiente;
     private int selectedRow = -1;
-    private ArrayList<Usuario> users = new ArrayList<Usuario>();
+    private ArrayList<Usuario> users = new ArrayList();
     private Conectar conx;
     
     public Usuarios(Ambiente amb) {
@@ -262,6 +261,7 @@ public class Usuarios extends javax.swing.JFrame {
             if(conf == JOptionPane.YES_OPTION) {
                 Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
                 clip.setContents(new java.awt.datatransfer.StringSelection(users.get(selectedRow).getCorreo()), null);
+                JOptionPane.showMessageDialog(null, "Correo electrónico copiado.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
