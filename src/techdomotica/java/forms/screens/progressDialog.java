@@ -1,4 +1,4 @@
-package techdomotica.java.forms;
+package techdomotica.java.forms.screens;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;

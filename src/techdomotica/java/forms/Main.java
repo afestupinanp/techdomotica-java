@@ -28,9 +28,14 @@ import techdomotica.objs.Admin;
 import techdomotica.objs.Config;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Time;
+import techdomotica.objs.Reporte;
+import techdomotica.java.forms.devices.ACView;
+import techdomotica.java.forms.devices.SensorView;
+import techdomotica.java.forms.devices.CameraView;
+import techdomotica.java.forms.devices.CameraViewTodas;
+import techdomotica.java.forms.devices.DeviceManager;
 import techdomotica.java.forms.gestorusuarios.Registrar;
 import techdomotica.java.forms.gestorusuarios.Usuarios;
-import techdomotica.objs.Reporte;
 
 /**
  * @author Andres
@@ -83,7 +88,7 @@ public class Main extends javax.swing.JFrame {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
-                                tempAire.setText(String.format("Temperatura ajustada: %.1f°C", ambiente.getTemperaturaSala()));
+                                tempAire.setText(String.format("Temperatura de sala: %.1f°C", ambiente.getTemperaturaSala()));
                                 tempAmbience.setText(String.format("Temperatura ambiente: %.1f°C", ambiente.getTemperaturaAmbiente()));
                                 txPersonas.setText(String.format("Cantidad de personas: %d", ambiente.getPersonasInAmbiente()));
                             }
@@ -255,6 +260,9 @@ public class Main extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
+        jMenu10 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -323,7 +331,7 @@ public class Main extends javax.swing.JFrame {
         mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/sala.png"))); // NOI18N
         getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 380));
 
-        tempAire.setText("Temperatura ajustada: 23,0°C");
+        tempAire.setText("Temperatura de sala: 23,0°C");
 
         tempAmbience.setText("Temperatura ambiente: 26,0°C");
 
@@ -523,6 +531,18 @@ public class Main extends javax.swing.JFrame {
         jMenu5.add(jMenuItem20);
 
         jMenuBar1.add(jMenu5);
+
+        jMenu10.setText("Seguridad");
+
+        jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem12.setText("Ver historial de reportes");
+        jMenu10.add(jMenuItem12);
+
+        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem13.setText("Realizar un reporte");
+        jMenu10.add(jMenuItem13);
+
+        jMenuBar1.add(jMenu10);
 
         jMenu2.setText("Acerca de");
 
@@ -728,6 +748,7 @@ public class Main extends javax.swing.JFrame {
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Tech Domotica? Los estados de los dispositivos se guardarán automáticamente.", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirm == JOptionPane.YES_OPTION) {
+            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
             ambiente.saveAllDevicesFromQuit();
             System.exit(0);
         }
@@ -825,7 +846,7 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void logOut() {
-        Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 8, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
+        Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
         SystemTray tray = SystemTray.getSystemTray();
         tray.remove(appSystemTray);
         appSystemTray = null;
@@ -883,6 +904,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemCam3;
     private javax.swing.JMenuItem itemCam4;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -895,6 +917,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;

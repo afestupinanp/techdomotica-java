@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package techdomotica.java.forms;
+package techdomotica.java.forms.devices;
 
 import java.awt.Image;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import techdomotica.java.forms.screens.progressDialog;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Time;
 

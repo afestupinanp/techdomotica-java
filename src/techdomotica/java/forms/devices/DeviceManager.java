@@ -1,4 +1,4 @@
-package techdomotica.java.forms;
+package techdomotica.java.forms.devices;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -10,6 +10,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import techdomotica.java.forms.screens.progressDialog;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Config;
 import techdomotica.objs.Util;

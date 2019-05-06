@@ -1,5 +1,6 @@
 package techdomotica.java.forms;
 //lol
+import techdomotica.java.forms.screens.SplashScreen;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -159,17 +160,18 @@ public class LoginPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtUser)
-                                .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtUser)
+                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1)))
+                        .addContainerGap(20, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 40, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(imagePlace, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,9 +195,9 @@ public class LoginPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(16, 16, 16)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -250,6 +252,8 @@ public class LoginPage extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_txtUserKeyTyped
    
+    Main main;
+    
     public void logIn() {
         if(loggeable) {
             String email = txtUser.getText().trim();
@@ -261,13 +265,24 @@ public class LoginPage extends javax.swing.JFrame {
                         if(Arrays.equals(pswd, realPswd)) {
                             JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
                             int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
+                            Reporte.insertReport(Integer.parseInt(String.valueOf(conx.getResultSetRow("id_usuario"))), 1, "Este usuario ha iniciado sesión en la versión de Java desde " + System.getProperty("os.name"));
                             if(role == 1) {
                                 conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + email +"';");
                                 Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
-                                Reporte.insertReport(Integer.parseInt(admin.getID()), 1, "Este usuario ha iniciado sesión en la versión de Java desde " + System.getProperty("os.name"));
-                                Main main = new Main(admin);
-                                main.setVisible(true);
                                 this.dispose();
+                                SplashScreen splash = new SplashScreen() {
+                                    @Override
+                                    public void onAlmost() {
+                                        super.onAlmost();
+                                        main = new Main(admin);
+                                    }
+                                    
+                                    public void onComplete() {
+                                        super.onComplete();
+                                        main.setVisible(true);
+                                    }
+                                };
+                                splash.setVisible(true);
                             }
                         }
                         else {
@@ -305,12 +320,24 @@ public class LoginPage extends javax.swing.JFrame {
                         if(Arrays.equals(pswd, realPswd)) {
                             JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
                             int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
+                            Reporte.insertReport(Integer.parseInt(String.valueOf(conx.getResultSetRow("id_usuario"))), 1, "Este usuario ha iniciado sesión en la versión de Java desde " + System.getProperty("os.name"));
                             if(role == 1) {
                                 conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + email +"';");
                                 Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
-                                Main main = new Main(admin);
-                                main.setVisible(true);
                                 this.dispose();
+                                SplashScreen splash = new SplashScreen() {
+                                    @Override
+                                    public void onAlmost() {
+                                        super.onAlmost();
+                                        main = new Main(admin);
+                                    }
+                                    
+                                    public void onComplete() {
+                                        super.onAlmost();
+                                        main.setVisible(true);
+                                    }
+                                };
+                                splash.setVisible(true);
                             }
                         }
                         else {

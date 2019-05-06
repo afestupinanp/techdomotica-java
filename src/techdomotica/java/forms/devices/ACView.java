@@ -1,7 +1,8 @@
-package techdomotica.java.forms;
+package techdomotica.java.forms.devices;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import techdomotica.java.forms.screens.progressDialog;
 import techdomotica.objs.Ambiente;
 
 public class ACView extends javax.swing.JFrame {
