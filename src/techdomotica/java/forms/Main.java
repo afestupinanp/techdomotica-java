@@ -47,7 +47,7 @@ import techdomotica.java.forms.security.SecurityHistory;
 public class Main extends javax.swing.JFrame {
 
     public boolean onSystemTray = false;
-    
+
     private Thread mainChanger;
     
     private Admin adminEncargado = null;
