@@ -1,16 +1,11 @@
 package techdomotica.objs;
-
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-
 /**
  * Clase de funciones o métodos útiles. No es necesario instanciar esta clase, es una clase estática.
  * @author Andres
  */
 public class Util {
     
-    public static final String VERSION = "0.6-alpha";
+    public static final String VERSION = "0.6.1-beta";
     
     /**
      * Chequea si el String está vacío.

@@ -101,16 +101,18 @@ public class DeviceHistory extends javax.swing.JFrame {
 
     public void loadTable() {
         DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("#");
         model.addColumn("Modelo");
         model.addColumn("Marca");
         model.addColumn("Gasto energético");
+        model.addColumn("Tiempo de vida (%)");
         String query = "";
         if(checkTable.isSelected()) {
             model.addColumn("Estado");
-            query = "SELECT id_componente, nom_componente, marca, uso, gasto_energetico, habilitado FROM componente WHERE habilitado = 1;";
-        }
-        else {
             query = "SELECT id_componente, nom_componente, marca, uso, gasto_energetico, habilitado FROM componente WHERE 1;";
+        }
+        else {            
+            query = "SELECT id_componente, nom_componente, marca, uso, gasto_energetico, habilitado FROM componente WHERE habilitado = 1;";
         }
         if(conx.executeRS(query)) {
             tableDevices.getTableHeader().setReorderingAllowed(false);            
@@ -122,11 +124,12 @@ public class DeviceHistory extends javax.swing.JFrame {
                 devices.add(user);
                 Object[] fila;
                 if(checkTable.isSelected()) {
-                    Object[] filaCopy = {conx.getResultSetRow("id_componente"), conx.getResultSetRow("nom_componente"), conx.getResultSetRow("marca"), conx.getResultSetRow("gasto_energetico") + " Watts", (Integer.parseInt(String.valueOf(conx.getResultSetRow("habilitado"))) == 1 ? "Habilitado" : "Deshabilitado") };
+                    String desh = (Integer.parseInt(String.valueOf(conx.getResultSetRow("habilitado"))) == 1 ? "Habilitado" : "Deshabilitado");
+                    Object[] filaCopy = {conx.getResultSetRow("id_componente"), conx.getResultSetRow("nom_componente"), conx.getResultSetRow("marca"), conx.getResultSetRow("gasto_energetico") + " Watts", conx.getResultSetRow("uso") + "%", desh};
                     fila = Arrays.copyOf(filaCopy, filaCopy.length);
                 }
                 else {
-                    Object[] filaCopy = {conx.getResultSetRow("id_componente"), conx.getResultSetRow("nom_componente"), conx.getResultSetRow("marca"), conx.getResultSetRow("gasto_energetico") + " Watts"};
+                    Object[] filaCopy = {conx.getResultSetRow("id_componente"), conx.getResultSetRow("nom_componente"), conx.getResultSetRow("marca"), conx.getResultSetRow("gasto_energetico") + " Watts", conx.getResultSetRow("uso") + "%"};
                     fila = Arrays.copyOf(filaCopy, filaCopy.length);
                 }
                 model.addRow(fila);
