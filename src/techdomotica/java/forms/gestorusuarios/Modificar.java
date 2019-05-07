@@ -5,11 +5,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-//import techdomotica.java.forms.Main;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Reporte;
-//import techdomotica.objs.Usuario;
 import techdomotica.objs.Util;
 
 /**
@@ -55,14 +53,13 @@ public class Modificar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnEstado = new javax.swing.ButtonGroup();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tfd_contraseña = new javax.swing.JTextField();
         tfd_correo = new javax.swing.JTextField();
         tfd_documento = new javax.swing.JTextField();
         btn_registrar = new javax.swing.JButton();
@@ -76,6 +73,9 @@ public class Modificar extends javax.swing.JFrame {
         comboRoles = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        btnHabilitadoOn = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Modificación de usuario - Tech Domótica");
@@ -91,8 +91,6 @@ public class Modificar extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("<html>Modificación de usuario</html>");
-
-        jLabel2.setText("Contraseña*");
 
         jLabel5.setText("1er Nombre*");
 
@@ -123,13 +121,20 @@ public class Modificar extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 102, 0));
         jLabel10.setText("Los campos marcados con * son requeridos.");
 
+        jLabel11.setText("Estado de este usuario:");
+
+        btnEstado.add(btnHabilitadoOn);
+        btnHabilitadoOn.setSelected(true);
+        btnHabilitadoOn.setText("Habilitado");
+
+        btnEstado.add(jRadioButton2);
+        jRadioButton2.setText("Deshabilitado");
+
         jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(tfd_contraseña, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(tfd_correo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(tfd_documento, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btn_registrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -143,57 +148,69 @@ public class Modificar extends javax.swing.JFrame {
         jDesktopPane1.setLayer(comboRoles, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnHabilitadoOn, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jRadioButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Imageplace, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
+                                .addComponent(Imageplace, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(98, 98, 98))
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHabilitadoOn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton2)
+                                .addGap(10, 10, 10))
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(24, 24, 24)
+                                .addComponent(tfd_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                            .addGap(2, 2, 2)
-                                            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel5)
-                                                .addComponent(jLabel8))))
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel9)
                                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                        .addGap(4, 4, 4)
-                                        .addComponent(jLabel7))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfd_Nombre2)
-                            .addComponent(tfd_documento)
-                            .addComponent(tfd_Apellido2)
-                            .addComponent(tfd_correo)
-                            .addComponent(tfd_Nombre1)
-                            .addComponent(tfd_Apellido1)
-                            .addComponent(tfd_contraseña))))
-                .addGap(35, 35, 35))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btn_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel5)
+                                                    .addComponent(jLabel8)))
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel9)
+                                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                                .addGap(4, 4, 4)
+                                                .addComponent(jLabel7)))
+                                        .addGap(24, 24, 24))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(tfd_documento, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfd_Apellido2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfd_Apellido1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfd_Nombre2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfd_Nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -212,11 +229,7 @@ public class Modificar extends javax.swing.JFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfd_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfd_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfd_Nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -236,13 +249,18 @@ public class Modificar extends javax.swing.JFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfd_documento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(btnHabilitadoOn)
+                    .addComponent(jRadioButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_registrar)
-                .addContainerGap())
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -276,17 +294,16 @@ public class Modificar extends javax.swing.JFrame {
         String apellido2 = tfd_Apellido2.getText();
         String correo = tfd_correo.getText();
         String documento = tfd_documento.getText();
-        String contra = tfd_contraseña.getText();
 
         //Usuario person = new Usuario(nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
 
-        String str = String.format("Por favor, confirme los siguientes datos:\n\nPrimer nombre: %s\nSegundo nombre: %s.\nPrimer apellido: %s\nSegundo apellido: %s\nCorreo electrónico: %s\nDocumento de identidad: %s\nContraseña: %s", nombre1, nombre2, apellido1, apellido2, correo, documento, contra);
-        if(!Util.stringsVacios(nombre1, apellido1, correo, documento, contra)) {
+        String str = String.format("Por favor, confirme los siguientes datos:\n\nPrimer nombre: %s\nSegundo nombre: %s.\nPrimer apellido: %s\nSegundo apellido: %s\nCorreo electrónico: %s\nDocumento de identidad: %s", nombre1, nombre2, apellido1, apellido2, correo, documento);
+        if(!Util.stringsVacios(nombre1, apellido1, correo, documento)) {
             if(Util.esCorreo(correo)) {
                 if(Util.esNumerico(documento)) {
                     int confirm = JOptionPane.showConfirmDialog(null, str, "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(confirm == JOptionPane.YES_OPTION) {
-                        if(techdomotica.objs.Usuario.modifyUser(comboRoles.getSelectedIndex() + 1, correo, contra, nombre1, nombre2, apellido1, apellido2, documento, modifiedID) == 1) {
+                        if(techdomotica.objs.Usuario.modifyUser(comboRoles.getSelectedIndex() + 1, correo, nombre1, nombre2, apellido1, apellido2, documento, modifiedID, btnHabilitadoOn.isSelected()) == 1) {
                             Reporte.insertReport(Integer.parseInt(ambiente.getAdminEncargado().getID()), 2, "Este usuario ha modificado al usuario con dni " + documento + " desde la versión de Java en " + System.getProperty("os.name") + ".");
                             redirigir();
                         }
@@ -353,12 +370,14 @@ public class Modificar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imageplace;
+    private javax.swing.ButtonGroup btnEstado;
+    private javax.swing.JRadioButton btnHabilitadoOn;
     private javax.swing.JButton btn_registrar;
     public javax.swing.JComboBox<String> comboRoles;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -366,11 +385,11 @@ public class Modificar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JRadioButton jRadioButton2;
     public javax.swing.JTextField tfd_Apellido1;
     public javax.swing.JTextField tfd_Apellido2;
     public javax.swing.JTextField tfd_Nombre1;
     public javax.swing.JTextField tfd_Nombre2;
-    public javax.swing.JTextField tfd_contraseña;
     public javax.swing.JTextField tfd_correo;
     public javax.swing.JTextField tfd_documento;
     // End of variables declaration//GEN-END:variables

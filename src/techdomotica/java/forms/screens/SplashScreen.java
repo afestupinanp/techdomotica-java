@@ -100,11 +100,12 @@ public class SplashScreen extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel1.setBackground(new java.awt.Color(21, 19, 19));
 
         jProgressBar1.setBackground(new java.awt.Color(0, 0, 0));
         jProgressBar1.setForeground(new java.awt.Color(0, 153, 0));
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Cargando...");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

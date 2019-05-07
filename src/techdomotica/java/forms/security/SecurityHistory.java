@@ -69,7 +69,7 @@ public class SecurityHistory extends javax.swing.JFrame {
         charRemaining = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Tech Domótica - Historial de reportes");
+        setTitle("Historial de reportes - Tech Domótica");
         setResizable(false);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(370, 79));

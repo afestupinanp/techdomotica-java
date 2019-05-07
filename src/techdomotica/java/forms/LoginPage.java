@@ -261,7 +261,7 @@ public class LoginPage extends javax.swing.JFrame {
             String pswdd = Util.SHA256(String.valueOf(pswd));
             if(!email.isEmpty() && pswd.length != 0) {
                 if(Util.esCorreo(email)) {
-                    if(conx.executeRSOne("SELECT id_usuario, dni, password, nom1, id_rol FROM usuario WHERE correo = '"+ email +"';")) {
+                    if(conx.executeRSOne("SELECT id_usuario, dni, password, nom1, id_rol FROM usuario WHERE correo = '"+ email +"' AND habilitado = 1;")) {
                         String realPswd = String.valueOf(conx.getResultSetRow("password"));
                         System.out.println(String.format("%s - %s", realPswd, pswdd));
                         if(realPswd.equals(pswdd)) {
@@ -297,7 +297,7 @@ public class LoginPage extends javax.swing.JFrame {
                     else JOptionPane.showMessageDialog(null, "El usuario ingresado no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
                 }
                 else if(Util.esNumerico(email)) {
-                    if(conx.executeRSOne("SELECT id_usuario, password, nom1, id_rol FROM usuario WHERE dni = '"+ email +"';")) {
+                    if(conx.executeRSOne("SELECT id_usuario, password, nom1, id_rol FROM usuario WHERE dni = '"+ email +"' AND habilitado = 1;")) {
                         String realPswd = String.valueOf(conx.getResultSetRow("password"));
                         System.out.println(String.format("%s - %s", realPswd, pswdd));
                         if(realPswd.equals(pswdd)) {
@@ -333,7 +333,7 @@ public class LoginPage extends javax.swing.JFrame {
                     else JOptionPane.showMessageDialog(null, "Este documento de identificación no está registrado. Por favor, intentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);
                 }
                 else JOptionPane.showMessageDialog(null, "El texto ingresado en el campo de correo electrónico o cédula no corresponde a ninguno de los tipos requeridos.\nIntentelo de nuevo.", "Credenciales incorrectas", JOptionPane.ERROR_MESSAGE);               
-                conx.destroyResultSet();
+                if(conx.getResultSet() != null) conx.destroyResultSet();
             }
             else JOptionPane.showMessageDialog(null, "Uno o más campos de texto están vacío. Rellenos e intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
         }

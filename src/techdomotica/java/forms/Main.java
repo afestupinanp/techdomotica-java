@@ -1,7 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Querido Andrés del futuro,
+ * quizás leas este código, o quizás no. Se sincero contigo mismo, realmente has mejorado desde
+ * este momento?
+ * Aquí tiene es el putisimo código del proyecto del SENA de Tech Domótica.
+ * Y a los que vienen de GitHub, alistense para un spanglish, porque no me defino :v
  */
 package techdomotica.java.forms;
 
@@ -21,7 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 
 import techdomotica.objs.Admin;
@@ -34,6 +35,7 @@ import techdomotica.java.forms.devices.ACView;
 import techdomotica.java.forms.devices.SensorView;
 import techdomotica.java.forms.devices.CameraView;
 import techdomotica.java.forms.devices.CameraViewTodas;
+import techdomotica.java.forms.devices.DeviceHistory;
 import techdomotica.java.forms.devices.DeviceManager;
 
 import techdomotica.java.forms.gestorusuarios.Registrar;
@@ -42,14 +44,8 @@ import techdomotica.java.forms.security.SecurityAddRep;
 
 import techdomotica.java.forms.security.SecurityHistory;
 
-/**
- * @author Andres
- */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Dispositivos
-     */
     public boolean onSystemTray = false;
     
     private Thread mainChanger;
@@ -57,6 +53,7 @@ public class Main extends javax.swing.JFrame {
     private Admin adminEncargado = null;
     private Ambiente ambiente;
     
+    private boolean continueAutosaving = true;
     
     private TrayIcon appSystemTray = null;
     
@@ -64,21 +61,33 @@ public class Main extends javax.swing.JFrame {
     
     private Config cfg;
     
-    private Timer autosaveTimer;
+    private Thread autosaveTimer;
     
     public Main(Admin admin) {
         adminEncargado = admin;
         ambiente = new Ambiente(adminEncargado);
         cfg = ambiente.getConfig();
         System.out.println(String.format("Timer starting with the following: %d s (%d ms)", (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60), (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60) * (1000)));
-        autosaveTimer = new Timer( (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60) * (1000), new ActionListener() {
+        final int confT = Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60;
+        autosaveTimer = new Thread(new Runnable() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("I suck pee pee");
-                saveAllDevices();
+            public void run() {
+                while(continueAutosaving) {
+                    for(int i = 0 ; i < confT ; i++ ) {
+                        try {
+                            Thread.sleep(1000);
+                            System.out.println("Executing... " + confT + ":00 from 0:" + i);
+                            if(i == 59) {
+                                i = 0;
+                                saveAllDevices();
+                            }
+                        } catch (InterruptedException ex) {
+                            System.out.println(ex);
+                        }
+                    }
+                }
             }
         });
-        autosaveTimer.setRepeats(true);
         autosaveTimer.start();
         initComponents();
         
@@ -105,7 +114,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
             
-            //Cambio de temperatura ambiente por medio del hilo del tiempo.
+            //That's how an AI works my brave soul
             public void changeAmbientWeather() {
                 Time runTime = ambiente.getTimeThread();
                 System.out.println(String.format("%02d:%02d:%02d", runTime.getHours(), runTime.getMinutes(), runTime.getSeconds()));
@@ -142,22 +151,6 @@ public class Main extends javax.swing.JFrame {
                         warningDisplayed[3] = true;
                     }
                 }
-                
-                /*if((ambiente.getACondicionado(0) == null || ambiente.getACondicionado(0).getUsoComponente() <= 10.0) || ambiente.getACondicionado(1) == null) {
-                    ambiente.setTemperaturaAmbiente(ambiente.getTemperaturaAmbiente());
-                    if(!warningDisplayed[0]) {
-                        JOptionPane.showMessageDialog(null, "Atención. no se dispone de uno o más aires acondicionados en el ambiente debido a que no\nhan sido asignados o presentan problemas y requieren mantenimiento. La temperatura\npodría incrementar y ocasionar daños en los equipos.", "Advertencia de temperatura", JOptionPane.WARNING_MESSAGE);
-                        warningDisplayed[0] = true;
-                    }
-                    if(!warningDisplayed[1] && ambiente.getTemperaturaAmbiente() >= 28.0) {
-                        JOptionPane.showMessageDialog(null, "ATENCIÓN: La temperatura ambiental está sobre 28°C. Esta temperatura, con los equipos encendidos,\npodría ocasionar daños graves en los equipos que generen calor.", "Alerta crítica de temperatura", JOptionPane.WARNING_MESSAGE);
-                        warningDisplayed[1] = true;
-                    }
-                }
-                else {
-                    if(ambiente.getACondicionado(0).)
-                }
-                else ambiente.setTemperaturaAmbiente((ambiente.getTemperaturaAmbiente() + ambiente.getTemperaturaSala()) / 2);*/
             }
         });
         mainChanger.start();
@@ -166,13 +159,6 @@ public class Main extends javax.swing.JFrame {
         
         checkDeviceAvailability();
         addAppToSystemTray();
-        /*camera1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera-r.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        camera2.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        camera3.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera-r.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        camera4.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camera.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        */
-        
-        //sensor1.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/sensor.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
     }
     
     public void checkDeviceAvailability() {
@@ -444,6 +430,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem11.setText("Ver historial de dispositivos");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu9.add(jMenuItem11);
 
         jMenu4.add(jMenu9);
@@ -603,7 +594,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        //Not really a daemon but ok... Guess I'll work with this.
         if(cfg.getConfigKey("daemon").equalsIgnoreCase("true")) {            
             appSystemTray.displayMessage("Tech Domótica se ha minimizado", "Tech Domótica se seguirá ejecutando en segundo plano. Usa este icono para abrir de nuevo la aplicación.", TrayIcon.MessageType.INFO);
             this.setVisible(false);
@@ -702,12 +693,12 @@ public class Main extends javax.swing.JFrame {
             public void saveChangesToMain() {
                 super.saveChangesToMain();
                 saveAllDevices();
-                //System.out.println("We're out of here!");
+                
                 ambiente.toggleAmbienteThread(true);
                 ambiente.toggleDeviceThread(true);
                 
                 ambiente.startAmbienteThread();
-                //ambiente.startDeviceThread();
+                
                 checkDeviceAvailability();
                 
             }
@@ -725,7 +716,15 @@ public class Main extends javax.swing.JFrame {
         modal.setVisible(true);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
-    private void saveAllDevices() { }
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        DeviceHistory devices = new DeviceHistory(ambiente);
+        devices.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void saveAllDevices() {
+        System.out.println("Autosaving...");
+        ambiente.saveAllDevicesFromQuit();
+    }
     
     private void cameraView(String campath, String title, boolean ison) {
         CameraView camView = new CameraView(ambiente, campath, ison) {
@@ -862,10 +861,13 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void openApp() {
-        this.setVisible(true);
-        SystemTray tray = SystemTray.getSystemTray();
-        tray.remove(appSystemTray);
-        onSystemTray = false;
+        if(this.isVisible()) {
+            this.requestFocus();
+        }
+        else {
+            this.setVisible(true);
+            this.requestFocus();
+        }
     }
     
     private void logOut() {
@@ -880,7 +882,8 @@ public class Main extends javax.swing.JFrame {
         ambiente.toggleTimeThread(false);
         ambiente.toggleAmbienteThread(false);
         ambiente.toggleDeviceThread(false);
-        autosaveTimer.stop();
+        continueAutosaving = false;
+        autosaveTimer.interrupt();
         ambiente = null;
         this.dispose();
     }
@@ -889,7 +892,7 @@ public class Main extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        //Nimbus is fucking awful looking.
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

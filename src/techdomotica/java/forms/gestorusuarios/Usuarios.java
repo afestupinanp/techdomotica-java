@@ -39,20 +39,37 @@ public class Usuarios extends javax.swing.JFrame {
 
     private void loadTable() {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Nombre 1");
-        model.addColumn("Nombre 2");
-        model.addColumn("Apellido 1");
-        model.addColumn("Apellido 2");
+        model.addColumn("1er nombre");
+        model.addColumn("2do nombre");
+        model.addColumn("1er apellido");
+        model.addColumn("2do apellido");
         model.addColumn("Email");
         model.addColumn("Cedula de ciudadanía");
         model.addColumn("Rol");
-        if(conx.executeRS("SELECT * FROM usuario INNER JOIN rol ON rol.id_rol = usuario.id_rol WHERE 1;")) {
+        String query = "";
+        if(disabledUsersCheck.isSelected()) {
+            model.addColumn("Estado");
+            query = "SELECT * FROM usuario INNER JOIN rol ON rol.id_rol = usuario.id_rol WHERE 1;";
+        }
+        else {
+            query = "SELECT * FROM usuario INNER JOIN rol ON rol.id_rol = usuario.id_rol AND habilitado = 1 WHERE 1;";
+        }
+        if(conx.executeRS(query)) {
             tableUsers.getTableHeader().setReorderingAllowed(false);            
             users.clear();
             while(conx.nextRow()) {
                 Usuario user = new Usuario(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
                 users.add(user);
-                Object[] fila = {conx.getResultSetRow("nom1"), conx.getResultSetRow("nom2"), conx.getResultSetRow("apellido1"), conx.getResultSetRow("apellido2"), conx.getResultSetRow("correo"), conx.getResultSetRow("dni"), conx.getResultSetRow("tipo_rol")};
+                Object[] fila;
+                if(disabledUsersCheck.isSelected()){
+                    String hab = (Integer.parseInt(String.valueOf(conx.getResultSetRow("habilitado"))) == 1) ? "Habilitado" : "Deshabilitado";
+                    Object[] filaCustom = {conx.getResultSetRow("nom1"), conx.getResultSetRow("nom2"), conx.getResultSetRow("apellido1"), conx.getResultSetRow("apellido2"), conx.getResultSetRow("correo"), conx.getResultSetRow("dni"), conx.getResultSetRow("tipo_rol"), hab};
+                    fila = java.util.Arrays.copyOf(filaCustom, filaCustom.length);
+                }
+                else {
+                    Object[] filaCustom = {conx.getResultSetRow("nom1"), conx.getResultSetRow("nom2"), conx.getResultSetRow("apellido1"), conx.getResultSetRow("apellido2"), conx.getResultSetRow("correo"), conx.getResultSetRow("dni"), conx.getResultSetRow("tipo_rol")};
+                    fila = java.util.Arrays.copyOf(filaCustom, filaCustom.length);
+                }
                 model.addRow(fila);
             }
             
@@ -96,9 +113,10 @@ public class Usuarios extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        disabledUsersCheck = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Registrar usuario - Tech Domotica");
+        setTitle("Lista de usuarios - Tech Domotica");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -108,17 +126,17 @@ public class Usuarios extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Usuarios registrados");
+        jLabel1.setText("Mostrando todos los usuarios registrados");
 
         tableUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tableUsers.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -146,31 +164,46 @@ public class Usuarios extends javax.swing.JFrame {
 
         jLabel3.setText("Haz doble click a un usuario para modificar.");
 
+        disabledUsersCheck.setText("Mostrar usuarios deshabiitados");
+        disabledUsersCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                disabledUsersCheckActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Imageplace, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(235, 235, 235)
+                        .addComponent(Imageplace, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 32, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(0, 8, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(disabledUsersCheck)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(Imageplace, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,8 +213,10 @@ public class Usuarios extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(disabledUsersCheck)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,9 +229,7 @@ public class Usuarios extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -215,7 +248,6 @@ public class Usuarios extends javax.swing.JFrame {
                     tfd_Nombre2.setText(users.get(selectedRow).getNombre2());
                     tfd_Apellido1.setText(users.get(selectedRow).getApellido1());
                     tfd_Apellido2.setText(users.get(selectedRow).getApellido2());
-                    tfd_contraseña.setText(users.get(selectedRow).getContraseña());
                     tfd_correo.setText(users.get(selectedRow).getCorreo());
                     tfd_documento.setText(users.get(selectedRow).getDocumento());
                 }
@@ -248,7 +280,9 @@ public class Usuarios extends javax.swing.JFrame {
             try {
                 String subject = JOptionPane.showInputDialog(null, "Para enviar un correo electrónico, escribe el asunto del correo electrónico.\nTen en cuenta que esto abrirá la aplicación de correo de tu sistema operativo.", "Envío de correo electrónico", JOptionPane.QUESTION_MESSAGE);
                 if(!subject.isEmpty()) {
-                    java.awt.Desktop.getDesktop().mail(new java.net.URI(String.format("mailto:%s?subject=%s", users.get(selectedRow).getCorreo(), subject)));
+                    String convertedSubject = subject.replace(" ", "%20");
+                    System.out.println(convertedSubject);
+                    java.awt.Desktop.getDesktop().mail(new java.net.URI(String.format("mailto:%s?subject=%s", users.get(selectedRow).getCorreo(), convertedSubject)));
                 }
                 else JOptionPane.showMessageDialog(null, "No deberías de enviar un correo electrónico sin asunto.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -265,6 +299,15 @@ public class Usuarios extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void disabledUsersCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disabledUsersCheckActionPerformed
+        if(disabledUsersCheck.isSelected()) {
+            loadTable();
+        }
+        else {
+            loadTable();
+        }
+    }//GEN-LAST:event_disabledUsersCheckActionPerformed
     //<editor-fold>
     /**
      * @param args the command line arguments
@@ -299,6 +342,7 @@ public class Usuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imageplace;
+    private javax.swing.JCheckBox disabledUsersCheck;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

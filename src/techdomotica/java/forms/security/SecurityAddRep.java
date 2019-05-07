@@ -36,7 +36,7 @@ public class SecurityAddRep extends javax.swing.JDialog {
         charLim = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Tech Domótica - Añadir reporte");
+        setTitle("Añadir reporte - Tech Domótica");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
