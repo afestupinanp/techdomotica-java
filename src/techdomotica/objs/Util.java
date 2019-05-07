@@ -1,12 +1,16 @@
 package techdomotica.objs;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+
 /**
  * Clase de funciones o métodos útiles. No es necesario instanciar esta clase, es una clase estática.
  * @author Andres
  */
 public class Util {
     
-    public static final String VERSION = "0.5.1-alpha";
+    public static final String VERSION = "0.6-alpha";
     
     /**
      * Chequea si el String está vacío.
@@ -64,4 +68,57 @@ public class Util {
         return str.matches("-?\\d+(\\.\\d+)?");
     }
     
+    /**
+     * Este método permite cargar una fuente rápidamente.
+     * @param clase Clase a la que se le desea cargar el elemento Font.
+     * @param path Fuente a cargar
+     * @param tamano Tamaño de la fuente
+     * @return Retorna un objeto de tipo Font.
+     */
+    public static java.awt.Font cargarFuente(Object clase, String path, float tamano) {
+        try {
+            return java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, clase.getClass().getResourceAsStream(path)).deriveFont(tamano);
+        }
+        catch(Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+    
+    /**
+     * Este método permite cargar una fuente rápidamente.
+     * @param clase Clase a la que se le desea cargar el elemento Font.
+     * @param path Fuente a cargar
+     * @return Retorna un objeto de tipo Font.
+     */
+    public static java.awt.Font cargarFuente(Object clase, String path) {
+        try {
+            return java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, clase.getClass().getResourceAsStream(path));
+        }
+        catch(Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+    /**
+     * Método para encriptar un String a SHA-256 usando el MessageDigest proporcionado por Apache Commons.
+     * @param str Cadena a encriptar.
+     * @return Array con caracteres encriptados de SHA-256.
+     */
+    public static String SHA256(String str) {
+        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(str);
+    }
+    
+//    /**
+//     * Método para reemplazar los caracteres especiales de saltos de línea de un string en caracteres que pueda interpretar
+//     * Java.
+//     * Windows usa \r\n
+//     * Mac usa \n
+//     * Linux usa \n
+//     * @param str Cadena a cambiar los saltos de línea.
+//     * @return Retorna una cadena para guardar en una base de datos con el CRLF propio y más compatible de Java \n.
+//     */
+//    public static String cambiarSaltosLinea(String str) {
+//        return str.replace("\\r|\\n", "\n");
+//    }
 }

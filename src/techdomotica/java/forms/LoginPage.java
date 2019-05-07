@@ -29,7 +29,7 @@ public class LoginPage extends javax.swing.JFrame {
         else {
             initComponents();
 
-            ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L1.png")).getImage().getScaledInstance(240, 140, Image.SCALE_DEFAULT));
+            ImageIcon img = new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/L1.png")).getImage().getScaledInstance(240, 140, Image.SCALE_SMOOTH));
             //Solución por Tirz - StackOverflow: https://stackoverflow.com/a/32885963
             imagePlace.setIcon(img);
 
@@ -258,32 +258,14 @@ public class LoginPage extends javax.swing.JFrame {
         if(loggeable) {
             String email = txtUser.getText().trim();
             char[] pswd = txtPass.getPassword();
+            String pswdd = Util.SHA256(String.valueOf(pswd));
             if(!email.isEmpty() && pswd.length != 0) {
                 if(Util.esCorreo(email)) {
                     if(conx.executeRSOne("SELECT id_usuario, dni, password, nom1, id_rol FROM usuario WHERE correo = '"+ email +"';")) {
-                        char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
-                        if(Arrays.equals(pswd, realPswd)) {
-                            JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
-                            int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
-                            Reporte.insertReport(Integer.parseInt(String.valueOf(conx.getResultSetRow("id_usuario"))), 1, "Este usuario ha iniciado sesión en la versión de Java desde " + System.getProperty("os.name"));
-                            if(role == 1) {
-                                conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + email +"';");
-                                Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
-                                this.dispose();
-                                SplashScreen splash = new SplashScreen() {
-                                    @Override
-                                    public void onAlmost() {
-                                        super.onAlmost();
-                                        main = new Main(admin);
-                                    }
-                                    
-                                    public void onComplete() {
-                                        super.onComplete();
-                                        main.setVisible(true);
-                                    }
-                                };
-                                splash.setVisible(true);
-                            }
+                        String realPswd = String.valueOf(conx.getResultSetRow("password"));
+                        System.out.println(String.format("%s - %s", realPswd, pswdd));
+                        if(realPswd.equals(pswdd)) {
+                            loggedPassed(email);
                         }
                         else {
                             errors++;
@@ -316,29 +298,10 @@ public class LoginPage extends javax.swing.JFrame {
                 }
                 else if(Util.esNumerico(email)) {
                     if(conx.executeRSOne("SELECT id_usuario, password, nom1, id_rol FROM usuario WHERE dni = '"+ email +"';")) {
-                        char[] realPswd = String.valueOf(conx.getResultSetRow("password")).toCharArray();
-                        if(Arrays.equals(pswd, realPswd)) {
-                            JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
-                            int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
-                            Reporte.insertReport(Integer.parseInt(String.valueOf(conx.getResultSetRow("id_usuario"))), 1, "Este usuario ha iniciado sesión en la versión de Java desde " + System.getProperty("os.name"));
-                            if(role == 1) {
-                                conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + email +"';");
-                                Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
-                                this.dispose();
-                                SplashScreen splash = new SplashScreen() {
-                                    @Override
-                                    public void onAlmost() {
-                                        super.onAlmost();
-                                        main = new Main(admin);
-                                    }
-                                    
-                                    public void onComplete() {
-                                        super.onAlmost();
-                                        main.setVisible(true);
-                                    }
-                                };
-                                splash.setVisible(true);
-                            }
+                        String realPswd = String.valueOf(conx.getResultSetRow("password"));
+                        System.out.println(String.format("%s - %s", realPswd, pswdd));
+                        if(realPswd.equals(pswdd)) {
+                            loggedPassed(email);
                         }
                         else {
                             errors++;
@@ -377,6 +340,31 @@ public class LoginPage extends javax.swing.JFrame {
         else JOptionPane.showMessageDialog(null, "No puedes iniciar sesión. Has superado el número de intentos disponibles.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void loggedPassed(String mail) {
+        //SHA256Str(String str)
+        JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
+        int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
+        Reporte.insertReport(Integer.parseInt(String.valueOf(conx.getResultSetRow("id_usuario"))), 1, "Este usuario ha iniciado sesión en la versión de Java desde " + System.getProperty("os.name"));
+        if(role == 1) {
+            if(Util.esCorreo(mail)) conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + mail +"';");
+            else if(Util.esNumerico(mail)) conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + mail +"';");
+            Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
+            this.dispose();
+            SplashScreen splash = new SplashScreen() {
+            @Override
+                public void onAlmost() {
+                    super.onAlmost();
+                    main = new Main(admin);
+                }
+                public void onComplete() {
+                    super.onComplete();
+                    main.setVisible(true);
+                }
+            };
+            splash.setVisible(true);
+        }
+    }
+    
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Tech Domótica?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (confirm == JOptionPane.YES_OPTION) {

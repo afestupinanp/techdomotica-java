@@ -29,13 +29,18 @@ import techdomotica.objs.Config;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Time;
 import techdomotica.objs.Reporte;
+
 import techdomotica.java.forms.devices.ACView;
 import techdomotica.java.forms.devices.SensorView;
 import techdomotica.java.forms.devices.CameraView;
 import techdomotica.java.forms.devices.CameraViewTodas;
 import techdomotica.java.forms.devices.DeviceManager;
+
 import techdomotica.java.forms.gestorusuarios.Registrar;
 import techdomotica.java.forms.gestorusuarios.Usuarios;
+import techdomotica.java.forms.security.SecurityAddRep;
+
+import techdomotica.java.forms.security.SecurityHistory;
 
 /**
  * @author Andres
@@ -536,10 +541,20 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem12.setText("Ver historial de reportes");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem12);
 
         jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem13.setText("Realizar un reporte");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu10.add(jMenuItem13);
 
         jMenuBar1.add(jMenu10);
@@ -700,9 +715,17 @@ public class Main extends javax.swing.JFrame {
         manager.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
-    private void saveAllDevices() {
-        
-    }
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        SecurityHistory historial = new SecurityHistory(ambiente);
+        historial.setVisible(true);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        SecurityAddRep modal = new SecurityAddRep(this, true, ambiente);
+        modal.setVisible(true);
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void saveAllDevices() { }
     
     private void cameraView(String campath, String title, boolean ison) {
         CameraView camView = new CameraView(ambiente, campath, ison) {
