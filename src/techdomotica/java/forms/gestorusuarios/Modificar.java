@@ -42,6 +42,7 @@ public class Modificar extends javax.swing.JFrame {
             }
             comboRoles.setModel(model);
         }
+        if(conx.getResultSet() != null) conx.destroyResultSet();
     }
     
     /**

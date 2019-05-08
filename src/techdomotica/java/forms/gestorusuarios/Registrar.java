@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package techdomotica.java.forms.gestorusuarios;
 
 import java.awt.Image;
@@ -10,17 +5,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-//import techdomotica.java.forms.Main;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Reporte;
-//import techdomotica.objs.Usuario;
 import techdomotica.objs.Util;
 
-/**
- *
- * @author SENA
- */
 public class Registrar extends javax.swing.JFrame {
 
     private Ambiente ambiente;
@@ -47,6 +36,7 @@ public class Registrar extends javax.swing.JFrame {
             }
             comboRoles.setModel(model);
         }
+        if(conx.getResultSet() != null) conx.destroyResultSet();
     }
     
     /**

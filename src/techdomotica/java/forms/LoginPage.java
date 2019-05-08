@@ -1,14 +1,14 @@
 package techdomotica.java.forms;
-//lol
-import techdomotica.java.forms.screens.SplashScreen;
+
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+
+import techdomotica.java.forms.screens.SplashScreen;
 import techdomotica.objs.Admin;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Reporte;
@@ -271,7 +271,7 @@ public class LoginPage extends javax.swing.JFrame {
    
     Main main;
     
-    public void logIn() {
+    private void logIn() {
         if(loggeable) {
             String email = txtUser.getText().trim();
             char[] pswd = txtPass.getPassword();
@@ -357,7 +357,7 @@ public class LoginPage extends javax.swing.JFrame {
         else JOptionPane.showMessageDialog(null, "No puedes iniciar sesión. Has superado el número de intentos disponibles.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void loggedPassed(String mail) {
+    private void loggedPassed(String mail) {
         //SHA256Str(String str)
         JOptionPane.showMessageDialog(null, "Bienvenido, " + String.valueOf(conx.getResultSetRow("nom1")) + ".", "Inicio de sesión correcto", JOptionPane.INFORMATION_MESSAGE);
         int role = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_rol")));
@@ -366,6 +366,8 @@ public class LoginPage extends javax.swing.JFrame {
             if(Util.esCorreo(mail)) conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + mail +"';");
             else if(Util.esNumerico(mail)) conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + mail +"';");
             Admin admin = new Admin(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
+            conx.destroyResultSet();
+            conx.closeConnection();
             this.dispose();
             SplashScreen splash = new SplashScreen() {
             @Override

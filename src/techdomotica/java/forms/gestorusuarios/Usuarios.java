@@ -78,16 +78,10 @@ public class Usuarios extends javax.swing.JFrame {
             Object[] lol = {"No hay datos"};
             model.addRow(lol);
         }
+        if(conx.getResultSet() != null) conx.destroyResultSet();
         tableUsers.setRowSelectionInterval(0, 0);
         selectedRow = 0;
         tableUsers.setModel(model);
-//        if(conx.executeRS("SELECT * FROM rol WHERE 1;")) {
-//            DefaultComboBoxModel model = new DefaultComboBoxModel();
-//            while(conx.nextRow()) {
-//                model.addElement(conx.getResultSetRow("tipo_rol"));
-//            }
-//            comboRoles.setModel(model);
-//        }
     }
     
     /**

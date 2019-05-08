@@ -210,9 +210,7 @@ public class Ambiente {
     }
     
     public void loadPerfil() {
-        System.out.println("Not implemented!");
-        //Conectar con = new Conectar();
-        //con.consultarbd("SELECT * FROM ...");
+        System.out.println("Mañana");
     }
     
     public ACondicionado getACondicionado(int index) {

@@ -3,7 +3,6 @@ package techdomotica.java.forms.security;
 import javax.swing.JOptionPane;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Reporte;
-import techdomotica.objs.Util;
 
 /**
  *

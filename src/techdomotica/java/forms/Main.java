@@ -1,9 +1,13 @@
 /**
+ * 08/05/2019 ----
  * Querido Andrés del futuro,
- * quizás leas este código, o quizás no. Se sincero contigo mismo, realmente has mejorado desde
+ * quizás leas este código, o quizás no. Se sincero contigo mismo, ¿realmente has mejorado desde
  * este momento?
  * Aquí tiene es el putisimo código del proyecto del SENA de Tech Domótica.
- * Y a los que vienen de GitHub, alistense para un spanglish, porque no me defino :v
+ * Y a los que vienen de GitHub, alistense para un spanglish, porque no me defino que idioma quiero realmente usar para el
+ * proyecto xd.
+ * No me jodas.
+ *  ----
  */
 package techdomotica.java.forms;
 
@@ -74,15 +78,18 @@ public class Main extends javax.swing.JFrame {
             public void run() {
                 while(continueAutosaving) {
                     for(int i = 0 ; i < confT ; i++ ) {
-                        try {
-                            Thread.sleep(1000);
-                            System.out.println("Executing... " + confT + ":00 from 0:" + i);
-                            if(i == 59) {
-                                i = 0;
-                                saveAllDevices();
+                        //Redundant, I know, but trust me, it just works.
+                        if(continueAutosaving) {
+                            try {
+                                Thread.sleep(1000);
+                                System.out.println("Executing... " + confT + ":00 from 0:" + i);
+                                if(i == 59) {
+                                    i = 0;
+                                    saveAllDevices();
+                                }
+                            } catch (InterruptedException ex) {
+                                System.out.println(ex);
                             }
-                        } catch (InterruptedException ex) {
-                            System.out.println(ex);
                         }
                     }
                 }

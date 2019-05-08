@@ -39,6 +39,9 @@ public class RecuperarPass extends javax.swing.JFrame {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -164,7 +167,7 @@ public class RecuperarPass extends javax.swing.JFrame {
     }
     
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        closeThis();
+        
     }//GEN-LAST:event_formWindowClosed
 
     private void txtMailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMailKeyPressed
@@ -174,6 +177,10 @@ public class RecuperarPass extends javax.swing.JFrame {
     private void txtDniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) validateStuff();
     }//GEN-LAST:event_txtDniKeyPressed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        closeThis();
+    }//GEN-LAST:event_formWindowClosing
 
     public void closeThis() {
         this.dispose();

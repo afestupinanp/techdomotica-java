@@ -324,6 +324,7 @@ public class SecurityHistory extends javax.swing.JFrame {
             Object[] lol = {"No hay datos"};
             model.addRow(lol);
         }
+        if(conx.getResultSet() != null) conx.destroyResultSet();
         tableReports.setRowSelectionInterval(0, 0);
         selectedRow = 0;
         tableReports.setModel(model);
