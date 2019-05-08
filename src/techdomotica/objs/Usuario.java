@@ -89,7 +89,7 @@ public class Usuario {
     public static int insertUser(int rol, String correo, String contra, String nombre1, String nombre2, String apellido1, String apellido2, String documento) {
         Conectar conx = new Conectar();
         String hashed = techdomotica.objs.Util.SHA256(contra);
-        return conx.execute(String.format("INSERT INTO `usuario` VALUES (null, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s');", rol, correo, hashed, nombre1, nombre2, apellido1, apellido2, documento));
+        return conx.execute(String.format("INSERT INTO `usuario` VALUES (null, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', 1);", rol, correo, hashed, nombre1, nombre2, apellido1, apellido2, documento));
     }
     
     public static int modifyUser(int rol, String correo, String nombre1, String nombre2, String apellido1, String apellido2, String documento, int modifiedID, boolean enabled) {

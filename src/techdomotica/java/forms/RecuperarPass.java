@@ -124,7 +124,7 @@ public class RecuperarPass extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        validateStuff();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void validateStuff() {
@@ -138,18 +138,25 @@ public class RecuperarPass extends javax.swing.JFrame {
                 if(conx.nextRow()) {
                     String correo = String.valueOf(conx.getResultSetRow("correo"));
                     String dni = String.valueOf(conx.getResultSetRow("dni"));
+                    int usu = Integer.parseInt(String.valueOf(conx.getResultSetRow("id_usuario")));
+                    conx.destroyResultSet();
                     if(correo.equals(obtainedCorreo) && dni.equals(obtainedDni)) {
                         String newContra = JOptionPane.showInputDialog(null, "Escribe tu nueva contraseña", "Cambio de contraseña aceptado", JOptionPane.INFORMATION_MESSAGE);
                         if(!newContra.isEmpty()) {
-                            if(conx.execute(String.format("UPDATE usuario SET password = '%s' WHERE id_usuario = '%s';", techdomotica.objs.Util.SHA256(newContra), String.valueOf(conx.getResultSetRow("id_usuario")))) == 1) {
+                            if(conx.execute(String.format("UPDATE usuario SET password = '%s' WHERE id_usuario = '%s';", techdomotica.objs.Util.SHA256(newContra), usu)) == 1) {
+                                conx.closeConnection();
                                 JOptionPane.showMessageDialog(null, "Contraseña cambiada. Se te redirigirá al inicio de sesión.", "Contraseña modificada", JOptionPane.INFORMATION_MESSAGE);
+                                techdomotica.objs.Reporte.insertReport(usu, 9, "Se ha realizado un cambio de contraseña exitoso para este usuario desde la versión de Java en " + System.getProperty("os.name") + ".");
                                 closeThis();
                             }
                             else JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el intento de cambio de contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         else JOptionPane.showMessageDialog(null, "No puedes cambiar una contraseña por una contraseña vacía.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    else JOptionPane.showMessageDialog(null, "Las credenciales que has ingresado no son correctas.", "Error", JOptionPane.ERROR_MESSAGE);
+                    else {
+                        JOptionPane.showMessageDialog(null, "Las credenciales que has ingresado no son correctas.", "Error", JOptionPane.ERROR_MESSAGE);
+                        techdomotica.objs.Reporte.insertReport(Integer.parseInt(String.valueOf(conx.getResultSetRow("id_usuario"))), 9, "Alguien ha intentado realizar un cambio de contraseña en la versión de Java en " + System.getProperty("os.name") + ".");
+                     }
                 }
             }
             JOptionPane.showMessageDialog(null, "Dicho usuario que has especificado no existe.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -157,8 +164,7 @@ public class RecuperarPass extends javax.swing.JFrame {
     }
     
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-        onClose();
+        closeThis();
     }//GEN-LAST:event_formWindowClosed
 
     private void txtMailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMailKeyPressed

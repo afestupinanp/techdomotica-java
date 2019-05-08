@@ -112,7 +112,7 @@ public class Conectar {
     
     public void destroyResultSet() {
         try {
-            rs.close();
+            if(rs != null) rs.close();
         }
         catch(SQLException e) {
             System.out.println(e);

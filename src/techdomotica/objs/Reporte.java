@@ -85,7 +85,10 @@ public class Reporte {
         java.time.LocalDateTime time = java.time.LocalDateTime.now();
         String fecha = time.format(java.time.format.DateTimeFormatter.ofPattern("YYYY-MM-dd"));
         String hora = time.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
-        return conx.execute(String.format("INSERT INTO reporte VALUES (null, %d, %d, '%s', '%s', '%s');", user, reportTyp, fecha, hora, txt));
+        int value = conx.execute(String.format("INSERT INTO reporte VALUES (null, %d, %d, '%s', '%s', '%s');", user, reportTyp, fecha, hora, txt));
+        conx.destroyResultSet();
+        conx.closeConnection();
+        return value;
     }
     
     

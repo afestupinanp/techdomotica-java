@@ -315,7 +315,8 @@ public class Configuration extends javax.swing.JDialog {
         String hostnameOG = cfg.getConfigKey("hostname");
         
         String currentDaemon = (tEjecucion2do.isSelected()) ? "true" : "false";
-        if(!txtHostname.getText().equalsIgnoreCase(hostnameOG) || !tHostPort.getText().equalsIgnoreCase(portOG) || !currentDaemon.equalsIgnoreCase(daemonOG) || sliderValue.getValue() != Integer.parseInt(cfg.getConfigKey("deteriorationprogress")) || autosaveSlider.getValue() != Integer.parseInt(cfg.getConfigKey("autosavetimer"))) {
+        int tiempoOG = Integer.parseInt(cfg.getConfigKey("autosavetimer"));
+        if(!txtHostname.getText().equalsIgnoreCase(hostnameOG) || !tHostPort.getText().equalsIgnoreCase(portOG) || !currentDaemon.equalsIgnoreCase(daemonOG) || sliderValue.getValue() != Integer.parseInt(cfg.getConfigKey("deteriorationprogress")) || autosaveSlider.getValue() != tiempoOG) {
             int confirm = JOptionPane.showConfirmDialog(null, "Hay cambios pendientes para guardar. ¿Deseas guardarlos ahora?", "Configuración no guardada", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(confirm == JOptionPane.YES_OPTION) saveConfig();
             else this.dispose();
