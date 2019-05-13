@@ -41,6 +41,7 @@ import techdomotica.java.forms.devices.CameraView;
 import techdomotica.java.forms.devices.CameraViewTodas;
 import techdomotica.java.forms.devices.DeviceHistory;
 import techdomotica.java.forms.devices.DeviceManager;
+import techdomotica.java.forms.gestorusuarios.PerfilesScreen;
 
 import techdomotica.java.forms.gestorusuarios.Registrar;
 import techdomotica.java.forms.gestorusuarios.Usuarios;
@@ -238,6 +239,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -392,11 +394,20 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu6.setText("Perfil");
+        jMenu6.setText("Perfiles");
 
         jMenuItem15.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
-        jMenuItem15.setText("Mi perfil");
+        jMenuItem15.setText("Mis perfiles");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem15);
+
+        jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem14.setText("Crear un perfil");
+        jMenu6.add(jMenuItem14);
 
         jMenuBar1.add(jMenu6);
 
@@ -728,6 +739,12 @@ public class Main extends javax.swing.JFrame {
         devices.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+        PerfilesScreen screen = new PerfilesScreen(ambiente.getConnection(), Integer.parseInt(adminEncargado.getID()));
+        screen.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
     private void saveAllDevices() {
         System.out.println("Autosaving...");
         ambiente.saveAllDevicesFromQuit();
@@ -952,6 +969,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;

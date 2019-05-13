@@ -46,7 +46,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Perfil"/>
+            <Property name="text" type="java.lang.String" value="Perfiles"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem15">
@@ -54,7 +54,18 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+P"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Mi perfil"/>
+                <Property name="text" type="java.lang.String" value="Mis perfiles"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem15ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+I"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Crear un perfil"/>
               </Properties>
             </MenuItem>
           </SubComponents>

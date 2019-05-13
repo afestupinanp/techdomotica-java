@@ -20,7 +20,6 @@ public class Ambiente {
     private boolean continuePersonaThread = true;
     private boolean continueDeviceThread = true;
     
-    private String perfilActual = "";
     private Admin adminEncargado = null;
     
     private int personasEnAmbiente = 0;//Cada persona debería de generar una temperatura de 1°C
@@ -45,7 +44,6 @@ public class Ambiente {
         loadComponentes();
         
         adminEncargado = encargado;
-        
         
         startTimeThread();
         startAmbienteThread();
@@ -210,7 +208,18 @@ public class Ambiente {
     }
     
     public void loadPerfil() {
-        System.out.println("Mañana");
+        Perfil perfil = adminEncargado.getPerfilActual();
+        if(acondicionado[0] != null) {
+            acondicionado[0].toggleComponenteEncendido(perfil.isAire1On());
+            acondicionado[0].changeTemperatura(perfil.getTempAire1());
+        }
+        if(acondicionado[1] != null) {
+            acondicionado[1].toggleComponenteEncendido(perfil.isAire1On());
+            acondicionado[1].changeTemperatura(perfil.getTempAire1());
+        }
+        if(proyector != null) {
+            proyector.toggleComponenteEncendido(perfil.isProyectorOn());
+        }
     }
     
     public ACondicionado getACondicionado(int index) {

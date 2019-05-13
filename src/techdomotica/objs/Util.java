@@ -104,6 +104,19 @@ public class Util {
         return org.apache.commons.codec.digest.DigestUtils.sha256Hex(str);
     }
     
+    /**
+     * Este método sirve para convertir un objeto a un int, pasando por chequeos de nulidad.
+     * @param obj Objeto a convertir
+     * @return Número entero. Retorna 0 si no se puede convertir.
+     */
+    public static int parseInteger(Object obj) {
+        if(obj != null) {
+            String str = String.valueOf(obj);
+            if(str != null) return Integer.parseInt(str);
+        }
+        return 0;
+    }
+    
 //    /**
 //     * Método para reemplazar los caracteres especiales de saltos de línea de un string en caracteres que pueda interpretar
 //     * Java.
