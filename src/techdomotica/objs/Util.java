@@ -1,11 +1,12 @@
 package techdomotica.objs;
+
 /**
  * Clase de funciones o métodos útiles. No es necesario instanciar esta clase, es una clase estática.
  * @author Andres
  */
 public class Util {
     
-    public static final String VERSION = "0.6.1-beta";
+    public static final String VERSION = "0.6.2-beta";
     
     /**
      * Chequea si el String está vacío.
@@ -64,36 +65,32 @@ public class Util {
     }
     
     /**
-     * Este método permite cargar una fuente rápidamente.
+     * Este método permite cargar una fuente rápidamente para todos los elementos de un JFrame.
      * @param clase Clase a la que se le desea cargar el elemento Font.
      * @param path Fuente a cargar
-     * @param tamano Tamaño de la fuente
-     * @return Retorna un objeto de tipo Font.
+     * @return Retorna un boolean indicando si se logró cambiar la fuente de todos los elementos del JFrame
      */
-    public static java.awt.Font cargarFuente(Object clase, String path, float tamano) {
+    public static boolean cargarFuente(javax.swing.JFrame clase) {
         try {
-            return java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, clase.getClass().getResourceAsStream(path)).deriveFont(tamano);
+            java.awt.Font font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, techdomotica.java.forms.LoginPage.class.getResourceAsStream("/resources/fonts/Lato-Regular.ttf")).deriveFont(11f);
+            javax.swing.plaf.FontUIResource fontR = new javax.swing.plaf.FontUIResource(font);
+            
+            java.util.Enumeration keys = javax.swing.UIManager.getDefaults().keys();
+            while(keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                Object value = javax.swing.UIManager.get(key);
+                if(value instanceof javax.swing.plaf.FontUIResource && !key.toString().equals("PasswordField.font")) {
+                    javax.swing.UIManager.put(key, fontR);
+                    System.out.println("Key " + key + " cambiada.");
+                }
+            }
+            javax.swing.SwingUtilities.updateComponentTreeUI(clase);
         }
-        catch(Exception ex) {
-            System.out.println(ex);
-            return null;
+        catch(Exception e) {
+            System.out.println(e);
+            return false;
         }
-    }
-    
-    /**
-     * Este método permite cargar una fuente rápidamente.
-     * @param clase Clase a la que se le desea cargar el elemento Font.
-     * @param path Fuente a cargar
-     * @return Retorna un objeto de tipo Font.
-     */
-    public static java.awt.Font cargarFuente(Object clase, String path) {
-        try {
-            return java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, clase.getClass().getResourceAsStream(path));
-        }
-        catch(Exception ex) {
-            System.out.println(ex);
-            return null;
-        }
+        return true;
     }
     /**
      * Método para encriptar un String a SHA-256 usando el MessageDigest proporcionado por Apache Commons.

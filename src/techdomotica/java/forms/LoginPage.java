@@ -21,6 +21,7 @@ public class LoginPage extends javax.swing.JFrame {
     private boolean loggeable = true;
     
     public LoginPage() {
+        Util.cargarFuente(this);
         conx = new Conectar();
         if(!conx.ping()) {
             JOptionPane.showMessageDialog(null, "No se ha podido conectar a la base de datos de Tech Domótica.\nAsegurate de que todos los campos en la configuración sean correctos.", "Error de conexión", JOptionPane.ERROR_MESSAGE);

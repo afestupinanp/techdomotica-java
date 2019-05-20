@@ -11,7 +11,7 @@ public class Admin extends Usuario {
 
     public void loadDefaultPerfil() {
         Conectar conx = new Conectar();
-        if(conx.executeRSOne("SELECT usuario.perfil_actual, perfil.* FROM usuario INNER JOIN perfil ON usuario.perfil_actual = perfil.id_perfil WHERE perfil.id_usuario = " + getID() + " AND perfil.habilitado = 1;")) {
+        if(conx.executeRSOne("SELECT * FROM perfil WHERE id_usuario = " + getID() + " AND habilitado = 2;")) {
             perfilActual = new Perfil(Util.parseInteger(conx.getResultSetRow("id_perfil")), Util.parseInteger(conx.getResultSetRow("temp1")), Util.parseInteger(conx.getResultSetRow("temp2")), (Util.parseInteger(conx.getResultSetRow("temp1_on")) == 1), (Util.parseInteger(conx.getResultSetRow("temp2_on")) == 1), (Util.parseInteger(conx.getResultSetRow("proyector_on")) == 1));
         }
         if(conx.getResultSet() != null) conx.destroyResultSet();
