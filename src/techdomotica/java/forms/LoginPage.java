@@ -374,7 +374,9 @@ public class LoginPage extends javax.swing.JFrame {
             @Override
                 public void onAlmost() {
                     super.onAlmost();
+                    System.out.println("Just went through here!");
                     main = new Main(admin);
+                    System.out.println("After new Main!");
                 }
                 public void onComplete() {
                     super.onComplete();

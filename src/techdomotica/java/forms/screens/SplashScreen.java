@@ -6,9 +6,6 @@
 package techdomotica.java.forms.screens;
 
 import java.awt.Image;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.paint.Color;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 

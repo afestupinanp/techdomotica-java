@@ -741,7 +741,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         // TODO add your handling code here:
-        PerfilesScreen screen = new PerfilesScreen(ambiente.getConnection(), Integer.parseInt(adminEncargado.getID()));
+        PerfilesScreen screen = new PerfilesScreen(ambiente);
         screen.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 

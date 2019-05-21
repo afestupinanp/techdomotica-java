@@ -41,10 +41,10 @@ public class Ambiente {
     public Ambiente(Admin encargado) {
         config = new Config();
         connection = new Conectar();
-        loadComponentes();
-        
         adminEncargado = encargado;
         
+        
+        loadComponentes();
         startTimeThread();
         startAmbienteThread();
         startPersonaThread();
@@ -209,17 +209,24 @@ public class Ambiente {
     
     public void loadPerfil() {
         Perfil perfil = adminEncargado.getPerfilActual();
-        if(acondicionado[0] != null) {
-            acondicionado[0].toggleComponenteEncendido(perfil.isAire1On());
-            acondicionado[0].changeTemperatura(perfil.getTempAire1());
+        if(perfil != null) {
+            System.out.println("perfil no es null");
+            if(acondicionado[0] != null) {
+                System.out.println("acondcionado 0 no es null");
+                acondicionado[0].toggleComponenteEncendido(perfil.isAire1On());
+                acondicionado[0].changeTemperatura(perfil.getTempAire1());
+            }
+            if(acondicionado[1] != null) {
+                System.out.println("acondcionado 1 no es null");
+                acondicionado[1].toggleComponenteEncendido(perfil.isAire1On());
+                acondicionado[1].changeTemperatura(perfil.getTempAire1());
+            }
+            if(proyector != null) {
+                System.out.println("proyector no es null");
+                proyector.toggleComponenteEncendido(perfil.isProyectorOn());
+            }
         }
-        if(acondicionado[1] != null) {
-            acondicionado[1].toggleComponenteEncendido(perfil.isAire1On());
-            acondicionado[1].changeTemperatura(perfil.getTempAire1());
-        }
-        if(proyector != null) {
-            proyector.toggleComponenteEncendido(perfil.isProyectorOn());
-        }
+        //else System.out.println("perfil es null");
     }
     
     public ACondicionado getACondicionado(int index) {
