@@ -11,7 +11,7 @@ public class Admin extends Usuario {
 
     public void loadDefaultPerfil() {
         Conectar conx = new Conectar();
-        if(conx.executeRSOne("SELECT * FROM perfil WHERE id_usuario = " + getID() + " AND habilitado = 2;")) {
+        if(conx.executeRSOne("SELECT * FROM perfil WHERE id_usuario = " + getID() + " AND habilitado = 2 LIMIT 1;")) {
 //            System.out.println("id_perfil " + conx.getResultSetRow("id_perfil"));
 //            System.out.println("temp1 " + conx.getResultSetRow("temp1"));
 //            System.out.println("temp2 " + conx.getResultSetRow("temp2"));
