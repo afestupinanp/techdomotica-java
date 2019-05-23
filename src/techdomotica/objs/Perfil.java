@@ -13,8 +13,8 @@ public class Perfil {
     private boolean sensor2On = false;
     
     public Perfil(int pID, int ac1t, int ac2t, boolean tvOn, boolean ac1On, boolean ac2On, boolean sen1On, boolean sen2On) {
-        tempAire1 = 0;
-        tempAire2 = 0;
+        tempAire1 = ac1t;
+        tempAire2 = ac2t;
         perfilID = pID;
 
         proyectorOn = tvOn;

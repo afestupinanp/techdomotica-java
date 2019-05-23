@@ -212,21 +212,23 @@ public class Ambiente {
         if(perfil != null) {
             System.out.println("perfil no es null");
             if(acondicionado[0] != null) {
-                System.out.println("acondcionado 0 no es null");
+                //System.out.println("acondcionado 1 no es null - temp: " + acondicionado[0].getTemperatura());
                 acondicionado[0].toggleComponenteEncendido(perfil.isAire1On());
                 acondicionado[0].changeTemperatura(perfil.getTempAire1());
+                System.out.println("acondcionado 1 no es null - temp: " + acondicionado[0].getTemperatura());
             }
             if(acondicionado[1] != null) {
-                System.out.println("acondcionado 1 no es null");
-                acondicionado[1].toggleComponenteEncendido(perfil.isAire1On());
-                acondicionado[1].changeTemperatura(perfil.getTempAire1());
+//                System.out.println("acondcionado 2 no es null - new temp: " + acondicionado[1].getTemperatura());
+                acondicionado[1].toggleComponenteEncendido(perfil.isAire2On());
+                acondicionado[1].changeTemperatura(perfil.getTempAire2());
+//                System.out.println("acondcionado 2 no es null - new temp: " + acondicionado[1].getTemperatura());
             }
             if(proyector != null) {
-                System.out.println("proyector no es null");
+//                System.out.println("proyector no es null");
                 proyector.toggleComponenteEncendido(perfil.isProyectorOn());
             }
         }
-        //else System.out.println("perfil es null");
+        else System.out.println("perfil es null");
     }
     
     public ACondicionado getACondicionado(int index) {

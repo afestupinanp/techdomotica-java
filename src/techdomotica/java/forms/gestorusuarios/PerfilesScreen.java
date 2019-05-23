@@ -93,7 +93,6 @@ public class PerfilesScreen extends javax.swing.JFrame {
                 Object[] fila = {conx.getResultSetRow("id_perfil"), conx.getResultSetRow("temp1"), conx.getResultSetRow("temp2"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp1_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("proyector_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor1_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor2_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("habilitado")) == 2 ? "Si" : "No")};
                 model.addRow(fila);
             }
-            
         }
         else {
             Object[] lol = {"No hay datos"};
@@ -134,6 +133,7 @@ public class PerfilesScreen extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -192,10 +192,17 @@ public class PerfilesScreen extends javax.swing.JFrame {
 
         jButton2.setText("Modificar");
 
-        jButton3.setText("Seleccionar como perfil actual");
+        jButton3.setText("Escoger fila como perfil actual");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Quitar perfil actual");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -207,20 +214,19 @@ public class PerfilesScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +238,8 @@ public class PerfilesScreen extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 14, Short.MAX_VALUE))
@@ -436,6 +443,15 @@ public class PerfilesScreen extends javax.swing.JFrame {
         createProfile(true);
     }//GEN-LAST:event_addDefaultActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de no seleccionar ningún perfil?\nLos perfiles asignan valores a los dispositivos automáticamente.", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(conf == JOptionPane.YES_OPTION) {
+            disableAllDefaults();
+            JOptionPane.showMessageDialog(null, "Se ha quitado el perfil actual.", "Operación éxitosa", JOptionPane.INFORMATION_MESSAGE);
+            loadTable();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void createProfile(boolean saveAsDefault) {
         String profileResumen = String.format("Temperatura (aire 1): %d°C.\nTemperatura (aire 2): %d°C.\nEstado del aire acondicionado 1: %s.\nEstado del aire acondicionado 2: %s.\nEstado del proyector: %s.\nEstado del sensor de movimiento: %s.\nEstado del sensor de puerta: %s.\n", Integer.parseInt(tempaire1.getText()), Integer.parseInt(tempaire2.getText()), comboAire1.getSelectedItem(), comboAire2.getSelectedItem(), comboProyector.getSelectedItem(), comboSensor1.getSelectedItem(), comboSensor2.getSelectedItem());
         int conf = JOptionPane.showConfirmDialog(null, "Confirma los siguientes datos:\n" + profileResumen + "\n\n¿Estás seguro de guardar este perfil?", "Confirmación de datos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -495,6 +511,7 @@ public class PerfilesScreen extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
