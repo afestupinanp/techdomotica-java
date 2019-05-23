@@ -22,9 +22,6 @@ public class Admin extends Usuario {
     }
     
     public Perfil getPerfilActual() {
-        System.out.println("id_perfil " + perfilActual.getPerfilID());
-        System.out.println("temp1 " + perfilActual.getTempAire1());
-        System.out.println("temp2 " + perfilActual.getTempAire2());
         return perfilActual;
     }
     
