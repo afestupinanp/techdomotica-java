@@ -41,6 +41,7 @@ import techdomotica.java.forms.devices.CameraView;
 import techdomotica.java.forms.devices.CameraViewTodas;
 import techdomotica.java.forms.devices.DeviceHistory;
 import techdomotica.java.forms.devices.DeviceManager;
+import techdomotica.java.forms.gestorusuarios.PerfilCreation;
 import techdomotica.java.forms.gestorusuarios.PerfilesScreen;
 
 import techdomotica.java.forms.gestorusuarios.Registrar;
@@ -407,6 +408,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem14.setText("Crear un perfil");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem14);
 
         jMenuBar1.add(jMenu6);
@@ -744,6 +750,11 @@ public class Main extends javax.swing.JFrame {
         PerfilesScreen screen = new PerfilesScreen(ambiente);
         screen.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        PerfilCreation creation = new PerfilCreation(this, true, ambiente);
+        creation.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void saveAllDevices() {
         System.out.println("Autosaving...");
