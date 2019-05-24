@@ -37,7 +37,7 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F11"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Documentaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Manual de usuario"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>

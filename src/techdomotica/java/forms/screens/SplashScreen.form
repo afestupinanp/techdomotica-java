@@ -98,7 +98,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cargando..."/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;Cargando... obteniendo dispositivos...&lt;/html&gt;"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -67,16 +67,14 @@ public class SplashScreen extends javax.swing.JFrame {
     }
 
     public void onHalf() {
-        jLabel1.setText("<html>Cargando... obteniendo dispositivos.</html>");
+        jLabel1.setText("<html>Cargando... generando mapa de la sala...</html>");
     }
     
     public void onAlmost() {
-        jLabel1.setText("<html>Cargando... generando mapa de sala.</html>");
+        jLabel1.setText("<html>Cargando... obteniendo datos de perfil...</html>");
     }
     
-    public void onComplete() {
-        jLabel1.setText("<html>Cargando... terminado.</html>");
-    }
+    public void onComplete() { }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,7 +101,7 @@ public class SplashScreen extends javax.swing.JFrame {
         jProgressBar1.setForeground(new java.awt.Color(0, 153, 0));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Cargando...");
+        jLabel1.setText("<html>Cargando... obteniendo dispositivos...</html>");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

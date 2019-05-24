@@ -77,7 +77,6 @@ public class PerfilesScreen extends javax.swing.JFrame {
         model.addColumn("Temperatura aire 2");
         model.addColumn("¿Aire 1 encendido?");
         model.addColumn("¿Aire 2 encendido?");
-        model.addColumn("¿Aire 2 encendido?");
         model.addColumn("¿Proyector encendido?");
         model.addColumn("¿Sensor puerta encendido?");
         model.addColumn("¿Sensor movimiento encendido?");
@@ -90,7 +89,7 @@ public class PerfilesScreen extends javax.swing.JFrame {
             while(conx.nextRow()) {
                 Perfil perfil = new Perfil(techdomotica.objs.Util.parseInteger(conx.getResultSetRow("id_perfil")), techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp1")), techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2")), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp1_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("proyector_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor1_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor2_on")) == 1));
                 perfilList.add(perfil);
-                Object[] fila = {conx.getResultSetRow("id_perfil"), conx.getResultSetRow("temp1"), conx.getResultSetRow("temp2"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp1_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("proyector_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor1_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor2_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("habilitado")) == 2 ? "Si" : "No")};
+                Object[] fila = {conx.getResultSetRow("id_perfil"), conx.getResultSetRow("temp1"), conx.getResultSetRow("temp2"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp1_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("proyector_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor1_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor2_on")) == 1 ? "Si" : "No"), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("habilitado")) == 2 ? "Si" : "No")};
                 model.addRow(fila);
             }
         }

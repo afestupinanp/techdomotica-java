@@ -222,7 +222,7 @@
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Estado"/>
+                <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnrepairac1">
@@ -271,7 +271,7 @@
             <Component class="javax.swing.JLabel" name="jLabel11">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Estado"/>
+                <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JProgressBar" name="deviceprogressac2">
@@ -581,7 +581,7 @@
                     <Component class="javax.swing.JLabel" name="jLabel4">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Estado"/>
+                        <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btndeletecam1">
@@ -701,7 +701,7 @@
                     <Component class="javax.swing.JLabel" name="jLabel5">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Estado"/>
+                        <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="displaydevicecam2">
@@ -719,7 +719,7 @@
                     <Component class="javax.swing.JLabel" name="jLabel10">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Estado"/>
+                        <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btndeletecam3">
@@ -796,7 +796,7 @@
                     <Component class="javax.swing.JLabel" name="jLabel12">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Estado"/>
+                        <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnrepaircam4">
@@ -975,7 +975,7 @@
             <Component class="javax.swing.JLabel" name="jLabel13">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Estado"/>
+                <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btndeletesensor1">
@@ -1044,7 +1044,7 @@
             <Component class="javax.swing.JLabel" name="jLabel14">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Estado"/>
+                <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btndeletesensor2">
@@ -1218,7 +1218,7 @@
             <Component class="javax.swing.JLabel" name="jLabel15">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Estado"/>
+                <Property name="text" type="java.lang.String" value="Tiempo de vida"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JProgressBar" name="deviceprogressprojector">

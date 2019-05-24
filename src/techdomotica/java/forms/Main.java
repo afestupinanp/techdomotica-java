@@ -41,6 +41,7 @@ import techdomotica.java.forms.devices.CameraView;
 import techdomotica.java.forms.devices.CameraViewTodas;
 import techdomotica.java.forms.devices.DeviceHistory;
 import techdomotica.java.forms.devices.DeviceManager;
+import techdomotica.java.forms.events.EventScreen;
 import techdomotica.java.forms.gestorusuarios.PerfilCreation;
 import techdomotica.java.forms.gestorusuarios.PerfilesScreen;
 
@@ -544,6 +545,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem17.setText("Configurar eventos");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem17);
 
         jMenuItem20.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.ALT_MASK));
@@ -577,7 +583,7 @@ public class Main extends javax.swing.JFrame {
         jMenu2.setText("Acerca de");
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
-        jMenuItem3.setText("Documentación");
+        jMenuItem3.setText("Manual de usuario");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -607,8 +613,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO: Añadir código para abrir la documentación.
-
+        try {
+            int conf = JOptionPane.showConfirmDialog(null, "El manual de usuario está disponible en manera de PDF desde Google Drive.\nSe abrirá una pestaña en tu navegador.", "Confirmación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(conf == JOptionPane.OK_OPTION) {
+                if(java.awt.Desktop.isDesktopSupported()) java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://drive.google.com/open?id=18SYZl7nY4pkEZOJaZZ66u_tqZpxTsady"));
+            }
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -755,6 +768,11 @@ public class Main extends javax.swing.JFrame {
         PerfilCreation creation = new PerfilCreation(this, true, ambiente);
         creation.setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        EventScreen screen = new EventScreen(ambiente);
+        screen.setVisible(true);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void saveAllDevices() {
         System.out.println("Autosaving...");

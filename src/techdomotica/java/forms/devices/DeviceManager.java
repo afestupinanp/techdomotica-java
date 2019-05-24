@@ -212,7 +212,7 @@ public class DeviceManager extends javax.swing.JFrame {
         });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Estado");
+        jLabel3.setText("Tiempo de vida");
 
         btnrepairac1.setText("Reparar");
         btnrepairac1.setEnabled(false);
@@ -245,7 +245,7 @@ public class DeviceManager extends javax.swing.JFrame {
         displaydeviceac2.setText("DISPLAY_DEVICE");
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Estado");
+        jLabel11.setText("Tiempo de vida");
 
         deviceprogressac2.setForeground(new java.awt.Color(0, 153, 0));
         deviceprogressac2.setToolTipText("");
@@ -392,7 +392,7 @@ public class DeviceManager extends javax.swing.JFrame {
         displaydevicecam1.setText("DISPLAY_DEVICE");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Estado");
+        jLabel4.setText("Tiempo de vida");
 
         btndeletecam1.setText("Eliminar");
         btndeletecam1.addActionListener(new java.awt.event.ActionListener() {
@@ -481,7 +481,7 @@ public class DeviceManager extends javax.swing.JFrame {
         });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Estado");
+        jLabel5.setText("Tiempo de vida");
 
         displaydevicecam2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         displaydevicecam2.setText("DISPLAY_DEVICE");
@@ -490,7 +490,7 @@ public class DeviceManager extends javax.swing.JFrame {
         displaydevicecam3.setText("DISPLAY_DEVICE");
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Estado");
+        jLabel10.setText("Tiempo de vida");
 
         btndeletecam3.setText("Eliminar");
         btndeletecam3.addActionListener(new java.awt.event.ActionListener() {
@@ -546,7 +546,7 @@ public class DeviceManager extends javax.swing.JFrame {
         displaydevicecam4.setText("DISPLAY_DEVICE");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Estado");
+        jLabel12.setText("Tiempo de vida");
 
         btnrepaircam4.setText("Reparar");
         btnrepaircam4.setEnabled(false);
@@ -756,7 +756,7 @@ public class DeviceManager extends javax.swing.JFrame {
         displaysensor1.setText("DISPLAY_DEVICE");
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Estado");
+        jLabel13.setText("Tiempo de vida");
 
         btndeletesensor1.setText("Eliminar");
         btndeletesensor1.addActionListener(new java.awt.event.ActionListener() {
@@ -805,7 +805,7 @@ public class DeviceManager extends javax.swing.JFrame {
         displaysensor2.setText("DISPLAY_DEVICE");
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Estado");
+        jLabel14.setText("Tiempo de vida");
 
         btndeletesensor2.setText("Eliminar");
         btndeletesensor2.addActionListener(new java.awt.event.ActionListener() {
@@ -951,7 +951,7 @@ public class DeviceManager extends javax.swing.JFrame {
         });
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Estado");
+        jLabel15.setText("Tiempo de vida");
 
         deviceprogressprojector.setForeground(new java.awt.Color(0, 153, 0));
         deviceprogressprojector.setToolTipText("");
