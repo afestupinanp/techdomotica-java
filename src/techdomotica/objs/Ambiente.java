@@ -14,13 +14,14 @@ public class Ambiente {
     private Thread personaThread;
     private Thread deviceThread;
     
-    private Time runTime;
+    private TimeChecker runTime;
     
     private boolean continueAmbienteThread = true;
     private boolean continuePersonaThread = true;
     private boolean continueDeviceThread = true;
     
-    private Admin adminEncargado = null;
+    private Admin adminEncargado = null;//Si está vacío, se inhabilitarán todos los elementos del administrador.
+    private Usuario usuarioEncargado = null;
     
     private int personasEnAmbiente = 0;//Cada persona debería de generar una temperatura de 1°C
     private int personasDetectadas = 0;
@@ -50,6 +51,19 @@ public class Ambiente {
         startPersonaThread();
         startDeviceThread();
     }
+    
+    public Ambiente(Usuario encargado) {
+        config = new Config();
+        connection = new Conectar();
+        usuarioEncargado = encargado;
+        
+        
+        loadComponentes();
+        startTimeThread();
+        startAmbienteThread();
+        startPersonaThread();
+        startDeviceThread();
+    }
 
     public void loadComponentes() {
         loadACondicionados();
@@ -57,7 +71,7 @@ public class Ambiente {
         loadLuces();
         loadSensores();
         loadProyector();
-        loadPerfil();
+        if(adminEncargado != null) loadPerfil();
     }
     
     public void createACondicionado(int index, String model, String mark) {
@@ -347,12 +361,12 @@ public class Ambiente {
         return deviceThread;
     }
     
-    public Time getTimeThread() {
+    public TimeChecker getTimeThread() {
         return runTime;
     }
     
     public void startTimeThread() {
-        runTime = new Time();
+        runTime = new TimeChecker();
         runTime.start();
     }
     

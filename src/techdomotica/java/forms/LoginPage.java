@@ -12,6 +12,7 @@ import techdomotica.java.forms.screens.SplashScreen;
 import techdomotica.objs.Admin;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Reporte;
+import techdomotica.objs.Usuario;
 import techdomotica.objs.Util;
 
 public class LoginPage extends javax.swing.JFrame {
@@ -381,9 +382,31 @@ public class LoginPage extends javax.swing.JFrame {
             @Override
                 public void onAlmost() {
                     super.onAlmost();
-                    System.out.println("Just went through here!");
+                    System.out.println("Just went through here for user!");
                     main = new Main(admin);
-                    System.out.println("After new Main!");
+                    System.out.println("After new Main for user!");
+                }
+                public void onComplete() {
+                    super.onComplete();
+                    main.setVisible(true);
+                }
+            };
+            splash.setVisible(true);
+        }
+        else {
+            if(Util.esCorreo(mail)) conx.executeRSOne("SELECT * FROM usuario WHERE correo = '" + mail +"';");
+            else if(Util.esNumerico(mail)) conx.executeRSOne("SELECT * FROM usuario WHERE dni = '" + mail +"';");
+            Usuario usuario = new Usuario(String.valueOf(conx.getResultSetRow("id_usuario")), String.valueOf(conx.getResultSetRow("nom1")), String.valueOf(conx.getResultSetRow("nom2")), String.valueOf(conx.getResultSetRow("apellido1")), String.valueOf(conx.getResultSetRow("apellido2")), String.valueOf(conx.getResultSetRow("correo")), String.valueOf(conx.getResultSetRow("dni")), String.valueOf(conx.getResultSetRow("password")));
+            conx.destroyResultSet();
+            conx.closeConnection();
+            this.dispose();
+            SplashScreen splash = new SplashScreen() {
+            @Override
+                public void onAlmost() {
+                    super.onAlmost();
+                    System.out.println("Just went through here for user!");
+                    main = new Main(usuario);
+                    System.out.println("After new Main for user!");
                 }
                 public void onComplete() {
                     super.onComplete();

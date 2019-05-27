@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import techdomotica.java.forms.screens.progressDialog;
 import techdomotica.objs.Ambiente;
-import techdomotica.objs.Time;
+import techdomotica.objs.TimeChecker;
 
 /**
  *

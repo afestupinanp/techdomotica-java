@@ -30,6 +30,7 @@ public class DeviceManager extends javax.swing.JFrame {
     public DeviceManager(Ambiente amb) {
         initComponents();
         ambiente = amb;
+        removeAdminStuff();
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         setLocationRelativeTo(null);
         
@@ -1828,6 +1829,15 @@ public class DeviceManager extends javax.swing.JFrame {
         dialogo.setTitle(title);
         dialogo.textVar.setText("<html>" + textvar + ". Por favor espere...</html>");
         dialogo.setVisible(true);
+    }
+    
+    private void removeAdminStuff() {
+        if(ambiente.getAdminEncargado() == null) {
+            btndeleteac1.setVisible(false);
+            btndeleteac2.setVisible(false);
+            jPanel2.setVisible(false);
+            jPanel3.setVisible(false);
+        }
     }
     
     /**

@@ -5,46 +5,34 @@
  */
 package techdomotica.java.forms.events;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
-import techdomotica.objs.Event;
+import techdomotica.objs.Ambiente;
 import techdomotica.objs.Perfil;
-import techdomotica.objs.Util;
 
 /**
  *
  * @author Andres
  */
-public class EventScreen extends javax.swing.JFrame {
+public class modifyEvent extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EventScreen
-     */
-    private ArrayList<Event> eventosList = new ArrayList();
-    private ArrayList<Perfil> perfilList = new ArrayList();
     private Ambiente ambiente;
     private Conectar conx = null;
+    private ArrayList<Perfil> perfilList = new ArrayList();
     
-    private int selectedRow = 0;
     
-    public EventScreen(Ambiente amb) {
+    public modifyEvent(Ambiente amb) {
         initComponents();
-        ambiente = amb;
-        conx = amb.getConnection();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
-        loadTable();
+        ambiente = amb;
+        conx = amb.getConnection();
         loadPerfiles(false);
     }
-
+    
     private void loadPerfiles(boolean showMineOnly) {
         String query = "";
         perfilList.clear();
@@ -71,45 +59,7 @@ public class EventScreen extends javax.swing.JFrame {
             jButton3.setToolTipText("No puedes ver los valores de un perfil no seleccionado.");
         }
     }
-    
-    private void loadTable() {
-        selectedRow = 0;
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("#");
-        model.addColumn("Perfil para el evento");
-        model.addColumn("Fecha del evento");
-        model.addColumn("Hora del evento");
-        String query = "SELECT * FROM evento INNER JOIN perfil ON perfil.id_perfil = evento.id_perfil WHERE fecha >= CURRENT_DATE AND perfil.habilitado >= 1;";
-        if(conx.executeRS(query)) {
-            tableEvents.getTableHeader().setReorderingAllowed(false);
-            conx.setBeforeFirst();
-            eventosList.clear();
-            while(conx.nextRow()) {
-                Perfil perfil = new Perfil(techdomotica.objs.Util.parseInteger(conx.getResultSetRow("id_perfil")), techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp1")), techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2")), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp1_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("temp2_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("proyector_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor1_on")) == 1), (techdomotica.objs.Util.parseInteger(conx.getResultSetRow("sensor2_on")) == 1));
-                Event evento = new Event(Util.parseInteger(conx.getResultSetRow("id_evento")), LocalDate.parse(String.valueOf(conx.getResultSetRow("fecha"))), LocalTime.parse(String.valueOf(conx.getResultSetRow("hora"))), perfil);
-                eventosList.add(evento);
-                //perfilList.add(perfil);
-                Object[] fila = {conx.getResultSetRow("id_evento"), conx.getResultSetRow("id_perfil"), conx.getResultSetRow("fecha"), conx.getResultSetRow("hora")};
-                model.addRow(fila);
-            }
-        }
-        else {
-            Object[] lol = {"No hay datos"};
-            model.addRow(lol);
-        }
-        if(conx.getResultSet() != null) conx.destroyResultSet();
-        if(eventosList.isEmpty()) {
-            jButton1.setEnabled(false);
-            jButton2.setEnabled(false);
-        }
-        else {
-            jButton1.setEnabled(true);
-            jButton2.setEnabled(true);
-        }
-        tableEvents.setModel(model);
-        tableEvents.setRowSelectionInterval(0, 0);
-    }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,25 +69,6 @@ public class EventScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableEvents = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableEvents1 = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -154,102 +85,12 @@ public class EventScreen extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Eventos - Tech Domótica");
+        setTitle("Modificando evento - Tech Domótica");
         setResizable(false);
-
-        tableEvents.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        tableEvents.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableEventsMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tableEvents);
-
-        tableEvents1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        tableEvents1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableEventsMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tableEvents1);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Eventos del sistema");
-
-        jButton1.setText("Eliminar evento");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Modificar evento");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("<html>Para ver los detalles del perfil seleccionado para el evento, has doble click en la fila escogida.</html>");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(153, 153, 153)
-                                .addComponent(jButton1)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Añadir un evento");
+        jLabel2.setText("Modificar evento");
 
         jLabel4.setText("Los eventos son perfiles que se activan durante ciertas horas.");
 
@@ -274,7 +115,7 @@ public class EventScreen extends javax.swing.JFrame {
 
         comboMin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
 
-        jButton4.setText("Crear evento");
+        jButton4.setText("Modificar evento");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -296,7 +137,7 @@ public class EventScreen extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -319,10 +160,10 @@ public class EventScreen extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(comboMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 42, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(134, 134, 134)
+                .addGap(140, 140, 140)
                 .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -351,60 +192,22 @@ public class EventScreen extends javax.swing.JFrame {
                     .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tableEventsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEventsMouseClicked
-        if(evt.getClickCount() == 2) {
-            Perfil perfil = eventosList.get(selectedRow).getPerfilEvento();
-            String msg = String.format("Temperatura del aire 1: %d°C.\nTemperatura del aire 2: %d°C.\n¿Aire acondicionado 1 encendido?: %s.\n¿Aire acondicionado 2 encendido?: %s.\n¿Proyector encendido?: %s.\n¿Sensor de puerta encendido?: %s.\n¿Sensor de movimiento encendido?: %s.\n", perfil.getTempAire1(), perfil.getTempAire2(), (perfil.isAire1On() ? "Si" : "No"), (perfil.isAire2On() ? "Si" : "No"),  (perfil.isProyectorOn() ? "Si" : "No"), (perfil.isSensor1On() ? "Si" : "No"), (perfil.isSensor2On() ? "Si" : "No"));
-            JOptionPane.showMessageDialog(null, msg, "Perfil del evento #" + eventosList.get(selectedRow).getEventID(), JOptionPane.INFORMATION_MESSAGE);
-        }
-        else {
-            selectedRow = tableEvents.getSelectedRow();
-        }
-    }//GEN-LAST:event_tableEventsMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar este evento? Esta acción no se puede revertir.", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(conf == JOptionPane.YES_OPTION) {
-            /*if(conx.execute("UPDATE evento SET habilitado = 0 WHERE id_evento = " + eventosList.get(selectedRow).getEventID() +";") == 1) {
-                JOptionPane.showMessageDialog(null, "Se ha quitado el evento de la lista.", "Evento modificado", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar modificar este evento. Intentalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);*/
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Event evento = eventosList.get(selectedRow);
-        String hour = evento.getHora().format(DateTimeFormatter.ofPattern("HH"));
-        String minute = evento.getHora().format(DateTimeFormatter.ofPattern("mm"));
-        String date = evento.getFecha().format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
-        modifyEvent eventomod = new modifyEvent(ambiente);
-        eventomod.comboHora.setSelectedItem(hour);
-        eventomod.comboMin.setSelectedItem(minute);
-        eventomod.dateText.setText(date);
-        
-        eventomod.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Perfil perfil = perfilList.get(comboPerfiles.getSelectedIndex());
@@ -412,22 +215,21 @@ public class EventScreen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, msg, "Información del perfil seleccionado", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        loadPerfiles(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String msg = String.format("Perfil seleccionado: %s.\nFecha del evento: %s.\nHora del evento: %s:%s.\n\n¿Estás seguro de agregar este nuevo evento?", comboPerfiles.getSelectedItem(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem());
         int conf = JOptionPane.showConfirmDialog(null, "Por favor, verifica los siguientes datos:\n" + msg, "Creación de nuevo evento", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(conf == JOptionPane.YES_OPTION) {
-            if(conx.execute(String.format("INSERT INTO evento VALUES(null, %d, '%s', '%s:%s:00');", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
-                JOptionPane.showMessageDialog(null, "Se ha agregado un nuevo evento.", "¡Nuevo evento creado!", JOptionPane.INFORMATION_MESSAGE);
-                loadTable();
-                loadPerfiles(jCheckBox1.isSelected());
+            if(conx.execute(String.format("UPDATE evento SET id_perfil = %d, fecha = '%s', hora = '%s:%s:00' WHERE id_evento = ;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha modificado el evento seleccionado.", "¡Evento modificado!", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
             }
             else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        loadPerfiles(jCheckBox1.isSelected());
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -446,47 +248,38 @@ public class EventScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EventScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifyEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EventScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifyEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EventScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifyEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EventScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modifyEvent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EventScreen(null).setVisible(true);
+                new modifyEvent(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> comboHora;
-    private javax.swing.JComboBox<String> comboMin;
+    public javax.swing.JComboBox<String> comboHora;
+    public javax.swing.JComboBox<String> comboMin;
     private javax.swing.JComboBox<String> comboPerfiles;
-    private javax.swing.JFormattedTextField dateText;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    public javax.swing.JFormattedTextField dateText;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tableEvents;
-    private javax.swing.JTable tableEvents1;
     // End of variables declaration//GEN-END:variables
 }

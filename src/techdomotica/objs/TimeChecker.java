@@ -1,18 +1,19 @@
 package techdomotica.objs;
 
-public class Time extends Thread {
+public class TimeChecker extends Thread {
     
     private boolean continueThread = true;
     private int seconds, minutes, hours;
+    
     @Override
     public void run() {
         seconds = java.time.LocalDateTime.now().getSecond();
         minutes = java.time.LocalDateTime.now().getMinute();
         hours = java.time.LocalDateTime.now().getHour();
         
-        seconds = 50;
+        /*seconds = 50;
         minutes = 59;
-        hours = 6;
+        hours = 6;*/
         while(continueThread) {
             try {
                 Thread.sleep(1000);

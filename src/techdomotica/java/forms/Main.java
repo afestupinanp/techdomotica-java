@@ -32,7 +32,7 @@ import javax.swing.UIManager;
 import techdomotica.objs.Admin;
 import techdomotica.objs.Config;
 import techdomotica.objs.Ambiente;
-import techdomotica.objs.Time;
+import techdomotica.objs.TimeChecker;
 import techdomotica.objs.Reporte;
 
 import techdomotica.java.forms.devices.ACView;
@@ -50,14 +50,19 @@ import techdomotica.java.forms.gestorusuarios.Usuarios;
 import techdomotica.java.forms.security.SecurityAddRep;
 
 import techdomotica.java.forms.security.SecurityHistory;
+import techdomotica.objs.Usuario;
 
 public class Main extends javax.swing.JFrame {
 
     public boolean onSystemTray = false;
 
     private Thread mainChanger;
+    private Thread[] appSync = new Thread[2];
+    private Thread autosaveTimer;
     
     private Admin adminEncargado = null;
+    private Usuario usuarioEncargado = null;
+    
     private Ambiente ambiente;
     
     private boolean continueAutosaving = true;
@@ -68,39 +73,38 @@ public class Main extends javax.swing.JFrame {
     
     private Config cfg;
     
-    private Thread autosaveTimer;
-    
     public Main(Admin admin) {
         adminEncargado = admin;
         ambiente = new Ambiente(adminEncargado);
         cfg = ambiente.getConfig();
-        System.out.println(String.format("Timer starting with the following: %d s (%d ms)", (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60), (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60) * (1000)));
-        final int confT = Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60;
-        autosaveTimer = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(continueAutosaving) {
-                    for(int i = 0 ; i < confT ; i++ ) {
-                        //Redundant, I know, but trust me, it just works.
-                        if(continueAutosaving) {
-                            try {
-                                Thread.sleep(1000);
-                                System.out.println("Executing... " + confT + ":00 from 0:" + i);
-                                if(i == 59) {
-                                    i = 0;
-                                    saveAllDevices();
-                                }
-                            } catch (InterruptedException ex) {
-                                System.out.println(ex);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        autosaveTimer.start();
+        startAutosaveTimer();
         initComponents();
+        startMainThread();
+        setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         
+        //startAppSyncThreads();
+        checkDeviceAvailability();
+        addAppToSystemTray();
+    }
+    
+    public Main(Usuario usuario) {
+        usuarioEncargado = usuario;
+        ambiente = new Ambiente(usuarioEncargado);
+        cfg = ambiente.getConfig();
+        startAutosaveTimer();
+        initComponents();
+        startMainThread();
+        setLocationRelativeTo(null);
+        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
+        disableAdminOptions();
+        
+        //startAppSyncThreads();
+        checkDeviceAvailability();
+        addAppToSystemTray();
+    }
+    
+    private void startMainThread() {
         mainChanger = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -126,7 +130,7 @@ public class Main extends javax.swing.JFrame {
             
             //That's how an AI works my brave soul
             public void changeAmbientWeather() {
-                Time runTime = ambiente.getTimeThread();
+                TimeChecker runTime = ambiente.getTimeThread();
                 System.out.println(String.format("%02d:%02d:%02d", runTime.getHours(), runTime.getMinutes(), runTime.getSeconds()));
                 if(runTime.getHours() >= 0 && runTime.getHours() <= 5) ambiente.setTemperaturaAmbiente(23);
                 else if(runTime.getHours() >= 6 && runTime.getHours() <= 12) ambiente.setTemperaturaAmbiente(25);
@@ -164,11 +168,34 @@ public class Main extends javax.swing.JFrame {
             }
         });
         mainChanger.start();
-        setLocationRelativeTo(null);
-        setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
-        
-        checkDeviceAvailability();
-        addAppToSystemTray();
+    }
+    
+    private void startAutosaveTimer() {
+        System.out.println(String.format("Timer starting with the following: %d s (%d ms)", (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60), (Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60) * (1000)));
+        final int confT = Integer.parseInt(cfg.getConfigKey("autosavetimer")) * 60;
+        autosaveTimer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(continueAutosaving) {
+                    for(int i = 0 ; i < confT ; i++ ) {
+                        //Redundant, I know, but trust me, it just works.
+                        if(continueAutosaving) {
+                            try {
+                                Thread.sleep(1000);
+                                System.out.println("Executing... " + confT + ":00 from 0:" + i);
+                                if(i == 59) {
+                                    i = 0;
+                                    saveAllDevices();
+                                }
+                            } catch (InterruptedException ex) {
+                                System.out.println(ex);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        autosaveTimer.start();
     }
     
     public void checkDeviceAvailability() {
@@ -212,6 +239,26 @@ public class Main extends javax.swing.JFrame {
             sensorItem.setEnabled(false);
             sensorItem.setToolTipText("Sensor no disponible: no está instalado.");
         }
+    }
+    
+    private void startAppSyncThreads() {
+        appSync[0] = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(continueAutosaving) {//This one never goes into false.
+                    try {
+                        for(int i = 0 ; i < 60 ; i++) {
+                            Thread.sleep(1000);
+                        }
+                    }
+                    catch(Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+            
+        });
+        appSync[0].start();
     }
     
     /**
@@ -802,6 +849,10 @@ public class Main extends javax.swing.JFrame {
         return adminEncargado;
     }
     
+    public Usuario getUsuarioEncargado() {
+        return usuarioEncargado;
+    }
+    
     public Ambiente getAmbiente() {
         return ambiente;
     }
@@ -823,7 +874,8 @@ public class Main extends javax.swing.JFrame {
     public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de salir de Tech Domotica? Los estados de los dispositivos se guardarán automáticamente.", "Confirmación de salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirm == JOptionPane.YES_OPTION) {
-            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
+            if(adminEncargado != null) Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
+            else Reporte.insertReport(Integer.parseInt(usuarioEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
             ambiente.saveAllDevicesFromQuit();
             System.exit(0);
         }
@@ -924,13 +976,15 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void logOut() {
-        Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
+        if(adminEncargado != null) Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
+        else Reporte.insertReport(Integer.parseInt(usuarioEncargado.getID()), 6, "Este usuario ha cerrado sesión en la versión de Java desde " + System.getProperty("os.name") + ".");
         SystemTray tray = SystemTray.getSystemTray();
         tray.remove(appSystemTray);
         appSystemTray = null;
         LoginPage login = new LoginPage();
         login.setVisible(true);
         adminEncargado = null;
+        usuarioEncargado = null;
         mainChanger.interrupt();
         ambiente.toggleTimeThread(false);
         ambiente.toggleAmbienteThread(false);
@@ -939,6 +993,18 @@ public class Main extends javax.swing.JFrame {
         autosaveTimer.interrupt();
         ambiente = null;
         this.dispose();
+    }
+    
+    private void disableAdminOptions() {
+        jMenuItem5.setVisible(false);//Archivo - Configuración
+        jMenu6.setVisible(false);//Perfiles
+        jMenu3.setVisible(false);//Usuarios
+        jMenuItem11.setVisible(false);//Dispositivos - Todos los dispositivos - Historial de dispositivos
+        jMenu7.setVisible(false);//Dispositivos - Cámaras
+        jMenu8.setVisible(false);//Dispositivos - Sensores
+        jMenu8.setVisible(false);//Dispositivos - Aires acondicionados
+        jMenu5.setVisible(false);//Seguridad
+        
     }
     
     /**
