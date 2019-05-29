@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 18-05-2019 a las 23:21:13
--- Versión del servidor: 10.1.38-MariaDB
--- Versión de PHP: 7.3.2
+-- Servidor: localhost
+-- Tiempo de generación: 29-05-2019 a las 18:48:37
+-- Versión del servidor: 10.1.39-MariaDB
+-- Versión de PHP: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,6 +73,7 @@ CREATE TABLE `componente` (
 CREATE TABLE `evento` (
   `id_evento` int(11) NOT NULL,
   `id_perfil` int(11) NOT NULL,
+  `habilitado` tinyint(1) NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -123,15 +124,6 @@ CREATE TABLE `reporte` (
   `hora` time NOT NULL,
   `texto` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `reporte`
---
-
-INSERT INTO `reporte` (`id_reporte`, `id_usuario`, `id_tr`, `fecha`, `hora`, `texto`) VALUES
-(1, 1, 7, '2019-05-18', '15:39:13', 'Intento de inicio de sesión en la versión de Java en Windows 10'),
-(2, 1, 9, '2019-05-18', '15:39:54', 'Se ha realizado un cambio de contraseña exitoso para este usuario desde la versión de Java en Windows 10.'),
-(3, 1, 1, '2019-05-18', '15:39:59', 'Este usuario ha iniciado sesión en la versión de Java desde Windows 10');
 
 -- --------------------------------------------------------
 
@@ -189,7 +181,14 @@ INSERT INTO `tipo_reporte` (`id_tr`, `nombre`) VALUES
 (6, 'Cierre de sesión'),
 (7, 'Intento de inicio de sesión'),
 (8, 'Personalizado'),
-(9, 'Cambio de contraseña');
+(9, 'Cambio de contraseña'),
+(10, 'Usuario deshabilitado'),
+(11, 'Dispositivo deshabilitado'),
+(12, 'Perfil - creado'),
+(13, 'Perfil - modificado'),
+(14, 'Perfil - deshabilitado'),
+(15, 'Evento - creado'),
+(16, 'Evento - deshabilitado');
 
 -- --------------------------------------------------------
 
@@ -228,7 +227,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `id_rol`, `correo`, `password`, `nom1`, `nom2`, `apellido1`, `apellido2`, `dni`, `habilitado`) VALUES
-(1, 1, 'andres.pelaez00@hotmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Andrés', 'Felipe', 'Estupiñán', 'Peláez', 1005964948, 1);
+(1, 1, 'admin@techdomotica.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Administrador', '', 'Tech Domótica', '', 123, 1),
+(2, 2, 'usuario@techdomotica.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Usuario', '', 'Tech Domótica', '', 321, 1);
 
 --
 -- Índices para tablas volcadas
@@ -361,7 +361,7 @@ ALTER TABLE `perfil`
 -- AUTO_INCREMENT de la tabla `reporte`
 --
 ALTER TABLE `reporte`
-  MODIFY `id_reporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_reporte` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -379,7 +379,7 @@ ALTER TABLE `sensor`
 -- AUTO_INCREMENT de la tabla `tipo_reporte`
 --
 ALTER TABLE `tipo_reporte`
-  MODIFY `id_tr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_tr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `tv`
@@ -391,7 +391,7 @@ ALTER TABLE `tv`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
