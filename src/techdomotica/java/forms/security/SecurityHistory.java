@@ -31,7 +31,7 @@ public class SecurityHistory extends javax.swing.JFrame {
         conx = amb.getConnection();
         initComponents();
         
-        loadTable();
+        loadTable(false);
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         setLocationRelativeTo(null);
     }
@@ -55,6 +55,7 @@ public class SecurityHistory extends javax.swing.JFrame {
             }
         };
         jLabel3 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         labelTypeReport = new javax.swing.JLabel();
@@ -98,16 +99,24 @@ public class SecurityHistory extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Historial de reportes");
 
+        jCheckBox1.setText("Ver solamente reportes generados por mi.");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -117,8 +126,10 @@ public class SecurityHistory extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
+                .addGap(6, 6, 6)
+                .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -175,7 +186,7 @@ public class SecurityHistory extends javax.swing.JFrame {
                     .addComponent(labelTypeReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelUserReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(charRemaining)
@@ -216,12 +227,12 @@ public class SecurityHistory extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 469, Short.MAX_VALUE)
         );
 
         pack();
@@ -242,7 +253,7 @@ public class SecurityHistory extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Se ha guardado el reporte de manera exitosa.", "Éxito en la operación", JOptionPane.INFORMATION_MESSAGE);
                 txtReport.setText("");
                 txtReport.requestFocus();
-                loadTable();
+                loadTable(jCheckBox1.isSelected());
             }
             else JOptionPane.showMessageDialog(null, "Ha ocurrido al momento de guardar el reporte. Intentalo más tarde.", "Error en la operación", JOptionPane.ERROR_MESSAGE);
         }
@@ -256,6 +267,10 @@ public class SecurityHistory extends javax.swing.JFrame {
         }
         charRemaining.setText(String.format("Caracteres restantes: %d", (1000 - currentText.length())));
     }//GEN-LAST:event_txtReportKeyPressed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        loadTable(jCheckBox1.isSelected());
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,7 +314,7 @@ public class SecurityHistory extends javax.swing.JFrame {
         reportMainText.setText("<html>" + reportes.get(selectedRow).getReportText() + "</html>");
     }
     
-    private void loadTable() {
+    private void loadTable(boolean showMineOnly) {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("#");
         model.addColumn("Usuario (cédula)");
@@ -307,8 +322,10 @@ public class SecurityHistory extends javax.swing.JFrame {
         model.addColumn("Fecha");
         model.addColumn("Hora (24hr)");
         model.addColumn("Texto");
-        
-        if(conx.executeRS("SELECT reporte.id_usuario, reporte.id_tr, usuario.nom1, usuario.dni, reporte.id_reporte, tipo_reporte.nombre, reporte.fecha, reporte.hora, reporte.texto FROM reporte INNER JOIN tipo_reporte ON tipo_reporte.id_tr = reporte.id_tr INNER JOIN usuario ON reporte.id_usuario = usuario.id_usuario WHERE 1;")) {
+        String query = "";
+        if(showMineOnly) query = "SELECT reporte.id_usuario, reporte.id_tr, usuario.nom1, usuario.dni, reporte.id_reporte, tipo_reporte.nombre, reporte.fecha, reporte.hora, reporte.texto FROM reporte INNER JOIN tipo_reporte ON tipo_reporte.id_tr = reporte.id_tr INNER JOIN usuario ON reporte.id_usuario = usuario.id_usuario WHERE reporte.id_usuario = " + ambiente.getAdminEncargado().getID() + ";";
+        else query = "SELECT reporte.id_usuario, reporte.id_tr, usuario.nom1, usuario.dni, reporte.id_reporte, tipo_reporte.nombre, reporte.fecha, reporte.hora, reporte.texto FROM reporte INNER JOIN tipo_reporte ON tipo_reporte.id_tr = reporte.id_tr INNER JOIN usuario ON reporte.id_usuario = usuario.id_usuario WHERE 1;";
+        if(conx.executeRS(query)) {
             tableReports.getTableHeader().setReorderingAllowed(false);            
             reportes.clear();
             while(conx.nextRow()) {
@@ -333,6 +350,7 @@ public class SecurityHistory extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel charRemaining;
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

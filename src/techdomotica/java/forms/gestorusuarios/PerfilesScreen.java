@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Perfil;
+import techdomotica.objs.Reporte;
 
 public class PerfilesScreen extends javax.swing.JFrame {
 
@@ -493,6 +494,7 @@ public class PerfilesScreen extends javax.swing.JFrame {
             int result = conx.execute(String.format("INSERT INTO perfil VALUES (null, %d, %d, %d, %d, %d, %d, %d, %d, %d);", admID, Integer.parseInt(tempaire1.getText()), Integer.parseInt(tempaire2.getText()), comboAire1.getSelectedIndex(), comboAire2.getSelectedIndex(), comboProyector.getSelectedIndex(), comboSensor1.getSelectedIndex(), comboSensor2.getSelectedIndex(), saveDefault ));
             if(result == 1) {
                 JOptionPane.showMessageDialog(null, "Se ha guardado el perfil correctamente." + ( (saveAsDefault) ? "\nSe ha establecido este perfil como tu perfil por defecto." : "" ), "Perfil guardado", JOptionPane.INFORMATION_MESSAGE);
+                Reporte.insertReport(admID, 12, "Este usuario ha creado un nuevo perfil." + (saveAsDefault ? " Además, ha escogido el perfil creado como su perfil actual." : ""));
                 loadTable();
             }
             else JOptionPane.showMessageDialog(null, "Ha ocurrido un problema durante el guardado del perfil. Intentalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);

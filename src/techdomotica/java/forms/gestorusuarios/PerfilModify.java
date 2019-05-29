@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Perfil;
+import techdomotica.objs.Reporte;
 import techdomotica.objs.Util;
 
 public class PerfilModify extends javax.swing.JFrame {
@@ -237,6 +238,8 @@ public class PerfilModify extends javax.swing.JFrame {
             if(Util.esNumerico(tempaire1.getText()) && Util.esNumerico(tempaire2.getText())) {
                 if(conx.executeWithObjects("UPDATE perfil SET temp1 = ?, temp2 = ?, temp1_on = ?, temp2_on = ?, proyector_on = ?, sensor1_on = ?, sensor2_on = ? WHERE id_perfil = ?;", Integer.parseInt(tempaire1.getText()), Integer.parseInt(tempaire2.getText()), comboAire1.getSelectedIndex(), comboAire2.getSelectedIndex(), comboProyector.getSelectedIndex(), comboSensor1.getSelectedIndex(), comboSensor2.getSelectedIndex(), perfilModified) == 1) {
                     JOptionPane.showMessageDialog(null, "Perfil actualizado de manera correcta.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    Reporte.insertReport(admID, 13, "Este usuario ha modificado el perfil con ID " + perfilModified + ".");
+                    this.dispose();
                 }
                 else JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar modificar el perfil. Intentalo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
             }

@@ -18,6 +18,7 @@ import techdomotica.objs.Ambiente;
 import techdomotica.objs.Conectar;
 import techdomotica.objs.Event;
 import techdomotica.objs.Perfil;
+import techdomotica.objs.Reporte;
 import techdomotica.objs.Util;
 
 /**
@@ -87,12 +88,16 @@ public class EventScreen extends javax.swing.JFrame {
             comboPerfiles.setToolTipText(null);
             jButton3.setEnabled(true);
             jButton3.setToolTipText(null);
+            jButton4.setEnabled(true);
+            jButton4.setToolTipText(null);
         }
         else {
             comboPerfiles.setEnabled(false);
             comboPerfiles.setToolTipText("No se encontraron perfiles disponibles.");
             jButton3.setEnabled(false);
             jButton3.setToolTipText("No puedes ver los valores de un perfil no seleccionado.");
+            jButton4.setEnabled(false);
+            jButton4.setToolTipText("No puedes crear un perfil: no hay ningún perfil disponible.");
         }
     }
     
@@ -268,7 +273,7 @@ public class EventScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -345,36 +350,35 @@ public class EventScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(comboPerfiles, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jCheckBox1))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jButton3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(comboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dateText, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 12, Short.MAX_VALUE)))
+                                .addComponent(comboPerfiles, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -392,10 +396,10 @@ public class EventScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jLabel7)
                     .addComponent(comboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -404,7 +408,7 @@ public class EventScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -442,6 +446,7 @@ public class EventScreen extends javax.swing.JFrame {
         if(conf == JOptionPane.YES_OPTION) {
             if(conx.execute("UPDATE evento SET habilitado = 0 WHERE id_evento = " + eventosList.get(selectedRowF).getEventID() +";") == 1) {
                 JOptionPane.showMessageDialog(null, "Se ha quitado el evento de la lista.", "Evento modificado", JOptionPane.INFORMATION_MESSAGE);
+                Reporte.insertReport(Integer.parseInt(ambiente.getAdminEncargado().getID()), 16, "Este usuario ha deshabilitado el evento con ID " + eventosList.get(selectedRowF).getEventID());
                 loadTable();
                 loadTodayTable();
             }
@@ -480,23 +485,23 @@ public class EventScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String msg = String.format("Perfil seleccionado: %s.\nFecha del evento: %s.\nHora del evento: %s:%s.\n\n¿Estás seguro de agregar este nuevo evento?", comboPerfiles.getSelectedItem(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem());
-        int conf = JOptionPane.showConfirmDialog(null, "Por favor, verifica los siguientes datos:\n" + msg, "Creación de nuevo evento", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(conf == JOptionPane.YES_OPTION) {
-            if(dateText.getText().isEmpty()) JOptionPane.showMessageDialog(null, "El campo de la fecha está vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            else {
+        if(dateText.getText().isEmpty()) JOptionPane.showMessageDialog(null, "El campo de la fecha está vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+        else {
+            String msg = String.format("Perfil seleccionado: %s.\nFecha del evento: %s.\nHora del evento: %s:%s.\n\n¿Estás seguro de agregar este nuevo evento?", comboPerfiles.getSelectedItem(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem());
+            int conf = JOptionPane.showConfirmDialog(null, "Por favor, verifica los siguientes datos:\n" + msg, "Creación de nuevo evento", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(conf == JOptionPane.YES_OPTION) {
                 try {
                     java.util.Date utilDate = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateText.getText());
                     java.sql.Date date = new java.sql.Date(utilDate.getTime());
                     String convertedTime = comboHora.getSelectedItem() + ":" + comboMin.getSelectedItem() + ":00";
                     if(conx.executeWithObjects("INSERT INTO evento(`id_perfil`, `habilitado`, `fecha`, `hora`) VALUES(?, 1, ?, ?);", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), date, convertedTime) == 1) {
-                    //if(conx.execute(String.format("INSERT INTO evento VALUES(null, %d, 1, '%s', '%s:%s:00');", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), convertedDate, comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
                         JOptionPane.showMessageDialog(null, "Se ha agregado un nuevo evento.", "¡Nuevo evento creado!", JOptionPane.INFORMATION_MESSAGE);
                         loadTable();
                         loadPerfiles(jCheckBox1.isSelected());
                         ambiente.loadTodayEvents();
                         ambiente.getTimeThread().getAmbienteEventos();
                         ambiente.getTimeThread().checkEvents();
+                        Reporte.insertReport(Integer.parseInt(ambiente.getAdminEncargado().getID()), 15, "Este usuario ha creado un evento en la base de datos con el perfil " + perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID() + ".");
                         loadTodayTable();
                     }
                     else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);

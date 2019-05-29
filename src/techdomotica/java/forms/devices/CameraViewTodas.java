@@ -65,6 +65,9 @@ public class CameraViewTodas extends javax.swing.JFrame {
                 if(ambiente.getCamara(i).getComponenteEncendidoState()) cameras[i].setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/camara" + (i + 1) +".png")).getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
                 else cameras[i].setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal.png")).getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
             }
+            else {
+                cameras[i].setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/resources/media/simulator/nosignal2.png")).getImage().getScaledInstance(340, 250, Image.SCALE_SMOOTH)));
+            }
         }
     }
     
@@ -170,43 +173,47 @@ public class CameraViewTodas extends javax.swing.JFrame {
     }//GEN-LAST:event_comboCamaraActionPerformed
 
     private void cameraonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cameraonActionPerformed
-        progressDialog dialogo = new progressDialog(this, true, 10){
-            @Override
-            public void progressBarFilled() {
-                super.progressBarFilled();
-                ambiente.getCamara(comboCamara.getSelectedIndex()).toggleComponenteEncendido(true);
-                try {
-                    Thread.sleep(500);
-                    loadCameraFeed();
-                } 
-                catch (InterruptedException ex) {
-                    ex.printStackTrace();
+        if(ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteEncendidoState() == false) {
+            progressDialog dialogo = new progressDialog(this, true, 10){
+                @Override
+                public void progressBarFilled() {
+                    super.progressBarFilled();
+                    ambiente.getCamara(comboCamara.getSelectedIndex()).toggleComponenteEncendido(true);
+                    try {
+                        Thread.sleep(500);
+                        loadCameraFeed();
+                    } 
+                    catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        };
-        dialogo.setTitle("Encendiendo cámara");
-        dialogo.textVar.setText("Encendiendo la cámara " + ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteFullName() + ". Por favor espere...");
-        dialogo.setVisible(true);
+            };
+            dialogo.setTitle("Encendiendo cámara");
+            dialogo.textVar.setText("Encendiendo la cámara " + ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteFullName() + ". Por favor espere...");
+            dialogo.setVisible(true);
+        }        
     }//GEN-LAST:event_cameraonActionPerformed
 
     private void cameraoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cameraoffActionPerformed
-        progressDialog dialogo = new progressDialog(this, true, 10){
-            @Override
-            public void progressBarFilled() {
-                super.progressBarFilled();
-                ambiente.getCamara(comboCamara.getSelectedIndex()).toggleComponenteEncendido(false);
-                try {
-                    Thread.sleep(500);
-                    loadCameraFeed();
-                } 
-                catch (InterruptedException ex) {
-                    ex.printStackTrace();
+        if(ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteEncendidoState() == true) {
+            progressDialog dialogo = new progressDialog(this, true, 10){
+                @Override
+                public void progressBarFilled() {
+                    super.progressBarFilled();
+                    ambiente.getCamara(comboCamara.getSelectedIndex()).toggleComponenteEncendido(false);
+                    try {
+                        Thread.sleep(500);
+                        loadCameraFeed();
+                    } 
+                    catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        };
-        dialogo.setTitle("Apagando cámara");
-        dialogo.textVar.setText("Apagando la cámara " + ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteFullName() + ". Por favor espere...");
-        dialogo.setVisible(true);
+            };
+            dialogo.setTitle("Apagando cámara");
+            dialogo.textVar.setText("Apagando la cámara " + ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteFullName() + ". Por favor espere...");
+            dialogo.setVisible(true);
+        }
     }//GEN-LAST:event_cameraoffActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -221,8 +228,14 @@ public class CameraViewTodas extends javax.swing.JFrame {
     
     public void loadCamaraRadioButtons() {
         if(ambiente.getCamara(comboCamara.getSelectedIndex()) != null) {
+            cameraon.setEnabled(true);
+            cameraoff.setEnabled(true);
             if(ambiente.getCamara(comboCamara.getSelectedIndex()).getComponenteEncendidoState()) cameraon.setSelected(true);
             else cameraoff.setSelected(true);
+        }
+        else {
+            cameraon.setEnabled(false);
+            cameraoff.setEnabled(false);
         }
     }
     
