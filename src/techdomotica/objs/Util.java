@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  */
 public class Util {
     
-    public static final String VERSION = "0.7-beta";
+    public static final String VERSION = "0.8-RC-1";
     
     /**
      * Chequea si el String está vacío.
