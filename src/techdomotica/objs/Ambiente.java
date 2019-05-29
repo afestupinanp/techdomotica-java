@@ -383,7 +383,14 @@ public class Ambiente {
     }
     
     public void startTimeThread() {
-        runTime = new TimeChecker(this);
+        runTime = new TimeChecker(this) {
+            @Override
+            public void onEventChange() {
+                super.onEventChange();
+                appTray.displayMessage("Nuevo evento", "Se ha configurado un perfil para adaptarse a uno de los eventos en la sala.", TrayIcon.MessageType.INFO);
+                
+            }
+        };
         runTime.start();
     }
     

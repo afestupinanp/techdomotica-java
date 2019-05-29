@@ -483,24 +483,27 @@ public class EventScreen extends javax.swing.JFrame {
         String msg = String.format("Perfil seleccionado: %s.\nFecha del evento: %s.\nHora del evento: %s:%s.\n\n¿Estás seguro de agregar este nuevo evento?", comboPerfiles.getSelectedItem(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem());
         int conf = JOptionPane.showConfirmDialog(null, "Por favor, verifica los siguientes datos:\n" + msg, "Creación de nuevo evento", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(conf == JOptionPane.YES_OPTION) {
-            try {
-                java.util.Date utilDate = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateText.getText());
-                java.sql.Date date = new java.sql.Date(utilDate.getTime());
-                String convertedTime = comboHora.getSelectedItem() + ":" + comboMin.getSelectedItem() + ":00";
-                if(conx.executeWithObjects("INSERT INTO evento(`id_perfil`, `habilitado`, `fecha`, `hora`) VALUES(?, 1, ?, ?);", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), date, convertedTime) == 1) {
-                //if(conx.execute(String.format("INSERT INTO evento VALUES(null, %d, 1, '%s', '%s:%s:00');", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), convertedDate, comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
-                    JOptionPane.showMessageDialog(null, "Se ha agregado un nuevo evento.", "¡Nuevo evento creado!", JOptionPane.INFORMATION_MESSAGE);
-                    loadTable();
-                    loadPerfiles(jCheckBox1.isSelected());
-                    ambiente.loadTodayEvents();
-                    ambiente.getTimeThread().getAmbienteEventos();
-                    ambiente.getTimeThread().checkEvents();
-                    loadTodayTable();
+            if(dateText.getText().isEmpty()) JOptionPane.showMessageDialog(null, "El campo de la fecha está vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            else {
+                try {
+                    java.util.Date utilDate = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateText.getText());
+                    java.sql.Date date = new java.sql.Date(utilDate.getTime());
+                    String convertedTime = comboHora.getSelectedItem() + ":" + comboMin.getSelectedItem() + ":00";
+                    if(conx.executeWithObjects("INSERT INTO evento(`id_perfil`, `habilitado`, `fecha`, `hora`) VALUES(?, 1, ?, ?);", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), date, convertedTime) == 1) {
+                    //if(conx.execute(String.format("INSERT INTO evento VALUES(null, %d, 1, '%s', '%s:%s:00');", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), convertedDate, comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
+                        JOptionPane.showMessageDialog(null, "Se ha agregado un nuevo evento.", "¡Nuevo evento creado!", JOptionPane.INFORMATION_MESSAGE);
+                        loadTable();
+                        loadPerfiles(jCheckBox1.isSelected());
+                        ambiente.loadTodayEvents();
+                        ambiente.getTimeThread().getAmbienteEventos();
+                        ambiente.getTimeThread().checkEvents();
+                        loadTodayTable();
+                    }
+                    else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            catch(ParseException e) {
-                System.out.println(e);
+                catch(ParseException e) {
+                    System.out.println(e);
+                }
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed

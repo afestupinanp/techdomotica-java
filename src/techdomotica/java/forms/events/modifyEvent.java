@@ -229,19 +229,22 @@ public class modifyEvent extends javax.swing.JFrame {
         String msg = String.format("Perfil seleccionado: %s.\nFecha del evento: %s.\nHora del evento: %s:%s.\n\n¿Estás seguro de agregar este nuevo evento?", comboPerfiles.getSelectedItem(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem());
         int conf = JOptionPane.showConfirmDialog(null, "Por favor, verifica los siguientes datos:\n" + msg, "Creación de nuevo evento", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(conf == JOptionPane.YES_OPTION) {
-            try {
-                java.util.Date utilDate = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateText.getText());
-                java.sql.Date date = new java.sql.Date(utilDate.getTime());
-                String convertedTime = comboHora.getSelectedItem() + ":" + comboMin.getSelectedItem() + ":00";
-                if(conx.executeWithObjects("UPDATE evento SET id_perfil = ?, fecha = ?, hora = ? WHERE id_evento = ?;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), date, convertedTime, editingID) == 1) {
-                //if(conx.execute(String.format("UPDATE evento SET id_perfil = %d, fecha = '%s', hora = '%s:%s:00' WHERE id_evento = ;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
-                    JOptionPane.showMessageDialog(null, "Se ha modificado el evento seleccionado.", "¡Evento modificado!", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
+            if(dateText.getText().isEmpty()) JOptionPane.showMessageDialog(null, "El campo de la fecha está vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            else {
+                try {
+                    java.util.Date utilDate = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateText.getText());
+                    java.sql.Date date = new java.sql.Date(utilDate.getTime());
+                    String convertedTime = comboHora.getSelectedItem() + ":" + comboMin.getSelectedItem() + ":00";
+                    if(conx.executeWithObjects("UPDATE evento SET id_perfil = ?, fecha = ?, hora = ? WHERE id_evento = ?;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), date, convertedTime, editingID) == 1) {
+                    //if(conx.execute(String.format("UPDATE evento SET id_perfil = %d, fecha = '%s', hora = '%s:%s:00' WHERE id_evento = ;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
+                        JOptionPane.showMessageDialog(null, "Se ha modificado el evento seleccionado.", "¡Evento modificado!", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                    }
+                    else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            catch(ParseException e) {
-                System.out.println(e);
+                catch(ParseException e) {
+                    System.out.println(e);
+                }
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed

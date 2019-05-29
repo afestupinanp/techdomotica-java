@@ -1,6 +1,5 @@
 package techdomotica.objs;
 
-import java.awt.TrayIcon;
 import java.util.ArrayList;
 import java.time.LocalTime;
 
@@ -25,13 +24,13 @@ public class TimeChecker extends Thread {
     
     public void setNextEvent() {
         if(!eventList.isEmpty() && eventConfirmed) {
-            ambiente.getTrayIcon().displayMessage("Nuevo evento", "Se ha configurado un perfil para adaptarse a uno de los eventos en la sala.", TrayIcon.MessageType.INFO);
             System.out.println("Indexes: " + eventList.size());
             eventList.remove(0);
             if(!eventList.isEmpty()) {
                 nextHours = eventList.get(0).getHora().getHour();
                 nextMinutes = eventList.get(0).getHora().getMinute();
                 eventConfirmed = true;
+                onEventChange();
             }
             else {
                 eventConfirmed = false;
@@ -71,6 +70,8 @@ public class TimeChecker extends Thread {
     public int getHours() {
         return hours;
     }
+    
+    public void onEventChange() {}
     
     public void run() {
         getAmbienteEventos();

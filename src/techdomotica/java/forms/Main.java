@@ -16,7 +16,9 @@ import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
+import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -660,15 +662,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        try {
-            int conf = JOptionPane.showConfirmDialog(null, "El manual de usuario está disponible en manera de PDF desde Google Drive.\nSe abrirá una pestaña en tu navegador.", "Confirmación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(conf == JOptionPane.OK_OPTION) {
-                if(java.awt.Desktop.isDesktopSupported()) java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://drive.google.com/open?id=18SYZl7nY4pkEZOJaZZ66u_tqZpxTsady"));
-            }
-        }
-        catch(Exception e) {
-            System.out.println(e);
-        }
+        techdomotica.objs.Util.openManual();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

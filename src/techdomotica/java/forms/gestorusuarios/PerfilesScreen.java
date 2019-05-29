@@ -190,6 +190,11 @@ public class PerfilesScreen extends javax.swing.JFrame {
         });
 
         jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Escoger fila como perfil actual");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +218,7 @@ public class PerfilesScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -241,7 +246,7 @@ public class PerfilesScreen extends javax.swing.JFrame {
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -435,13 +440,26 @@ public class PerfilesScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void justAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_justAddActionPerformed
-        createProfile(false);
+        if(checkStrings()) createProfile(false);
     }//GEN-LAST:event_justAddActionPerformed
 
     private void addDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDefaultActionPerformed
-        createProfile(true);
+        if(checkStrings()) createProfile(true);
     }//GEN-LAST:event_addDefaultActionPerformed
 
+    private boolean checkStrings() {
+        if(tempaire1.getText().isEmpty() || tempaire2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Uno de los campos de temperatura están vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            if(techdomotica.objs.Util.esNumerico(tempaire1.getText()) && techdomotica.objs.Util.esNumerico(tempaire2.getText())) {
+                return true;
+            }
+            else JOptionPane.showMessageDialog(null, "Al menos un campo de temperatura no es numérico.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de no seleccionar ningún perfil?\nLos perfiles asignan valores a los dispositivos automáticamente.", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(conf == JOptionPane.YES_OPTION) {
@@ -450,6 +468,21 @@ public class PerfilesScreen extends javax.swing.JFrame {
             loadTable();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        PerfilModify modifier = new PerfilModify(ambiente);
+        Perfil perfil = perfilList.get(selectedRow);
+        modifier.setModifiedID(perfil.getPerfilID());
+        modifier.tempaire1.setText(String.valueOf(perfil.getTempAire1()));
+        modifier.tempaire2.setText(String.valueOf(perfil.getTempAire2()));
+        modifier.comboAire1.setSelectedIndex(perfil.isAire1On() ? 1 : 0);
+        modifier.comboAire2.setSelectedIndex(perfil.isAire2On() ? 1 : 0);
+        modifier.comboProyector.setSelectedIndex(perfil.isProyectorOn()? 1 : 0);
+        modifier.comboSensor1.setSelectedIndex(perfil.isSensor1On()? 1 : 0);
+        modifier.comboSensor2.setSelectedIndex(perfil.isSensor2On()? 1 : 0);
+        
+        modifier.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void createProfile(boolean saveAsDefault) {
         String profileResumen = String.format("Temperatura (aire 1): %d°C.\nTemperatura (aire 2): %d°C.\nEstado del aire acondicionado 1: %s.\nEstado del aire acondicionado 2: %s.\nEstado del proyector: %s.\nEstado del sensor de movimiento: %s.\nEstado del sensor de puerta: %s.\n", Integer.parseInt(tempaire1.getText()), Integer.parseInt(tempaire2.getText()), comboAire1.getSelectedItem(), comboAire2.getSelectedItem(), comboProyector.getSelectedItem(), comboSensor1.getSelectedItem(), comboSensor2.getSelectedItem());

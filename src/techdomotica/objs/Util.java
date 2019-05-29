@@ -1,5 +1,10 @@
 package techdomotica.objs;
 
+import java.awt.Desktop;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import javax.swing.JOptionPane;
+
 /**
  * Clase de funciones o métodos útiles. No es necesario instanciar esta clase, es una clase estática.
  * @author Andres
@@ -112,6 +117,26 @@ public class Util {
             if(str != null) return Integer.parseInt(str);
         }
         return 0;
+    }
+    
+    public static void openManual() {
+        try {
+            int conf = JOptionPane.showConfirmDialog(null, "El manual de usuario está disponible en manera de PDF desde Google Drive.\nSe abrirá una pestaña en tu navegador.", "Confirmación", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(conf == JOptionPane.OK_OPTION) {
+                if(java.awt.Desktop.isDesktopSupported() && java.awt.Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://drive.google.com/open?id=18SYZl7nY4pkEZOJaZZ66u_tqZpxTsady"));
+                else {
+                    conf = JOptionPane.showConfirmDialog(null, "El sistema operativo actual no soporta la redirección automática.\n¿Deseas copiar el enlace?", "Reintentando", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(conf == JOptionPane.YES_OPTION) {
+                        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+                        clip.setContents(new java.awt.datatransfer.StringSelection("https://drive.google.com/open?id=18SYZl7nY4pkEZOJaZZ66u_tqZpxTsady"), null);
+                        JOptionPane.showMessageDialog(null, "Enlace copiado exitosamente en el portapapeles.", "Enlace copiado", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
     }
     
 //    /**
