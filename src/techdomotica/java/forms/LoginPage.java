@@ -378,9 +378,11 @@ public class LoginPage extends javax.swing.JFrame {
             @Override
                 public void onAlmost() {
                     super.onAlmost();
-                    System.out.println("Just went through here for user!");
+                    if(admin.getPerfilActual() != null) this.jLabel1.setText("<html>Cargando... obteniendo datos de tu perfil...</html>");
+                    else this.jLabel1.setText("<html>Cargando... asignando valores de los componentes...</html>");
+                    System.out.println("Just went through here for admin!");
                     main = new Main(admin);
-                    System.out.println("After new Main for user!");
+                    System.out.println("After new Main for admin!");
                 }
                 public void onComplete() {
                     super.onComplete();
@@ -400,6 +402,7 @@ public class LoginPage extends javax.swing.JFrame {
             @Override
                 public void onAlmost() {
                     super.onAlmost();
+                    this.jLabel1.setText("<html>Cargando... asignando valores de los componentes...</html>");
                     System.out.println("Just went through here for user!");
                     main = new Main(usuario);
                     System.out.println("After new Main for user!");

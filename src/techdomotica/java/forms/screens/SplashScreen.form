@@ -100,6 +100,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;Cargando... obteniendo dispositivos...&lt;/html&gt;"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

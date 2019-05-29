@@ -1344,19 +1344,19 @@ public class DeviceManager extends javax.swing.JFrame {
     }
     
     private void rdbtnonac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnonac1ActionPerformed
-        ambiente.getACondicionado(0).toggleComponenteEncendido(true);
+        if(ambiente.getACondicionado(0).getComponenteEncendidoState() == false) ambiente.getACondicionado(0).toggleComponenteEncendido(true);
     }//GEN-LAST:event_rdbtnonac1ActionPerformed
 
     private void rdbtnoffac1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffac1ActionPerformed
-        ambiente.getACondicionado(0).toggleComponenteEncendido(false);
+        if(ambiente.getACondicionado(0).getComponenteEncendidoState() == true) ambiente.getACondicionado(0).toggleComponenteEncendido(false);
     }//GEN-LAST:event_rdbtnoffac1ActionPerformed
 
     private void rdbtnonac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnonac2ActionPerformed
-        ambiente.getACondicionado(1).toggleComponenteEncendido(true);
+        if(ambiente.getACondicionado(0).getComponenteEncendidoState() == false) ambiente.getACondicionado(1).toggleComponenteEncendido(true);
     }//GEN-LAST:event_rdbtnonac2ActionPerformed
 
     private void rdbtnoffac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnoffac2ActionPerformed
-        ambiente.getACondicionado(1).toggleComponenteEncendido(false);
+        if(ambiente.getACondicionado(0).getComponenteEncendidoState() == true) ambiente.getACondicionado(1).toggleComponenteEncendido(false);
     }//GEN-LAST:event_rdbtnoffac2ActionPerformed
 
     private void btndeleteac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteac2ActionPerformed
@@ -1769,25 +1769,29 @@ public class DeviceManager extends javax.swing.JFrame {
     public void saveChangesToMain() {}
     
     private void toggleCamera(int id, boolean onoff) {
-        onoffCamera(ambiente.getCamara(id), new progressDialog(this, true, 10) {
-            @Override
-            public void progressBarFilled() {
-                ambiente.getCamara(id).toggleComponenteEncendido(onoff);
-            }
-        }, "Encendiendo componente", "Modificando valores de la cámara " + ambiente.getCamara(id).getComponenteFullName() + ", puede tardar unos segundos.");
+        if(ambiente.getCamara(id).getComponenteEncendidoState() == !onoff) {
+            onoffCamera(ambiente.getCamara(id), new progressDialog(this, true, 10) {
+                @Override
+                public void progressBarFilled() {
+                    ambiente.getCamara(id).toggleComponenteEncendido(onoff);
+                }
+            }, "Encendiendo componente", "Modificando valores de la cámara " + ambiente.getCamara(id).getComponenteFullName() + ", puede tardar unos segundos.");
+        }
     }
     
     private void toggleDevice(Componente comp, int timevalue, boolean onoff) {
-        progressDialog dialogo = new progressDialog(this, true, timevalue) {
-            @Override
-            public void progressBarFilled() {
-                comp.toggleComponenteEncendido(onoff);
-            }
-        };
-        if(onoff) dialogo.setTitle("Encendiendo dispositivo");
-        else dialogo.setTitle("Apagando dispositivo");
-        dialogo.textVar.setText("<html>Modificando valores del dispositivo " + comp.getComponenteFullName() + ", puede tardar unos segundos...</html>");
-        dialogo.setVisible(true);
+        if(comp.getComponenteEncendidoState() == !onoff) {
+            progressDialog dialogo = new progressDialog(this, true, timevalue) {
+                @Override
+                public void progressBarFilled() {
+                    comp.toggleComponenteEncendido(onoff);
+                }
+            };
+            if(onoff) dialogo.setTitle("Encendiendo dispositivo");
+            else dialogo.setTitle("Apagando dispositivo");
+            dialogo.textVar.setText("<html>Modificando valores del dispositivo " + comp.getComponenteFullName() + ", puede tardar unos segundos...</html>");
+            dialogo.setVisible(true);
+        }
     }
     
     private void cameraView(String campath, String title, boolean ison) {
@@ -1835,6 +1839,10 @@ public class DeviceManager extends javax.swing.JFrame {
         if(ambiente.getAdminEncargado() == null) {
             btndeleteac1.setVisible(false);
             btndeleteac2.setVisible(false);
+            
+            jTabbedPane1.remove(jPanel2);
+            jTabbedPane1.remove(jPanel3);
+            
             jPanel2.setVisible(false);
             jPanel3.setVisible(false);
         }

@@ -134,43 +134,47 @@ public class CameraView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void camerabtnonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camerabtnonActionPerformed
-        progressDialog dialogo = new progressDialog(this, true, 10){
-            @Override
-            public void progressBarFilled() {
-                super.progressBarFilled();
-                ambient.getCamara(cameraID).toggleComponenteEncendido(true);
-                try {
-                    Thread.sleep(500);
-                    loadViewIcon(cameraPath, true);
-                } 
-                catch (InterruptedException ex) {
-                    ex.printStackTrace();
+        if(ambient.getCamara(cameraID).getComponenteEncendidoState() == false) {
+            progressDialog dialogo = new progressDialog(this, true, 10){
+                @Override
+                public void progressBarFilled() {
+                    super.progressBarFilled();
+                    ambient.getCamara(cameraID).toggleComponenteEncendido(true);
+                    try {
+                        Thread.sleep(500);
+                        loadViewIcon(cameraPath, true);
+                    } 
+                    catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        };
-        dialogo.setTitle("Encendiendo cámara");
-        dialogo.textVar.setText("Encendiendo la cámara " + ambient.getCamara(cameraID).getComponenteFullName() + ". Por favor espere...");
-        dialogo.setVisible(true);
+            };
+            dialogo.setTitle("Encendiendo cámara");
+            dialogo.textVar.setText("Encendiendo la cámara " + ambient.getCamara(cameraID).getComponenteFullName() + ". Por favor espere...");
+            dialogo.setVisible(true);
+        }
     }//GEN-LAST:event_camerabtnonActionPerformed
 
     private void camerabtnoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camerabtnoffActionPerformed
-        progressDialog dialogo = new progressDialog(this, true, 10){
-            @Override
-            public void progressBarFilled() {
-                super.progressBarFilled();
-                ambient.getCamara(cameraID).toggleComponenteEncendido(false);
-                try {
-                    Thread.sleep(500);
-                    loadViewIcon(cameraPath, false);
-                } 
-                catch (InterruptedException ex) {
-                    ex.printStackTrace();
+        if(ambient.getCamara(cameraID).getComponenteEncendidoState() == true) {
+            progressDialog dialogo = new progressDialog(this, true, 10){
+                @Override
+                public void progressBarFilled() {
+                    super.progressBarFilled();
+                    ambient.getCamara(cameraID).toggleComponenteEncendido(false);
+                    try {
+                        Thread.sleep(500);
+                        loadViewIcon(cameraPath, false);
+                    } 
+                    catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        };
-        dialogo.setTitle("Apagando cámara");
-        dialogo.textVar.setText("Apagando la cámara " + ambient.getCamara(cameraID).getComponenteFullName() + ". Por favor espere...");
-        dialogo.setVisible(true);
+            };
+            dialogo.setTitle("Apagando cámara");
+            dialogo.textVar.setText("Apagando la cámara " + ambient.getCamara(cameraID).getComponenteFullName() + ". Por favor espere...");
+            dialogo.setVisible(true);
+        }
     }//GEN-LAST:event_camerabtnoffActionPerformed
 
     public void loadViewIcon(String campath, boolean ison) {

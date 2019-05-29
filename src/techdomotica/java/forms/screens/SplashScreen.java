@@ -71,7 +71,7 @@ public class SplashScreen extends javax.swing.JFrame {
     }
     
     public void onAlmost() {
-        jLabel1.setText("<html>Cargando... obteniendo datos de perfil...</html>");
+        
     }
     
     public void onComplete() { }
@@ -177,7 +177,7 @@ public class SplashScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JLabel logoLabel;

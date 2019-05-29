@@ -186,57 +186,63 @@ public class ACView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void activestateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activestateActionPerformed
-        progressDialog dialog = new progressDialog(this, true, 3) {
-            @Override
-            public void progressBarFilled() {
-                ambiente.getACondicionado(0).toggleComponenteEncendido(true);
-                checkAC();
-            }
-        };
-        dialog.setTitle("Encendiendo sendor de puerta");
-        dialog.textVar.setText("Encendiendo el sensor de la puerta. Por favor, espere...");
-        dialog.setVisible(true);
+        if(ambiente.getACondicionado(0).getComponenteEncendidoState() == false) {
+            progressDialog dialog = new progressDialog(this, true, 3) {
+                @Override
+                public void progressBarFilled() {
+                    ambiente.getACondicionado(0).toggleComponenteEncendido(true);
+                    checkAC();
+                }
+            };
+            dialog.setTitle("Encendiendo sendor de puerta");
+            dialog.textVar.setText("Encendiendo el sensor de la puerta. Por favor, espere...");
+            dialog.setVisible(true);
+        }
     }//GEN-LAST:event_activestateActionPerformed
 
     private void inactivestateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivestateActionPerformed
-        progressDialog dialog = new progressDialog(this, true, 3) {
-            @Override
-            public void progressBarFilled() {
-                ambiente.getACondicionado(0).toggleComponenteEncendido(false);
-                checkAC();
-            }
-        };
-        dialog.setTitle("Apagando aire acondicionado");
-        dialog.textVar.setText("Apagando el aire acondicionado seleccionado. Por favor, espere...");
-        dialog.setVisible(true);
+        if(ambiente.getACondicionado(0).getComponenteEncendidoState() == true) {
+            progressDialog dialog = new progressDialog(this, true, 3) {
+                @Override
+                public void progressBarFilled() {
+                    ambiente.getACondicionado(0).toggleComponenteEncendido(false);
+                    checkAC();
+                }
+            };
+            dialog.setTitle("Apagando aire acondicionado");
+            dialog.textVar.setText("Apagando el aire acondicionado seleccionado. Por favor, espere...");
+            dialog.setVisible(true);
+        }
     }//GEN-LAST:event_inactivestateActionPerformed
 
     private void activestate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activestate1ActionPerformed
-        // TODO add your handling code here:
-        progressDialog dialog = new progressDialog(this, true, 3) {
-            @Override
-            public void progressBarFilled() {
-                ambiente.getACondicionado(1).toggleComponenteEncendido(true);
-                checkAC();
-            }
-        };
-        dialog.setTitle("Encendiendo aire acondicionado");
-        dialog.textVar.setText("Encendiendo el aire acondicionado seleccionado. Por favor, espere...");
-        dialog.setVisible(true);
+        if(ambiente.getACondicionado(1).getComponenteEncendidoState() == false) {
+            progressDialog dialog = new progressDialog(this, true, 3) {
+                @Override
+                public void progressBarFilled() {
+                    ambiente.getACondicionado(1).toggleComponenteEncendido(true);
+                    checkAC();
+                }
+            };
+            dialog.setTitle("Encendiendo aire acondicionado");
+            dialog.textVar.setText("Encendiendo el aire acondicionado seleccionado. Por favor, espere...");
+            dialog.setVisible(true);
+        }
     }//GEN-LAST:event_activestate1ActionPerformed
 
     private void inactivestate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inactivestate1ActionPerformed
-        // TODO add your handling code here:
-        progressDialog dialog = new progressDialog(this, true, 3) {
-            @Override
-            public void progressBarFilled() {
-                ambiente.getACondicionado(1).toggleComponenteEncendido(false);
-                checkAC();
-            }
-        };
-        dialog.setTitle("Apagando aire acondicionado");
-        dialog.textVar.setText("Apagando el aire acondicionado seleccionado. Por favor, espere...");
-        dialog.setVisible(true);
+        if(ambiente.getACondicionado(1).getComponenteEncendidoState() == true) {
+            progressDialog dialog = new progressDialog(this, true, 3) {
+                @Override
+                public void progressBarFilled() {
+                    ambiente.getACondicionado(1).toggleComponenteEncendido(false);
+                    checkAC();
+                }
+            };
+            dialog.setTitle("Apagando aire acondicionado");
+            dialog.textVar.setText("Apagando el aire acondicionado seleccionado. Por favor, espere...");
+            dialog.setVisible(true);
+        }
     }//GEN-LAST:event_inactivestate1ActionPerformed
 
     /**
