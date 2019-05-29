@@ -1,5 +1,9 @@
 package techdomotica.objs;
 
+import java.awt.TrayIcon;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import techdomotica.objs.comps.Televisor;
 import techdomotica.objs.comps.Sensor;
 import techdomotica.objs.comps.Luz;
@@ -8,6 +12,7 @@ import techdomotica.objs.comps.ACondicionado;
 
 public class Ambiente {
     
+    private TrayIcon appTray;
     private Conectar connection;
     
     private Thread ambienteThread;
@@ -39,26 +44,31 @@ public class Ambiente {
     
     private Config config;
     
-    public Ambiente(Admin encargado) {
+    private ArrayList<Event> todayEvents = new ArrayList();
+    
+    public Ambiente(Admin encargado, TrayIcon appTra) {
         config = new Config();
         connection = new Conectar();
         adminEncargado = encargado;
+        appTray = appTra;
         
         
         loadComponentes();
+        loadTodayEvents();
         startTimeThread();
         startAmbienteThread();
         startPersonaThread();
         startDeviceThread();
     }
     
-    public Ambiente(Usuario encargado) {
+    public Ambiente(Usuario encargado, TrayIcon appTra) {
         config = new Config();
         connection = new Conectar();
         usuarioEncargado = encargado;
         
         
         loadComponentes();
+        loadTodayEvents();
         startTimeThread();
         startAmbienteThread();
         startPersonaThread();
@@ -71,7 +81,7 @@ public class Ambiente {
         loadLuces();
         loadSensores();
         loadProyector();
-        if(adminEncargado != null) loadPerfil();
+        loadPerfilFromAdmin(adminEncargado);
     }
     
     public void createACondicionado(int index, String model, String mark) {
@@ -221,8 +231,15 @@ public class Ambiente {
         connection.destroyResultSet();
     }
     
-    public void loadPerfil() {
-        Perfil perfil = adminEncargado.getPerfilActual();
+    public void loadPerfilFromEvent(int index) {
+        loadPerfil(todayEvents.get(index).getPerfilEvento());
+    }
+    
+    public void loadPerfilFromAdmin(Admin admin) {
+        if(adminEncargado != null) loadPerfil(adminEncargado.getPerfilActual());
+    }
+    
+    public void loadPerfil(Perfil perfil) {
         if(perfil != null) {
             System.out.println("perfil no es null");
             if(acondicionado[0] != null) {
@@ -366,7 +383,7 @@ public class Ambiente {
     }
     
     public void startTimeThread() {
-        runTime = new TimeChecker();
+        runTime = new TimeChecker(this);
         runTime.start();
     }
     
@@ -473,6 +490,10 @@ public class Ambiente {
         personaThread.start();
     }
     
+    public ArrayList<Event> getEventList() {
+        return todayEvents;
+    }
+
     public Conectar getConnection() {
         return connection;
     }
@@ -544,6 +565,17 @@ public class Ambiente {
         deviceThread.start();
     }
     
+    public void loadTodayEvents() {
+        todayEvents.clear();
+        if(connection.executeRS("SELECT * FROM evento INNER JOIN perfil ON perfil.id_perfil = evento.id_perfil WHERE evento.habilitado = 1 AND evento.fecha = CURRENT_DATE AND CURRENT_TIME <= evento.hora;")) {
+            while(connection.nextRow()) {
+                Perfil perfil = new Perfil(techdomotica.objs.Util.parseInteger(connection.getResultSetRow("id_perfil")), techdomotica.objs.Util.parseInteger(connection.getResultSetRow("temp1")), techdomotica.objs.Util.parseInteger(connection.getResultSetRow("temp2")), (techdomotica.objs.Util.parseInteger(connection.getResultSetRow("temp1_on")) == 1), (techdomotica.objs.Util.parseInteger(connection.getResultSetRow("temp2_on")) == 1), (techdomotica.objs.Util.parseInteger(connection.getResultSetRow("proyector_on")) == 1), (techdomotica.objs.Util.parseInteger(connection.getResultSetRow("sensor1_on")) == 1), (techdomotica.objs.Util.parseInteger(connection.getResultSetRow("sensor2_on")) == 1));
+                Event evento = new Event(Util.parseInteger(connection.getResultSetRow("id_evento")), LocalDate.parse(String.valueOf(connection.getResultSetRow("fecha"))), LocalTime.parse(String.valueOf(connection.getResultSetRow("hora"))), perfil);
+                todayEvents.add(evento);
+            }
+        }
+    }
+    
     public void toggleAmbienteThread() {
         continueAmbienteThread = !continueAmbienteThread;
         ambienteThread.interrupt();
@@ -572,4 +604,9 @@ public class Ambiente {
     public Config getConfig() {
         return config;
     }
+    
+    public TrayIcon getTrayIcon() {
+        return appTray;
+    }
+    
 }

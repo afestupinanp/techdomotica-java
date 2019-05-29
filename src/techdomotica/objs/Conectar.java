@@ -48,6 +48,40 @@ public class Conectar {
         return 0;
     }
     
+    public int executeWithObjects(String query, Object... stuff) {
+        System.out.println("Unparsed query: " + query);
+        if(query.contains("?")) {
+            System.out.print("Stuff parameters: ");
+            for(int i = 0 ; i < stuff.length ; i++) {
+                System.out.print(stuff[i].toString() + " ");
+            }
+            System.out.println(" - " + stuff.length);
+            try {
+                int count = 0;
+                for(int i = 0 ; i < query.length() ; i++) {
+                    if(query.charAt(i) == '?') {
+                        count++;
+                    }
+                }
+                //System.out.println("? Contados: " + count);
+                if(count == stuff.length) {
+                    PreparedStatement prepared = conx.prepareStatement(query);
+                    for(int i = 0; i < stuff.length ; i++) {
+                        prepared.setObject(i + 1, stuff[i]);
+                    }
+                    System.out.println("Query: " + prepared.toString());
+                    return prepared.executeUpdate();
+                }
+                else System.out.println("Error: La cantidad de ? en query no coincide con la de los objetos pasados");
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
+        else System.out.println("Error: No se encontraron parametros (?) para cambiar.");
+        return 0;
+    }
+    
     public boolean executeRSOne(String query) {
         System.out.println("Query: " + query);
         try {

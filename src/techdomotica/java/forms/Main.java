@@ -75,7 +75,8 @@ public class Main extends javax.swing.JFrame {
     
     public Main(Admin admin) {
         adminEncargado = admin;
-        ambiente = new Ambiente(adminEncargado);
+        addAppToSystemTray();
+        ambiente = new Ambiente(adminEncargado, appSystemTray);
         cfg = ambiente.getConfig();
         startAutosaveTimer();
         initComponents();
@@ -85,12 +86,12 @@ public class Main extends javax.swing.JFrame {
         
         //startAppSyncThreads();
         checkDeviceAvailability();
-        addAppToSystemTray();
     }
     
     public Main(Usuario usuario) {
         usuarioEncargado = usuario;
-        ambiente = new Ambiente(usuarioEncargado);
+        addAppToSystemTray();
+        ambiente = new Ambiente(usuarioEncargado, appSystemTray);
         cfg = ambiente.getConfig();
         startAutosaveTimer();
         initComponents();
@@ -100,8 +101,7 @@ public class Main extends javax.swing.JFrame {
         disableAdminOptions();
         
         //startAppSyncThreads();
-        checkDeviceAvailability();
-        addAppToSystemTray();
+        checkDeviceAvailability();        
     }
     
     private void startMainThread() {

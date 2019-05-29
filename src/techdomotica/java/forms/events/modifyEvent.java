@@ -5,6 +5,7 @@
  */
 package techdomotica.java.forms.events;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -22,6 +23,7 @@ public class modifyEvent extends javax.swing.JFrame {
     private Ambiente ambiente;
     private Conectar conx = null;
     private ArrayList<Perfil> perfilList = new ArrayList();
+    private int editingID = 0;
     
     
     public modifyEvent(Ambiente amb) {
@@ -87,6 +89,14 @@ public class modifyEvent extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificando evento - Tech Domótica");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -163,7 +173,7 @@ public class modifyEvent extends javax.swing.JFrame {
                         .addGap(0, 42, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(140, 140, 140)
+                .addGap(188, 188, 188)
                 .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -219,11 +229,20 @@ public class modifyEvent extends javax.swing.JFrame {
         String msg = String.format("Perfil seleccionado: %s.\nFecha del evento: %s.\nHora del evento: %s:%s.\n\n¿Estás seguro de agregar este nuevo evento?", comboPerfiles.getSelectedItem(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem());
         int conf = JOptionPane.showConfirmDialog(null, "Por favor, verifica los siguientes datos:\n" + msg, "Creación de nuevo evento", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(conf == JOptionPane.YES_OPTION) {
-            if(conx.execute(String.format("UPDATE evento SET id_perfil = %d, fecha = '%s', hora = '%s:%s:00' WHERE id_evento = ;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
-                JOptionPane.showMessageDialog(null, "Se ha modificado el evento seleccionado.", "¡Evento modificado!", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
+            try {
+                java.util.Date utilDate = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateText.getText());
+                java.sql.Date date = new java.sql.Date(utilDate.getTime());
+                String convertedTime = comboHora.getSelectedItem() + ":" + comboMin.getSelectedItem() + ":00";
+                if(conx.executeWithObjects("UPDATE evento SET id_perfil = ?, fecha = ?, hora = ? WHERE id_evento = ?;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), date, convertedTime, editingID) == 1) {
+                //if(conx.execute(String.format("UPDATE evento SET id_perfil = %d, fecha = '%s', hora = '%s:%s:00' WHERE id_evento = ;", perfilList.get(comboPerfiles.getSelectedIndex()).getPerfilID(), dateText.getText(), comboHora.getSelectedItem(), comboMin.getSelectedItem())) == 1) {
+                    JOptionPane.showMessageDialog(null, "Se ha modificado el evento seleccionado.", "¡Evento modificado!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                }
+                else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            else JOptionPane.showMessageDialog(null, "No se ha podido agregar este evento. Por favor, intentelo de nuevo.", "Error", JOptionPane.ERROR_MESSAGE);
+            catch(ParseException e) {
+                System.out.println(e);
+            }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -231,6 +250,20 @@ public class modifyEvent extends javax.swing.JFrame {
         loadPerfiles(jCheckBox1.isSelected());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        onClose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        onClose();
+    }//GEN-LAST:event_formWindowClosed
+
+    public void onClose() {}
+    
+    public void setEditingID(int id) {
+        editingID = id;
+    }
+    
     /**
      * @param args the command line arguments
      */
