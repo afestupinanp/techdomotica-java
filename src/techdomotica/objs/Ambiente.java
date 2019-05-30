@@ -18,12 +18,14 @@ public class Ambiente {
     private Thread ambienteThread;
     private Thread personaThread;
     private Thread deviceThread;
+    private Thread syncThread;
     
     private TimeChecker runTime;
     
     private boolean continueAmbienteThread = true;
     private boolean continuePersonaThread = true;
     private boolean continueDeviceThread = true;
+    private boolean continueSyncThread = true;
     
     private Admin adminEncargado = null;//Si está vacío, se inhabilitarán todos los elementos del administrador.
     private Usuario usuarioEncargado = null;
@@ -59,6 +61,7 @@ public class Ambiente {
         startAmbienteThread();
         startPersonaThread();
         startDeviceThread();
+        startSyncThread();
     }
     
     public Ambiente(Usuario encargado, TrayIcon appTra) {
@@ -73,6 +76,7 @@ public class Ambiente {
         startAmbienteThread();
         startPersonaThread();
         startDeviceThread();
+        startSyncThread();
     }
 
     public void loadComponentes() {
@@ -82,6 +86,15 @@ public class Ambiente {
         loadSensores();
         loadProyector();
         loadPerfilFromAdmin(adminEncargado);
+    }
+    
+    public void loadComponentesValues() {
+        System.out.println("uwu");
+        loadACondicionadosValues();
+        loadCamarasValues();
+        //loadLucesValues();
+        loadSensoresValues();
+        loadProyectorValues();
     }
     
     public void createACondicionado(int index, String model, String mark) {
@@ -109,6 +122,20 @@ public class Ambiente {
         }
         connection.destroyResultSet();
         //createACondicionado(0, "9000btu", "LG", 45.0);
+    }
+    
+    public void loadACondicionadosValues() {
+        connection.executeRS("SELECT temperatura, uso, componente_on FROM acondicionado INNER JOIN componente ON acondicionado.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 2;");
+        int i = 0;
+        while(connection.nextRow()) {
+            if(acondicionado[i] != null) {
+                acondicionado[i].changeTemperatura(Double.parseDouble(String.valueOf(connection.getResultSetRow("temperatura"))));
+                acondicionado[i].toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+                acondicionado[i].setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+            }
+            i++;
+        }
+        connection.destroyResultSet();
     }
 
     public Admin getAdminEncargado() {
@@ -147,12 +174,33 @@ public class Ambiente {
         connection.destroyResultSet();
     }
     
+    public void loadSensoresValues() {
+        connection.executeRS("SELECT uso, componente_on FROM sensor INNER JOIN componente ON sensor.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 2;");
+        int i = 0;
+        while(connection.nextRow()) {
+            sensores[i].toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+            sensores[i].setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+            i++;
+        }
+        connection.destroyResultSet();
+    }
+    
     public void loadProyector() {
         if(connection.executeRSOne("SELECT * FROM tv INNER JOIN componente ON tv.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 1;")) {
             proyector = new Televisor(String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
             proyector.setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
             proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
             proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+        }
+        connection.destroyResultSet();
+    }
+    
+    public void loadProyectorValues() {
+        if(connection.executeRSOne("SELECT uso, componente_on FROM tv INNER JOIN componente ON tv.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 2;")) {
+            if(proyector != null) {
+                proyector.toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+                proyector.setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+            }
         }
         connection.destroyResultSet();
     }
@@ -165,6 +213,34 @@ public class Ambiente {
     public void createCamara(int index, String model, String mark, double value) {
         camaras[index] = new Camara(model, mark, value);
         camaras[index].toggleComponenteEncendido(true);
+    }
+    
+    public void loadCamaras() {
+        connection.executeRS("SELECT * FROM camara INNER JOIN componente ON camara.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 4;");
+        int i = 0;
+        while(connection.nextRow()) {
+            i = Integer.parseInt(String.valueOf(connection.getResultSetRow("ubicacion"))) - 1;
+            createCamara(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+            camaras[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
+            camaras[i].setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+            camaras[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+            if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) camaras[i].toggleComponenteEncendido(true);
+            else camaras[i].toggleComponenteEncendido(false);
+        }
+        connection.destroyResultSet();
+    }
+    
+    public void loadCamarasValues() {
+        connection.executeRS("SELECT uso, componente_on FROM camara INNER JOIN componente ON camara.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 2;");
+        int i = 0;
+        while(connection.nextRow()) {
+            if(camaras[i] != null) {
+                camaras[i].toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+                camaras[i].setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+            }
+            i++;
+        }
+        connection.destroyResultSet();
     }
     
     public void insertACIntoDB(String model, String mark) {
@@ -214,21 +290,6 @@ public class Ambiente {
     
     public void createTelevisor(String model, String mark, double value) {
         proyector = new Televisor(model, mark, value);
-    }
-    
-    public void loadCamaras() {
-        connection.executeRS("SELECT * FROM camara INNER JOIN componente ON camara.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 4;");
-        int i = 0;
-        while(connection.nextRow()) {
-            i = Integer.parseInt(String.valueOf(connection.getResultSetRow("ubicacion"))) - 1;
-            createCamara(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
-            camaras[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
-            camaras[i].setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
-            camaras[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
-            if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) camaras[i].toggleComponenteEncendido(true);
-            else camaras[i].toggleComponenteEncendido(false);
-        }
-        connection.destroyResultSet();
     }
     
     public void loadPerfilFromEvent(int index) {
@@ -380,6 +441,28 @@ public class Ambiente {
     
     public TimeChecker getTimeThread() {
         return runTime;
+    }
+    
+    public Thread getSyncThread() {
+        return syncThread;
+    }
+    
+    public void startSyncThread() {
+        syncThread = new Thread(new Runnable() {
+           @Override
+           public void run() {
+               try {
+                   while(continueSyncThread) {
+                       Thread.sleep(2000);
+                       loadComponentesValues();
+                   }
+               }
+               catch(InterruptedException e) {
+                   System.out.println(e);
+               }
+           }
+        });
+        syncThread.start();
     }
     
     public void startTimeThread() {

@@ -139,7 +139,9 @@ public class CameraView extends javax.swing.JFrame {
                 @Override
                 public void progressBarFilled() {
                     super.progressBarFilled();
-                    ambient.getCamara(cameraID).toggleComponenteEncendido(true);
+                    techdomotica.objs.comps.Camara cam = ambient.getCamara(cameraID);
+                    cam.toggleComponenteEncendido(true);
+                    ambient.getConnection().execute(String.format("UPDATE `componente` SET `uso`= %d, `componente_on`= %d WHERE id_componente = %d;", Math.round(cam.getUsoComponente()), (cam.getComponenteEncendidoState() ? 1 : 0), cam.getDeviceID()));
                     try {
                         Thread.sleep(500);
                         loadViewIcon(cameraPath, true);

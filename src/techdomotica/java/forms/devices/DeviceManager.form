@@ -20,6 +20,8 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="btnprojector">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="btnlights">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -435,7 +437,7 @@
                                                           </Group>
                                                       </Group>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="deviceprogresscam2" pref="157" max="32767" attributes="0"/>
+                                                      <Component id="deviceprogresscam2" pref="160" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -461,7 +463,7 @@
                                                           </Group>
                                                       </Group>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="deviceprogresscam3" pref="157" max="32767" attributes="0"/>
+                                                      <Component id="deviceprogresscam3" pref="160" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -487,7 +489,7 @@
                                                           </Group>
                                                       </Group>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="deviceprogresscam4" pref="157" max="32767" attributes="0"/>
+                                                      <Component id="deviceprogresscam4" pref="160" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -953,7 +955,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="sensorstats2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="32" max="32767" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                       <Component id="jLabel8" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1159,9 +1161,9 @@
                           <Component id="rdbtnprojectoroff" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="displayprojector" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="11" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace pref="35" max="32767" attributes="0"/>
                               <Component id="jLabel15" min="-2" pref="23" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="deviceprogressprojector" min="-2" pref="23" max="-2" attributes="0"/>
@@ -1169,10 +1171,14 @@
                               <Component id="btnrepairprojector" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btndeleteprojector" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="displayprojectoricon" min="-2" pref="166" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="displayprojectoricon" min="-2" pref="166" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel9" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1246,6 +1252,88 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btndeleteprojectorActionPerformed"/>
               </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel6">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Luces">
+                <Property name="tabTitle" type="java.lang.String" value="Luces"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Component id="btnlightson" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnlightsoff" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jSlider1" pref="274" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="labelLucesImg" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="labelLucesImg" min="-2" pref="201" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnlightson" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnlightsoff" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jSlider1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JRadioButton" name="btnlightson">
+              <Properties>
+                <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="default"/>
+                </Property>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="btnlights"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Encendidas"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="btnlightsoff">
+              <Properties>
+                <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="default"/>
+                </Property>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="btnlights"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Apagadas"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSlider" name="jSlider1">
+              <Properties>
+                <Property name="majorTickSpacing" type="int" value="1"/>
+                <Property name="maximum" type="int" value="5"/>
+                <Property name="paintLabels" type="boolean" value="true"/>
+                <Property name="value" type="int" value="3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="labelLucesImg">
             </Component>
           </SubComponents>
         </Container>
