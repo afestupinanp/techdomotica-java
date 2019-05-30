@@ -615,5 +615,23 @@ public class Ambiente {
     public TrayIcon getTrayIcon() {
         return appTray;
     }
+ 
+    public int getPowerConsumo() {
+        double power = 0;
+        for(Camara cam : camaras) {
+            if(cam != null && cam.getComponenteEncendidoState()) power += cam.getGastoEnergetico();
+        }
+        for(Luz luz : luces) {
+            if(luz != null && luz.getComponenteEncendidoState()) power += luz.getGastoEnergetico();
+        }
+        for(ACondicionado ac : acondicionado) {
+            if(ac != null && ac.getComponenteEncendidoState()) power += ac.getGastoEnergetico();
+        }
+        for(Sensor sen : sensores) {
+            if(sen != null && sen.getComponenteEncendidoState()) power += sen.getGastoEnergetico();
+        }
+        if(proyector != null && proyector.getComponenteEncendidoState()) power += proyector.getGastoEnergetico();
+        return (int)Math.round(power);
+    }
     
 }

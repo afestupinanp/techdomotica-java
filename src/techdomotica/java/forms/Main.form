@@ -260,6 +260,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Estad&#xed;sticas de la sala"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem20ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

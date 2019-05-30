@@ -11,6 +11,8 @@ public class TimeChecker extends Thread {
     private boolean continueThread = true,
             eventConfirmed = false;
     
+    private long spentSeconds = 0;
+    
     private int seconds, minutes, hours;
     private int nextMinutes = -1, nextHours = -1;
     
@@ -71,6 +73,10 @@ public class TimeChecker extends Thread {
         return hours;
     }
     
+    public long getSpentSeconds() {
+        return spentSeconds;
+    }
+    
     public void onEventChange() {}
     
     public void run() {
@@ -88,6 +94,7 @@ public class TimeChecker extends Thread {
             try {
                 Thread.sleep(1000);
                 seconds++;
+                spentSeconds++;
                 if(seconds == 60) {
                     seconds = 0;
                     minutes++;

@@ -2,6 +2,8 @@ package techdomotica.objs;
 
 public class Reporte {
     
+    private static int reportTimes = 0;
+    
     private int idReport = 0,
             idUser = 0,
             typeReport = 0;
@@ -88,8 +90,12 @@ public class Reporte {
         int value = conx.execute(String.format("INSERT INTO reporte VALUES (null, %d, %d, '%s', '%s', '%s');", user, reportTyp, fecha, hora, txt));
         conx.destroyResultSet();
         conx.closeConnection();
+        reportTimes++;
         return value;
     }
     
+    public static int getReportTimes() {
+        return reportTimes;
+    }
     
 }

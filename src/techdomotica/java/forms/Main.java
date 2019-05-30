@@ -603,6 +603,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem20.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem20.setText("Estadísticas de la sala");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem20);
 
         jMenuBar1.add(jMenu5);
@@ -814,6 +819,12 @@ public class Main extends javax.swing.JFrame {
         EventScreen screen = new EventScreen(ambiente);
         screen.setVisible(true);
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        // TODO add your handling code here:
+        AmbientStats stats = new AmbientStats(ambiente);
+        stats.setVisible(true);
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     private void saveAllDevices() {
         System.out.println("Autosaving...");
