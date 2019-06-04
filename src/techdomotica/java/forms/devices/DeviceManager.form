@@ -1292,10 +1292,7 @@
                                   <Component id="btnlightsoff" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jSlider1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jSlider1" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -1305,9 +1302,6 @@
           <SubComponents>
             <Component class="javax.swing.JRadioButton" name="btnlightson">
               <Properties>
-                <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="default"/>
-                </Property>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="btnlights"/>
                 </Property>
@@ -1316,9 +1310,6 @@
             </Component>
             <Component class="javax.swing.JRadioButton" name="btnlightsoff">
               <Properties>
-                <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="default"/>
-                </Property>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="btnlights"/>
                 </Property>

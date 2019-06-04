@@ -5,8 +5,8 @@ import java.sql.*;
 public class Conectar {
     private static Connection conx;
     private static final String driver = "com.mysql.jdbc.Driver",
-                                user = "root",
-                                pswd = "",
+                                user = "andres",//andres
+                                pswd = "andres123",//andres123
                                 url = String.format("jdbc:mysql://%s:%s/techdomotica", new Config().getConfigKey("hostname"), new Config().getConfigKey("port"));
     private Statement ps;
     private ResultSet rs;
@@ -136,7 +136,10 @@ public class Conectar {
     
     public Object getResultSetRow(String columnLabel) {
         try {
-            return rs.getString(columnLabel);
+            if(!rs.isClosed()) {
+                return rs.getString(columnLabel);   
+            }
+            else return new Exception("se cerro uwu");
         }
         catch(SQLException e) {
             System.out.println(e);

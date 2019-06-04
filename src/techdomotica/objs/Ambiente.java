@@ -26,6 +26,7 @@ public class Ambiente {
     private boolean continuePersonaThread = true;
     private boolean continueDeviceThread = true;
     private boolean continueSyncThread = true;
+    private boolean perfilLoaded = false;
     
     private Admin adminEncargado = null;//Si está vacío, se inhabilitarán todos los elementos del administrador.
     private Usuario usuarioEncargado = null;
@@ -85,11 +86,10 @@ public class Ambiente {
         loadLuces();
         loadSensores();
         loadProyector();
-        loadPerfilFromAdmin(adminEncargado);
+        if(!perfilLoaded) loadPerfilFromAdmin(adminEncargado);
     }
     
     public void loadComponentesValues() {
-        System.out.println("uwu");
         loadACondicionadosValues();
         loadCamarasValues();
         //loadLucesValues();
@@ -109,19 +109,44 @@ public class Ambiente {
     
     public void loadACondicionados() {
         connection.executeRS("SELECT * FROM acondicionado INNER JOIN componente ON acondicionado.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 2;");
-        int i = 0;
+        int i = 0, count = 0;
         while(connection.nextRow()) {
-            createACondicionado(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
-            acondicionado[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
-            acondicionado[i].changeTemperatura(Double.parseDouble(String.valueOf(connection.getResultSetRow("temperatura"))));
-            System.out.println(acondicionado[i].getTemperatura());
-            acondicionado[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
-            if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) acondicionado[i].toggleComponenteEncendido(true);
-            else acondicionado[i].toggleComponenteEncendido(false);
+            count++;
+            if(acondicionado[i] == null) {
+                createACondicionado(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                acondicionado[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
+                acondicionado[i].changeTemperatura(Double.parseDouble(String.valueOf(connection.getResultSetRow("temperatura"))));
+                System.out.println(acondicionado[i].getTemperatura());
+                acondicionado[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) acondicionado[i].toggleComponenteEncendido(true);
+                else acondicionado[i].toggleComponenteEncendido(false);
+            }
+            else {
+                if(acondicionado[i].getDeviceID() != Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")))) {
+                    acondicionado[i] = null;
+                    createACondicionado(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                    acondicionado[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
+                    acondicionado[i].changeTemperatura(Double.parseDouble(String.valueOf(connection.getResultSetRow("temperatura"))));
+                    System.out.println(acondicionado[i].getTemperatura());
+                    acondicionado[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                    if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) acondicionado[i].toggleComponenteEncendido(true);
+                    else acondicionado[i].toggleComponenteEncendido(false);
+                }
+                else {
+                    acondicionado[i].changeTemperatura(Double.parseDouble(String.valueOf(connection.getResultSetRow("temperatura"))));
+                    acondicionado[i].toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+                    acondicionado[i].setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                }
+            }
             i++;
         }
+        int lastDefinedIndex = acondicionado.length - count;
+        System.out.println("Last index not null: " + lastDefinedIndex);
+        for(int j = lastDefinedIndex ; j < count ; j++) {
+            acondicionado[j] = null;
+        }
         connection.destroyResultSet();
-        //createACondicionado(0, "9000btu", "LG", 45.0);
+        
     }
     
     public void loadACondicionadosValues() {
@@ -160,16 +185,39 @@ public class Ambiente {
     
     public void loadSensores() {
         connection.executeRS("SELECT * FROM sensor INNER JOIN componente ON sensor.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 2;");
-        int i = 0;
+        int i = 0, count = 0;
         while(connection.nextRow()) {
+            count++;
             if(String.valueOf(connection.getResultSetRow("tiposensor")).equalsIgnoreCase("puerta")) i = 0;
             else i = 1;
-            createSensor(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
-            sensores[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
-            sensores[i].setTipoSensor(String.valueOf(connection.getResultSetRow("tiposensor")));
-            sensores[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
-            if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) sensores[i].toggleComponenteEncendido(true);
-            else sensores[i].toggleComponenteEncendido(false);
+            if(sensores[i] == null) {
+                createSensor(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                sensores[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
+                sensores[i].setTipoSensor(String.valueOf(connection.getResultSetRow("tiposensor")));
+                sensores[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) sensores[i].toggleComponenteEncendido(true);
+                else sensores[i].toggleComponenteEncendido(false);
+            }
+            else {
+                if(sensores[i].getDeviceID() != Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")))) {
+                    sensores[i] = null;
+                    createSensor(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                    sensores[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
+                    sensores[i].setTipoSensor(String.valueOf(connection.getResultSetRow("tiposensor")));
+                    sensores[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                    if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) sensores[i].toggleComponenteEncendido(true);
+                    else sensores[i].toggleComponenteEncendido(false);
+                }
+                else {
+                    sensores[i].toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+                    sensores[i].setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                }
+            }
+        }
+        int lastDefinedIndex = sensores.length - count;
+        System.out.println("Last index not null: " + lastDefinedIndex);
+        for(int j = lastDefinedIndex ; j < count ; j++) {
+            sensores[j] = null;
         }
         connection.destroyResultSet();
     }
@@ -187,10 +235,25 @@ public class Ambiente {
     
     public void loadProyector() {
         if(connection.executeRSOne("SELECT * FROM tv INNER JOIN componente ON tv.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 1;")) {
-            proyector = new Televisor(String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
-            proyector.setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
-            proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
-            proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+            if(proyector == null) {
+                proyector = new Televisor(String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                proyector.setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
+                proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+            }
+            else {
+                if(proyector.getDeviceID() != Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")))) {
+                    proyector = null;
+                    proyector = new Televisor(String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                    proyector.setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                    proyector.setCalidadTV(String.valueOf(connection.getResultSetRow("calidadtv")));
+                    proyector.setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+                }
+                else {
+                    proyector.toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+                    proyector.setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                }
+            }
         }
         connection.destroyResultSet();
     }
@@ -217,15 +280,38 @@ public class Ambiente {
     
     public void loadCamaras() {
         connection.executeRS("SELECT * FROM camara INNER JOIN componente ON camara.id_componente = componente.id_componente WHERE habilitado = 1 LIMIT 4;");
-        int i = 0;
+        int i = 0, count = 0;
         while(connection.nextRow()) {
-            i = Integer.parseInt(String.valueOf(connection.getResultSetRow("ubicacion"))) - 1;
-            createCamara(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
-            camaras[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
-            camaras[i].setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
-            camaras[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
-            if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) camaras[i].toggleComponenteEncendido(true);
-            else camaras[i].toggleComponenteEncendido(false);
+            count++;
+            if(camaras[i] == null) {
+                i = Integer.parseInt(String.valueOf(connection.getResultSetRow("ubicacion"))) - 1;
+                createCamara(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                camaras[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
+                camaras[i].setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+                camaras[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) camaras[i].toggleComponenteEncendido(true);
+                else camaras[i].toggleComponenteEncendido(false);
+            }
+            else {
+                if(camaras[i].getDeviceID() != Integer.parseInt(String.valueOf(connection.getResultSetRow("ubicacion"))) - 1) {
+                    i = Integer.parseInt(String.valueOf(connection.getResultSetRow("ubicacion"))) - 1;
+                    createCamara(i, String.valueOf(connection.getResultSetRow("nom_componente")), String.valueOf(connection.getResultSetRow("marca")), Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                    camaras[i].setGastoEnergetico(Double.parseDouble(String.valueOf(connection.getResultSetRow("gasto_energetico"))));
+                    camaras[i].setResolucion(String.valueOf(connection.getResultSetRow("resolucion")));
+                    camaras[i].setDeviceID(Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente"))));
+                    if(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1) camaras[i].toggleComponenteEncendido(true);
+                    else camaras[i].toggleComponenteEncendido(false);
+                }
+                else {
+                    camaras[i].toggleComponenteEncendido(Integer.parseInt(String.valueOf(connection.getResultSetRow("componente_on"))) == 1);
+                    camaras[i].setUsoComponente(Double.parseDouble(String.valueOf(connection.getResultSetRow("uso"))));
+                }
+            }
+        }
+        int lastDefinedIndex = camaras.length - count;
+        System.out.println("Last index not null: " + lastDefinedIndex);
+        for(int j = lastDefinedIndex ; j < count ; j++) {
+            camaras[j] = null;
         }
         connection.destroyResultSet();
     }
@@ -244,44 +330,48 @@ public class Ambiente {
     }
     
     public void insertACIntoDB(String model, String mark) {
-        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 25, 0, 1);", model, mark));
-        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
-            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
-            connection.execute(String.format("INSERT INTO acondicionado VALUES (null, %d, 23);", id_componente));
-            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo aire acondicionado: " + mark + " " + model +".");
+        if(connection.execute(String.format("INSERT INTO componente VALUES(null, '%s', '%s', '%s', 100, 2500, 0, 1);", adminEncargado.getID(), model, mark)) == 1) {
+            if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+                int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+                connection.execute(String.format("INSERT INTO acondicionado VALUES (null, %d, 23);", id_componente));
+                Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo aire acondicionado: " + mark + " " + model +".");
+            }
+            connection.destroyResultSet();
         }
-        connection.destroyResultSet();
     }
     
     public void insertCamaraIntoDB(int index, String model, String mark) {
-        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 5, 1, 1);", model, mark));
-        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
-            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
-            connection.execute(String.format("INSERT INTO camara VALUES (null, %d, '1080p', %d);", id_componente, (index + 1)));
-            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó una nueva cámara: " + mark + " " + model +".");
+        if(connection.execute(String.format("INSERT INTO componente VALUES(null, '%s', '%s', '%s', 100, 5, 1, 1);", adminEncargado.getID(), model, mark)) == 1) {
+            if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+                int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+                connection.execute(String.format("INSERT INTO camara VALUES (null, %d, '1080p', %d);", id_componente, (index + 1)));
+                Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó una nueva cámara: " + mark + " " + model +".");
+            }
+            connection.destroyResultSet();
         }
-        connection.destroyResultSet();
     }
     
     public void insertSensorIntoDB(String tipo, String model, String mark) {
-        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 5, 1, 1);", model, mark));
-        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
-            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
-            if(tipo.equalsIgnoreCase("puerta")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'puerta', 'puerta');", id_componente));
-            else if(tipo.equalsIgnoreCase("movimiento")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'movimiento', 'sala');", id_componente));
-            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo sensor: " + mark + " " + model +".");
+        if(connection.execute(String.format("INSERT INTO componente VALUES(null, '%s', '%s', '%s', 100, 5, 1, 1);", adminEncargado.getID(), model, mark)) == 1) {
+            if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+                int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+                if(tipo.equalsIgnoreCase("puerta")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'puerta', 'puerta');", id_componente));
+                else if(tipo.equalsIgnoreCase("movimiento")) connection.execute(String.format("INSERT INTO sensor VALUES (null, %d, 'movimiento', 'sala');", id_componente));
+                Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo sensor: " + mark + " " + model +".");
+            }
+            connection.destroyResultSet();
         }
-        connection.destroyResultSet();
     }
     
     public void insertTVIntoDB(String model, String mark) {
-        connection.execute(String.format("INSERT INTO componente VALUES(null, 1, '%s', '%s', 100, 5, 1, 1);", model, mark));
-        if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
-            int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
-            connection.execute(String.format("INSERT INTO tv VALUES (null, %d, 'Full HD', '1080p');", id_componente));
-            Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo proyector: " + mark + " " + model +".");
+        if(connection.execute(String.format("INSERT INTO componente VALUES(null, '%s', '%s', '%s', 100, 5, 1, 1);", adminEncargado.getID(), model, mark)) == 1) { 
+            if(connection.executeRSOne(String.format("SELECT id_componente FROM componente ORDER BY id_componente DESC LIMIT 1;"))) {
+                int id_componente = Integer.parseInt(String.valueOf(connection.getResultSetRow("id_componente")));
+                connection.execute(String.format("INSERT INTO tv VALUES (null, %d, 'Full HD', '1080p');", id_componente));
+                Reporte.insertReport(Integer.parseInt(adminEncargado.getID()), 3, "Este usuario agregó un nuevo proyector: " + mark + " " + model +".");
+            }
+            connection.destroyResultSet();
         }
-        connection.destroyResultSet();
     }
     
     public void createTelevisor(String model, String mark) {
@@ -454,11 +544,12 @@ public class Ambiente {
                try {
                    while(continueSyncThread) {
                        Thread.sleep(2000);
-                       loadComponentesValues();
+                       loadComponentes();
+                        //loadComponentesValues();
                    }
                }
-               catch(InterruptedException e) {
-                   System.out.println(e);
+               catch(Exception e) {
+                   e.printStackTrace();
                }
            }
         });

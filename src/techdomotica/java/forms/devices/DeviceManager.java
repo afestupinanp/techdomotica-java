@@ -1370,10 +1370,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getACondicionado(0).setUsoComponente(100.0);
-                deviceprogressac1.setValue(100);
-                btnrepairac1.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getACondicionado(0).getDeviceID() + ";") == 1) {
+                    ambiente.getACondicionado(0).setUsoComponente(100.0);
+                    deviceprogressac1.setValue(100);
+                    btnrepairac1.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
         
@@ -1390,7 +1392,7 @@ public class DeviceManager extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         continueOnThread = false;
         changeUI.interrupt();
-        saveChangesToMain();
+        //saveChangesToMain();
     }//GEN-LAST:event_formWindowClosing
 
     private void btnrepairac2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrepairac2ActionPerformed
@@ -1398,11 +1400,14 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getACondicionado(1).setUsoComponente(100.0);
-                deviceprogressac2.setValue(100);
-                btnrepairac2.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getACondicionado(1).getDeviceID() + ";") == 1) {
+                    ambiente.getACondicionado(1).setUsoComponente(100.0);
+                    deviceprogressac2.setValue(100);
+                    btnrepairac2.setEnabled(false);
+                    checkComponentUse();
+                }
             }
+                
         });
     }//GEN-LAST:event_btnrepairac2ActionPerformed
 
@@ -1590,10 +1595,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getCamara(0).setUsoComponente(100.0);
-                deviceprogresscam1.setValue(100);
-                btnrepaircam1.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getCamara(0).getDeviceID() + ";") == 1) {
+                    ambiente.getCamara(0).setUsoComponente(100.0);
+                    deviceprogresscam1.setValue(100);
+                    btnrepaircam1.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
     }//GEN-LAST:event_btnrepaircam1ActionPerformed
@@ -1622,10 +1629,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getCamara(1).setUsoComponente(100.0);
-                deviceprogresscam2.setValue(100);
-                btnrepaircam2.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getCamara(1).getDeviceID() + ";") == 1) {
+                    ambiente.getCamara(1).setUsoComponente(100.0);
+                    deviceprogresscam2.setValue(100);
+                    btnrepaircam2.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
     }//GEN-LAST:event_btnrepaircam2ActionPerformed
@@ -1667,10 +1676,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getCamara(2).setUsoComponente(100.0);
-                deviceprogresscam3.setValue(100);
-                btnrepaircam3.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getCamara(2).getDeviceID() + ";") == 1) {
+                    ambiente.getCamara(2).setUsoComponente(100.0);
+                    deviceprogresscam3.setValue(100);
+                    btnrepaircam3.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
     }//GEN-LAST:event_btnrepaircam3ActionPerformed
@@ -1695,10 +1706,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getCamara(3).setUsoComponente(100.0);
-                deviceprogresscam4.setValue(100);
-                btnrepaircam4.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getCamara(3).getDeviceID() + ";") == 1) {
+                    ambiente.getCamara(3).setUsoComponente(100.0);
+                    deviceprogresscam4.setValue(100);
+                    btnrepaircam4.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
     }//GEN-LAST:event_btnrepaircam4ActionPerformed
@@ -1781,10 +1794,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getSensor(0).setUsoComponente(100.0);
-                deviceprogresssensor1.setValue(100);
-                btnrepairsensor1.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getSensor(0).getDeviceID() + ";") == 1) {
+                    ambiente.getSensor(0).setUsoComponente(100.0);
+                    deviceprogresssensor1.setValue(100);
+                    btnrepairsensor1.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
     }//GEN-LAST:event_btnrepairsensor1ActionPerformed
@@ -1822,10 +1837,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getSensor(1).setUsoComponente(100.0);
-                deviceprogresssensor2.setValue(100);
-                btnrepairsensor2.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getSensor(1).getDeviceID() + ";") == 1) {
+                    ambiente.getSensor(1).setUsoComponente(100.0);
+                    deviceprogresssensor2.setValue(100);
+                    btnrepairsensor2.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
     }//GEN-LAST:event_btnrepairsensor2ActionPerformed
@@ -1840,10 +1857,12 @@ public class DeviceManager extends javax.swing.JFrame {
             @Override
             public void progressBarFilled() {
                 super.progressBarFilled();
-                ambiente.getTelevisor().setUsoComponente(100.0);
-                deviceprogressprojector.setValue(100);
-                btnrepairprojector.setEnabled(false);
-                checkComponentUse();
+                if(ambiente.getConnection().execute("UPDATE componente SET uso = 100 WHERE id_componente = " + ambiente.getTelevisor().getDeviceID() + ";") == 1) {
+                    ambiente.getTelevisor().setUsoComponente(100.0);
+                    deviceprogressprojector.setValue(100);
+                    btnrepairprojector.setEnabled(false);
+                    checkComponentUse();
+                }
             }
         });
     }//GEN-LAST:event_btnrepairprojectorActionPerformed
