@@ -95,7 +95,8 @@ public class DeviceManager extends javax.swing.JFrame {
                 while(continueOnThread) {
                     try {
                         Thread.sleep(2000);
-                        System.out.println("bruh");
+                        checkComponentUse();
+                        /*System.out.println("bruh");
                         for(int i = 0 ; i < allButtons.length ; i++) {
                             switch(i) {
                                 case 0:
@@ -131,7 +132,7 @@ public class DeviceManager extends javax.swing.JFrame {
                                     }
                                     break;
                             }
-                        }
+                        }*/
                     }
                     catch(InterruptedException e) {
                         System.out.println(e);
@@ -1893,31 +1894,13 @@ public class DeviceManager extends javax.swing.JFrame {
     }//GEN-LAST:event_btndeleteprojectorActionPerformed
 
     private void rdbtnprojectoronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnprojectoronActionPerformed
-        progressDialog dialogo = new progressDialog(this, true, 25) {
-            @Override
-            public void progressBarFilled() {
-                ambiente.getTelevisor().toggleComponenteEncendido(true);
-                rdbtnprojectoron.setSelected(true);
-                checkComponentUse();
-            }
-        };
-        dialogo.setTitle("Encendiendo dispositivo");
-        dialogo.textVar.setText("<html>Modificando valores del dispositivo " + ambiente.getTelevisor().getComponenteFullName() + ", puede tardar unos segundos...</html>");
-        dialogo.setVisible(true);
+        toggleDevice(ambiente.getTelevisor(), 15, true);
+        rdbtnprojectoron.setSelected(true);
     }//GEN-LAST:event_rdbtnprojectoronActionPerformed
 
     private void rdbtnprojectoroffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbtnprojectoroffActionPerformed
-        progressDialog dialogo = new progressDialog(this, true, 25) {
-            @Override
-            public void progressBarFilled() {
-                ambiente.getTelevisor().toggleComponenteEncendido(false);
-                rdbtnprojectoroff.setSelected(true);
-                checkComponentUse();
-            }
-        };
-        dialogo.setTitle("Apagando dispositivo");
-        dialogo.textVar.setText("<html>Modificando valores del dispositivo " + ambiente.getTelevisor().getComponenteFullName() + ", puede tardar unos segundos...</html>");
-        dialogo.setVisible(true);
+        toggleDevice(ambiente.getTelevisor(), 15, false);
+        rdbtnprojectoroff.setSelected(true);
     }//GEN-LAST:event_rdbtnprojectoroffActionPerformed
 
     public void saveChangesToMain() {}

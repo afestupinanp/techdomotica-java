@@ -161,6 +161,9 @@ public class SecurityHistory extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtReportKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtReportKeyTyped(evt);
+            }
         });
         jScrollPane2.setViewportView(txtReport);
 
@@ -261,16 +264,21 @@ public class SecurityHistory extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtReportKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtReportKeyPressed
-        String currentText = txtReport.getText();
-        if(currentText.length() > 1001) {
-            txtReport.setText(currentText);
-        }
-        charRemaining.setText(String.format("Caracteres restantes: %d", (1000 - currentText.length())));
+
     }//GEN-LAST:event_txtReportKeyPressed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         loadTable(jCheckBox1.isSelected());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void txtReportKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtReportKeyTyped
+        String currentText = txtReport.getText();
+        if(currentText.length() >= 1000) {
+            String realText = currentText.substring(0, 999);
+            txtReport.setText(realText);
+        }
+        charRemaining.setText(String.format("Caracteres restantes: %d", (1000 - currentText.length())));
+    }//GEN-LAST:event_txtReportKeyTyped
 
     /**
      * @param args the command line arguments

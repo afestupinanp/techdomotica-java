@@ -263,8 +263,9 @@ public class Usuarios extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int conf = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar al usuario " + users.get(selectedRow).getFullName() + "?\nEsta acción es irreversible.", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(conf == JOptionPane.YES_OPTION) {
-            if(conx.execute("DELETE FROM usuario WHERE id_usuario = " + Integer.parseInt(users.get(selectedRow).getID()) +";") == 1) { 
+            if(conx.execute("UPDATE usuario SET habilitado = 0 WHERE id_usuario = " + Integer.parseInt(users.get(selectedRow).getID()) +";") == 1) { 
                 loadTable();
+                JOptionPane.showMessageDialog(null, "El usuario se ha deshabilitado exitosamente.", "Operación completada", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed

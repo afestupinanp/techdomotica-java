@@ -48,6 +48,9 @@ public class SecurityAddRep extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 areaReportKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                areaReportKeyTyped(evt);
+            }
         });
         jScrollPane1.setViewportView(areaReport);
 
@@ -111,12 +114,17 @@ public class SecurityAddRep extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void areaReportKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaReportKeyPressed
+        
+    }//GEN-LAST:event_areaReportKeyPressed
+
+    private void areaReportKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaReportKeyTyped
         String currentText = areaReport.getText();
-        if(currentText.length() > 1001) {
-            areaReport.setText(currentText);
+        if(currentText.length() >= 1000) {
+            String realText = currentText.substring(0, 999);
+            areaReport.setText(realText);
         }
         charLim.setText(String.format("Límite de caracteres: %d/1000", currentText.length()));
-    }//GEN-LAST:event_areaReportKeyPressed
+    }//GEN-LAST:event_areaReportKeyTyped
 
     /**
      * @param args the command line arguments

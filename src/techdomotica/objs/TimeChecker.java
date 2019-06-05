@@ -48,7 +48,7 @@ public class TimeChecker extends Thread {
     }
     
     public void checkEvents() {
-        if(eventList.isEmpty()) {
+        if(!eventList.isEmpty()) {
             System.out.println("Not empty, updating!");
             nextHours = eventList.get(0).getHora().getHour();
             nextMinutes = eventList.get(0).getHora().getMinute();

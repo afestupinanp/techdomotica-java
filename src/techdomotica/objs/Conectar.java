@@ -5,8 +5,8 @@ import java.sql.*;
 public class Conectar {
     private static Connection conx;
     private static final String driver = "com.mysql.jdbc.Driver",
-                                user = "andres",//andres
-                                pswd = "andres123",//andres123
+                                user = "root",//andres
+                                pswd = "",//andres123
                                 url = String.format("jdbc:mysql://%s:%s/techdomotica", new Config().getConfigKey("hostname"), new Config().getConfigKey("port"));
     private Statement ps;
     private ResultSet rs;
