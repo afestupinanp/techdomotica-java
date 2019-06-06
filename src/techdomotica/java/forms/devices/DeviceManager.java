@@ -1913,7 +1913,15 @@ public class DeviceManager extends javax.swing.JFrame {
         if(rdbtnlightson.isSelected() == false) {
             rdbtnlightsoff.setSelected(false);
             rdbtnlightson.setSelected(true);
-            ambiente.getConnection().execute(String.format("UPDATE `luz` SET `encendido`= 0 WHERE id_luz = %d;", ambiente.getLuz().getID()));
+            progressDialog dialogo = new progressDialog(this, true, 5) {
+                @Override
+                public void progressBarFilled() {
+                    ambiente.getConnection().execute(String.format("UPDATE `luz` SET `encendido`= 0 WHERE id_luz = %d;", ambiente.getLuz().getID()));
+                }
+            };
+            dialogo.setTitle("Modificando configuración de luz");
+            dialogo.textVar.setText("Modificando estado de la luz... por favor espere.");
+            dialogo.setVisible(true);
         }
     }//GEN-LAST:event_rdbtnlightsoffActionPerformed
 
@@ -1921,17 +1929,20 @@ public class DeviceManager extends javax.swing.JFrame {
         if(rdbtnlightsoff.isSelected() == false) {
             rdbtnlightsoff.setSelected(true);
             rdbtnlightson.setSelected(false);
-            ambiente.getConnection().execute(String.format("UPDATE `luz` SET `encendido`= 1 WHERE id_luz = %d;", ambiente.getLuz().getID()));
+            progressDialog dialogo = new progressDialog(this, true, 5) {
+                @Override
+                public void progressBarFilled() {
+                    ambiente.getConnection().execute(String.format("UPDATE `luz` SET `encendido`= 1 WHERE id_luz = %d;", ambiente.getLuz().getID()));
+                }
+            };
+            dialogo.setTitle("Modificando configuración de luz");
+            dialogo.textVar.setText("Modificando estado de la luz... por favor espere.");
+            dialogo.setVisible(true);
         }
     }//GEN-LAST:event_rdbtnlightsonActionPerformed
 
     private void updateLight() {
         if(fuckAssigned) {
-            ambiente.getConnection().executeRSOne("UPDATE luz SET intensidad = " + lightSlider.getValue() + ";");
-            progressDialog dialogo = new progressDialog(this, true, 5);
-            dialogo.setTitle("Modificando configuración de luz");
-            dialogo.textVar.setText("Modificando estado de la luz... por favor espere.");
-            dialogo.setVisible(true);
         }
     }
     

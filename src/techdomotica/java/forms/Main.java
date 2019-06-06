@@ -1006,8 +1006,8 @@ public class Main extends javax.swing.JFrame {
         jMenu7.setVisible(false);//Dispositivos - Cámaras
         jMenu8.setVisible(false);//Dispositivos - Sensores
         jMenu8.setVisible(false);//Dispositivos - Aires acondicionados
-        jMenu5.setVisible(false);//Seguridad
-        
+        jMenu5.setVisible(false);//Gestión del ambiente
+        jMenu10.setVisible(false);//Seguridad
     }
     
     /**
