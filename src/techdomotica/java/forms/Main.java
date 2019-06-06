@@ -59,7 +59,7 @@ public class Main extends javax.swing.JFrame {
     public boolean onSystemTray = false;
 
     private Thread mainChanger;
-    private Thread[] appSync = new Thread[2];
+    private Thread appSync;
     private Thread autosaveTimer;
     
     private Admin adminEncargado = null;
@@ -86,7 +86,7 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         
-        //startAppSyncThreads();
+        startAppSyncThread();
         checkDeviceAvailability();
     }
     
@@ -102,7 +102,7 @@ public class Main extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/resources/media/L4.png")).getImage());
         disableAdminOptions();
         
-        //startAppSyncThreads();
+        startAppSyncThread();
         checkDeviceAvailability();        
     }
     
@@ -243,24 +243,22 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-    private void startAppSyncThreads() {
-        appSync[0] = new Thread(new Runnable() {
+    private void startAppSyncThread() {
+        appSync = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(continueAutosaving) {//This one never goes into false.
                     try {
-                        for(int i = 0 ; i < 60 ; i++) {
-                            Thread.sleep(1000);
-                        }
+                        Thread.sleep(2000);
+                        checkDeviceAvailability();
                     }
-                    catch(Exception e) {
+                    catch(InterruptedException e) {
                         System.out.println(e);
                     }
                 }
             }
-            
         });
-        appSync[0].start();
+        appSync.start();
     }
     
     /**
@@ -339,7 +337,7 @@ public class Main extends javax.swing.JFrame {
                 camera1MouseClicked(evt);
             }
         });
-        getContentPane().add(camera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 50, 50));
+        getContentPane().add(camera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 50, 50));
 
         camera2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/camera.png"))); // NOI18N
         camera2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -347,7 +345,7 @@ public class Main extends javax.swing.JFrame {
                 camera2MouseClicked(evt);
             }
         });
-        getContentPane().add(camera2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 50, 50));
+        getContentPane().add(camera2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 50, 50));
 
         camera3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/camera.png"))); // NOI18N
         camera3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -355,7 +353,7 @@ public class Main extends javax.swing.JFrame {
                 camera3MouseClicked(evt);
             }
         });
-        getContentPane().add(camera3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 50, 50));
+        getContentPane().add(camera3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 50, 50));
 
         camera4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/camera.png"))); // NOI18N
         camera4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -363,7 +361,7 @@ public class Main extends javax.swing.JFrame {
                 camera4MouseClicked(evt);
             }
         });
-        getContentPane().add(camera4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 50, 50));
+        getContentPane().add(camera4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 210, 50, 50));
 
         sensor1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -379,7 +377,7 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().add(sensor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 30, 30));
 
-        mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/media/simulator/sala.png"))); // NOI18N
+        mapaSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/simulator/sala.png"))); // NOI18N
         getContentPane().add(mapaSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 380));
 
         tempAire.setText("Temperatura de sala: 23,0°C");

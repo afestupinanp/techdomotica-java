@@ -41,7 +41,7 @@ public class Ambiente {
 
     private ACondicionado[] acondicionado = new ACondicionado[2];
     private Camara[] camaras = new Camara[4];
-    private Luz[] luces = new Luz[12];
+    private Luz luz = null;
     private Sensor[] sensores = new Sensor[2];
     private Televisor proyector = null;
     
@@ -83,7 +83,7 @@ public class Ambiente {
     public void loadComponentes() {
         loadACondicionados();
         loadCamaras();
-        loadLuces();
+        loadLuz();
         loadSensores();
         loadProyector();
         if(!perfilLoaded) loadPerfilFromAdmin(adminEncargado);
@@ -144,10 +144,11 @@ public class Ambiente {
         return adminEncargado;
     }
     
-    public void loadLuces() {
-        for(int i = 0 ; i < 12 ; i++) {
-            luces[i] = new Luz("Wattmax 200", "OSRAM");
+    public void loadLuz() {
+        if(connection.executeRSOne("SELECT * FROM luz LIMIT 1;")) {
+            luz = new Luz(Integer.parseInt(String.valueOf((connection.getResultSetRow("encendido")))) == 1, Integer.parseInt(String.valueOf(connection.getResultSetRow("intensidad"))), Integer.parseInt(String.valueOf(connection.getResultSetRow("id_luz"))));
         }
+        
     }
     
     public void createSensor(int index, String model, String mark) {
@@ -392,8 +393,8 @@ public class Ambiente {
         camaras[index] = null;
     }
     
-    public Luz getLuz(int index) {
-        return luces[index];
+    public Luz getLuz() {
+        return (luz != null) ? luz : null;
     }
     
     public Sensor getSensor(int index) {
@@ -745,9 +746,6 @@ public class Ambiente {
         for(Camara cam : camaras) {
             if(cam != null && cam.getComponenteEncendidoState()) power += cam.getGastoEnergetico();
         }
-        for(Luz luz : luces) {
-            if(luz != null && luz.getComponenteEncendidoState()) power += luz.getGastoEnergetico();
-        }
         for(ACondicionado ac : acondicionado) {
             if(ac != null && ac.getComponenteEncendidoState()) power += ac.getGastoEnergetico();
         }
@@ -755,6 +753,7 @@ public class Ambiente {
             if(sen != null && sen.getComponenteEncendidoState()) power += sen.getGastoEnergetico();
         }
         if(proyector != null && proyector.getComponenteEncendidoState()) power += proyector.getGastoEnergetico();
+        if(luz != null && luz.getLuzState()) power += 1000;
         return (int)Math.round(power);
     }
     

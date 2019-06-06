@@ -1,22 +1,23 @@
 package techdomotica.objs.comps;
 
-public class Luz extends Componente {
+public class Luz {
     
+    private int idConfig = 0;
     private boolean encendido = false;
-    private double intensidad = 100.0;
+    private double intensidad = 5;
     
-    public Luz(String nombre, String marca, double uso) {
-        super(nombre, marca, uso);
-        encendido = false;
+    public Luz(boolean encen, double inten, int id) {
+        idConfig = id;
+        encendido = encen;
+        intensidad = inten;
     }
-    
-    public Luz(String nombre, String marca) {
-        super(nombre, marca);
-    }
-    
     
     public void toggleLuz() {
         encendido = !encendido;
+    }
+    
+    public void toggleLuz(boolean onoff) {
+        encendido = onoff;
     }
     
     public boolean getLuzState() {
@@ -29,6 +30,10 @@ public class Luz extends Componente {
     
     public double getIntensidad() {
         return intensidad;
+    }
+    
+    public int getID() {
+        return idConfig;
     }
     
 }

@@ -101,8 +101,11 @@ public class Conectar {
         try {
             rs = ps.executeQuery(query);
             if(rs.next()) {
-                rs.beforeFirst();
-                return true;
+                if(rs != null) {
+                    rs.beforeFirst();
+                    return true;
+                }
+                else return false;
             }
         }
         catch(SQLException e) {
@@ -136,7 +139,7 @@ public class Conectar {
     
     public Object getResultSetRow(String columnLabel) {
         try {
-            if(!rs.isClosed()) {
+            if(!rs.isClosed() || rs != null) {
                 return rs.getString(columnLabel);   
             }
             else return new Exception("se cerro uwu");
@@ -149,7 +152,10 @@ public class Conectar {
     
     public void destroyResultSet() {
         try {
-            if(rs != null) rs.close();
+            if(rs != null) {
+                rs.close();
+                System.out.println("ResultSet closed");
+            }
         }
         catch(SQLException e) {
             System.out.println(e);
